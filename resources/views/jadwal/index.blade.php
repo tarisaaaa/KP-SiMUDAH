@@ -1,0 +1,65 @@
+@extends('layouts.mainadv')
+
+@section('title', 'MDP UKM | Jadwal')
+
+@section('content')
+    <div class="container">
+        <h1>Jadwal</h1>
+
+        @if (session('status'))
+            <div class="alert alert-success">
+                {{ session('status') }}
+            </div>
+        @endif
+
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <a href="/jadwal/create" class="btn btn-danger btn-icon-split">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-plus-square"></i>
+                    </span>
+                    <span class="text">Tambah Jadwal</span>
+                </a>
+            </div>
+            <div class="card-body p-2 m-3">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>UKM/HMJ</th>
+                                <th>Hari</th>
+                                <th>Waktu Mulai</th>
+                                <th>Waktu Selesai</th>
+                                <th>Tempat</th>
+                                <th>Nama Pelatih</th>
+                                <th>Ketua Mahasiswa</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($jadwal as $jadwal)
+                            <tr>
+                                <td>{{ $jadwal->ukm->nama_ukm }}</td>
+                                <td>{{ $jadwal->hari }}</td>
+                                <td>{{ $jadwal->waktu_mulai }}</td>
+                                <td>{{ $jadwal->waktu_selesai }}</td>
+                                <td>{{ $jadwal->tempat }}</td>
+                                <td>{{ $jadwal->pelatih->nama }}</td>
+                                <td>{{ $jadwal->ketuamhs->nama }}</td>
+                                <td>
+                                    <a href="/jadwal/{{ $jadwal->id}}/edit" class="btn btn-info btn-circle btn-sm"><i class="fas fa-edit"></i></a>
+                                    <form action="/jadwal/{{ $jadwal->id}}" method="POST" class="d-inline">
+                                        @method('delete')
+                                        @csrf
+                                        <button type="submit" class="btn btn-danger btn-circle btn-sm"><i class="fas fa-trash-alt"></i></button>
+                                    </form>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection

@@ -1,0 +1,48 @@
+body {
+    font-family: "Ubuntu", Tahoma, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.428571429;
+    color: #333333;
+    background: url('../assets/img/grid.jpg');
+    background-repeat: initial;
+  }
+
+a.card-maroon:link {
+  color: rgb(187, 43, 43);
+  text-decoration: none;
+}
+
+a.card-maroon:hover {
+  color: maroon;
+  text-decoration: underline;
+}
+
+a.card-info:link {
+  color: rgb(43, 141, 187);
+  text-decoration: none;
+}
+
+a.card-info:hover {
+  color: rgb(118, 177, 255);
+  text-decoration: underline;
+}
+
+a.card-olive:link {
+  color: olive;
+  text-decoration: none;
+}
+
+a.card-olive:hover {
+  color: olive;
+  text-decoration: underline;
+}
+
+a.card-pink:link {
+  color: rgb(168, 74, 121);
+  text-decoration: none;
+}
+
+a.card-pink:hover {
+  color: rgb(224, 108, 153);
+  text-decoration: underline;
+}
