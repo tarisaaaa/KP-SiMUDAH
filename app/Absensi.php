@@ -20,4 +20,9 @@ class Absensi extends Model
     {
         return $this->belongsTo('App\Users', 'user_id', 'id');
     }
+
+    public function absensidetail()
+    {
+        return $this->hasOne('App\AbsensiDetail', 'absensi_id', 'id');
+    }
 }

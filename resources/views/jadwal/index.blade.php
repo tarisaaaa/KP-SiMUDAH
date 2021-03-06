@@ -1,6 +1,6 @@
 @extends('layouts.mainadv')
 
-@section('title', 'MDP UKM | Jadwal')
+@section('title', 'SiMUDAH | Jadwal')
 
 @section('content')
     <div class="container">
@@ -11,10 +11,10 @@
                 {{ session('status') }}
             </div>
         @endif
-
+ 
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <a href="/jadwal/create" class="btn btn-danger btn-icon-split">
+                <a href="/jadwal/create" class="btn btn-outline-secondary btn-flat">
                     <span class="icon text-white-50">
                         <i class="fas fa-plus-square"></i>
                     </span>
@@ -31,24 +31,24 @@
                                 <th>Waktu Mulai</th>
                                 <th>Waktu Selesai</th>
                                 <th>Tempat</th>
-                                <th>Nama Pelatih</th>
+                                <th>Pelatih</th>
                                 <th>Ketua Mahasiswa</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($jadwal as $jadwal)
+                            @foreach($results as $jadwal)
                             <tr>
-                                <td>{{ $jadwal->ukm->nama_ukm }}</td>
-                                <td>{{ $jadwal->hari }}</td>
-                                <td>{{ $jadwal->waktu_mulai }}</td>
-                                <td>{{ $jadwal->waktu_selesai }}</td>
-                                <td>{{ $jadwal->tempat }}</td>
-                                <td>{{ $jadwal->pelatih->nama }}</td>
-                                <td>{{ $jadwal->ketuamhs->nama }}</td>
+                                <td>{{ $jadwal['nama_ukm'] }}</td>
+                                <td>{{ $jadwal['hari'] }}</td>
+                                <td>{{ $jadwal['waktu_mulai'] }}</td>
+                                <td>{{ $jadwal['waktu_selesai'] }}</td>
+                                <td>{{ $jadwal['tempat'] }}</td>
+                                <td>{{ $jadwal['pelatih']}}</td>
+                                <td>{{ $jadwal['ketuamhs'] }}</td>
                                 <td>
-                                    <a href="/jadwal/{{ $jadwal->id}}/edit" class="btn btn-info btn-circle btn-sm"><i class="fas fa-edit"></i></a>
-                                    <form action="/jadwal/{{ $jadwal->id}}" method="POST" class="d-inline">
+                                    <a href="/jadwal/{{ $jadwal['id']}}/edit" class="btn btn-info btn-circle btn-sm"><i class="fas fa-edit"></i></a>
+                                    <form action="/jadwal/{{ $jadwal['id']}}" method="POST" class="d-inline">
                                         @method('delete')
                                         @csrf
                                         <button type="submit" class="btn btn-danger btn-circle btn-sm"><i class="fas fa-trash-alt"></i></button>

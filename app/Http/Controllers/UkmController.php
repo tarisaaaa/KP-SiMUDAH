@@ -16,8 +16,18 @@ class UkmController extends Controller
      */
     public function index()
     {
-        $ukm = Ukm::all();
-        return view('ukm.index', compact('ukm'));
+        if (session('user')->role == 'adminaplikasi') 
+        {
+            $ukm = Ukm::all();
+            return view('ukm.index', compact('ukm'));
+        } 
+        else if (session('user')->role == 'ketuamahasiswa') 
+        {
+            $id = session('user')->id;
+            $ukm = Ukm::where('ketuamhs_id', $id)->get();
+            return view('ukm.index', compact('ukm'));
+        }
+        
     }
 
     /**
@@ -28,9 +38,10 @@ class UkmController extends Controller
     public function create()
     {
         $ukm = DB::select('select * from ukm');
+        $pembina = DB::select('select * from pembinaview');
         $pelatih = DB::select('select * from pelatihview');
         $ketuamhs = DB::select('select * from ketuamhsview');
-        return view('ukm.create', compact('ukm', 'pelatih', 'ketuamhs'));
+        return view('ukm.create', compact('ukm', 'pembina', 'pelatih', 'ketuamhs'));
     }
 
     /**
@@ -43,6 +54,7 @@ class UkmController extends Controller
     {
         $request->validate([
             'nama_ukm'      => ['required'],
+            'pembina_id'     => ['required'],
             'pelatih_id'     => ['required'],
             'ketuamhs_id'      => ['required'],
             'status'          => ['required']
@@ -50,13 +62,14 @@ class UkmController extends Controller
         
         $ukm = new Ukm;
         $ukm->nama_ukm = $request->nama_ukm;
+        $ukm->pembina_id = $request->pembina_id;
         $ukm->pelatih_id = $request->pelatih_id;
         $ukm->ketuamhs_id =$request->ketuamhs_id;
         $ukm->status = $request->status;
 
         //Ukm::create($request->all());
         Session::flash('add',$ukm->save());
-        return redirect('/ukm')->with('status', 'Data UKM Berhasil Ditambahkan!');
+        return redirect('/ukm')->with('status', 'Data UKM/HMJ Berhasil Ditambahkan!');
     }
 
     /**
@@ -78,9 +91,10 @@ class UkmController extends Controller
      */
     public function edit(Ukm $ukm)
     {
+        $pembina = DB::select('select * from pembinaview');
         $pelatih = DB::select('select * from pelatihview');
         $ketuamhs = DB::select('select * from ketuamhsview');
-        return view('ukm.edit', compact('ukm', 'pelatih', 'ketuamhs'));
+        return view('ukm.edit', compact('ukm', 'pembina', 'pelatih', 'ketuamhs'));
     }
 
     /**
@@ -94,6 +108,7 @@ class UkmController extends Controller
     {
         $request->validate([
             'nama_ukm' => 'required',
+            'pembina_id' => 'required',
             'pelatih_id' => 'required',
             'ketuamhs_id' => 'required',
             'status' => 'required'
@@ -102,12 +117,13 @@ class UkmController extends Controller
         Ukm::where('id', $ukm->id)
                 ->update([
                     'nama_ukm' => $request->nama_ukm,
+                    'pembina_id' => $request->pembina_id,
                     'pelatih_id' => $request->pelatih_id,
                     'ketuamhs_id' => $request->ketuamhs_id,
                     'status' => $request->status
                 ]);
 
-        return redirect('/ukm')->with('status', 'Data UKM berhasil diubah!');
+        return redirect('/ukm')->with('status', 'Data UKM/HMJ berhasil diubah!');
     }
 
     /**
@@ -119,6 +135,6 @@ class UkmController extends Controller
     public function destroy(Ukm $ukm)
     {
         DB::table('ukm')->where('id',$ukm->id)->delete();
-        return redirect('/ukm')->with('status', 'Data UKM Berhasil Dihapus!');
+        return redirect('/ukm')->with('status', 'Data UKM/HMJ Berhasil Dihapus!');
     }
 }

@@ -47,6 +47,12 @@
                                 @error('email')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
 
+                            <div class="form-group mt-3" hidden>
+                                <label for="status">Status</label>
+                                <input type="text" class="form-control @error('status') is-invalid @enderror" name="status" id="status" value="Aktif">
+                                @error('status')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                            </div>
+
                             <div class="form-group mt-3">
                                 @foreach ($ukm as $item)
                                     <input type="hidden" class="form-control @error('ukm_id') is-invalid @enderror" name="ukm_id" id="ukm_id" value="{{ $item->id }}">

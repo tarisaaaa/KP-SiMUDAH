@@ -1,10 +1,10 @@
 @extends('layouts.mainadv')
 
-@section('title', 'MDP UKM | Anggota')
+@section('title', 'SiMUDAH | Anggota')
 
 @section('content')
     <div class="container">
-        <h1 class="ml-3">List Anggota {{ $ukm->nama_ukm }}</h1>
+        <h1 class="ml-3">List Anggota Aktif {{ $ukm->nama_ukm }}</h1>
 
         @if (session('status'))
             <div class="alert alert-success">
@@ -17,6 +17,7 @@
                 <a href="/anggota/create/{{$ukm->id}}" class="btn btn-outline-secondary btn-flat">
                     <span class="text">Tambah Anggota</span>
                 </a>
+                <a href="/anggota/{{ $ukm->id }}/showall" class="btn btn-default btn-flat float-right">Lihat Semua Anggota</a>
             </div>
             <div class="card-body p-2 m-3">
                 <div class="table-responsive">

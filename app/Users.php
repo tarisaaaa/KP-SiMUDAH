@@ -14,7 +14,7 @@ class Users extends Model
 
     public function profile()
     {
-        return $this->hasMany('App\Profile', 'user_id', 'id');
+        return $this->hasOne('App\Profile', 'user_id', 'id');
     }
 
     public function absensi()

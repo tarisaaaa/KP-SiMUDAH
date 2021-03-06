@@ -17,7 +17,6 @@ class CreateAbsensiTable extends Migration
             $table->id();
             $table->string('ukm_id');
             $table->string('user_id');
-            $table->string('jml_kehadiran');
             $table->text('keterangan');
             $table->text('foto')->nullable();
             $table->timestamp('created_at')->useCurrent();

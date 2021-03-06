@@ -1,6 +1,6 @@
 @extends('layouts.mainadv')
 
-@section('title', 'Tambah Data Kegitan')
+@section('title', 'Tambah Data Kegiatan')
 
 @section('content')
 <div class="container">
@@ -19,8 +19,7 @@
                             @csrf
                             <div class="form-group mt-3">
                                 <label for="ukm_id">UKM / HMJ</label>
-                                <select name="ukm_id" id="ukm_id" class="form-control @error('ukm_id') is-invalid @enderror">
-                                    <option value="" hidden></option>
+                                <select name="ukm_id" id="ukm_id" class="form-control select2bs4 @error('ukm_id') is-invalid @enderror">
                                     @foreach ($ukm as $ukm)
                                         <option value="{{ $ukm->id }} {{ old('ukm_id') }}">{{ $ukm->nama_ukm }}</option>
                                     @endforeach

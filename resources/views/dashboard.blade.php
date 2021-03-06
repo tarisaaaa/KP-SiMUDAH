@@ -1,6 +1,6 @@
 @extends('layouts.mainadv')
 
-@section('title', 'MDP UKM | Jadwal')
+@section('title', 'SiMUDAH | Selamat Datang')
 
 @section('content')
     <div class="container">
@@ -10,7 +10,14 @@
             <div class="row m-2">
                 <div class="col-lg-6 m-2">
                     <h3><b>{{ session('user')->nama }}</b></h3>
-                    <h6>{{ session('user')->role }}</h6>
+                    <h6>
+                        @if (session('user')->role == 'wk')
+                            Wakil Ketua III
+                        @else
+                            {{ session('user')->role }}     
+                        @endif
+                       
+                    </h6>
                     @if (!empty($profile->user_id))
                         <a href="{{ route('profile.edit',['profile' => $profile->id]) }}">Edit Profil</a>
                     @else
@@ -42,6 +49,8 @@
         <div>
             @if (session('user')->role == 'wk')
                 grafik
+            @elseif (session('user')->role == 'pembina')
+                grafik pembina
             @endif
         </div>
     </div>

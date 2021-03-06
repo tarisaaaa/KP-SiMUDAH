@@ -1,10 +1,10 @@
 @extends('layouts.mainadv')
 
-@section('title', 'MDP UKM | UKM')
+@section('title', 'SiMUDAH | UKM/HMJ')
 
 @section('content')
     <div class="container">
-        <h1 class="ml-3">UKM</h1>
+        <h1 class="ml-3">UKM/HMJ</h1>
 
         @if (session('status'))
             <div class="alert alert-success">
@@ -13,19 +13,25 @@
         @endif
 
         <div class="card shadow m-4">
-            <div class="card-header py-3">
-                <a href="{{ route('ukm.create') }}" class="btn btn-outline-secondary btn-flat">
-                    <span class="text">Tambah UKM</span>
-                </a>
-            </div>
+            @if (session('user')->role == 'adminaplikasi')
+                <div class="card-header py-3">
+                    <a href="{{ route('ukm.create') }}" class="btn btn-outline-secondary btn-flat">
+                        <span class="text">Tambah UKM/HMJ</span>
+                    </a>
+                </div>    
+            @else
+                
+            @endif
+            
             <div class="card-body p-2 m-3">
                 <div class="table-responsive">
-                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
                                 <th>Nama UKM/HMJ</th>
-                                <th>Nama Pelatih</th>
-                                <th>Nama Ketua Mahasiswa</th>
+                                <th>Pembina</th>
+                                <th>Pelatih</th>
+                                <th>Ketua Mahasiswa</th>
                                 <th>Status</th>
                                 <th>Anggota</th>
                                 <th>Aksi</th>
@@ -35,6 +41,7 @@
                             @foreach($ukm as $u)
                             <tr>
                                 <td>{{ $u->nama_ukm }}</td>
+                                <td>{{ $u->pembina->nama }}</td>
                                 <td>{{ $u->pelatih->nama }}</td>
                                 <td>{{ $u->ketuamhs->nama }}</td>
                                 <td>{{ $u->status }}</td>

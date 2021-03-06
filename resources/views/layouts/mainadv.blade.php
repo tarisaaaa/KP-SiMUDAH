@@ -20,6 +20,11 @@
   <!-- DataTables -->
   <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
   <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
+  <!-- CKEditor -->
+  <script src="https://cdn.ckeditor.com/ckeditor5/25.0.0/classic/ckeditor.js"></script>
+  <!-- Select2 -->
+  <link rel="stylesheet" href="{{ asset('assets/plugins/select2/css/select2.min.css')}}">
+  <link rel="stylesheet" href="{{ asset('assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -48,7 +53,7 @@
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
-     <center><b>OrMa</b></center>
+     <center><b>SiMUDAH</b></center>
     </a>
 
     <!-- Sidebar -->
@@ -82,7 +87,7 @@
               <a href="/ukm" class="nav-link">
                 <i class="nav-icon fas fa-users"></i>
                 <p>
-                  UKM
+                  UKM/HMJ
                 </p>
               </a>
             </li>
@@ -102,14 +107,7 @@
                 </p>
               </a>
             </li>
-            <li class="nav-item">
-              <a href="/kegiatan" class="nav-link">
-                <i class="nav-icon fas fa-tasks"></i>
-                <p>
-                  Kegiatan
-                </p>
-              </a>
-            </li>
+            
             <li class="nav-item">
               <a href="/user" class="nav-link">
                 <i class="nav-icon fas fa-chalkboard-teacher"></i>
@@ -131,6 +129,14 @@
 
           @elseif(session('user')->role == "ketuamahasiswa")
             <li class="nav-item">
+              <a href="/ukm" class="nav-link">
+                <i class="nav-icon fas fa-users"></i>
+                <p>
+                  UKM/HMJ
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
               <a href="/pengumuman" class="nav-link">
                 <i class="nav-icon fas fa-bullhorn"></i>
                 <p>
@@ -138,6 +144,23 @@
                 </p>
               </a>
             </li>
+            <li class="nav-item">
+              <a href="/kegiatan" class="nav-link">
+                <i class="nav-icon fas fa-tasks"></i>
+                <p>
+                  Kegiatan
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/absensi" class="nav-link">
+                <i class="nav-icon fas fa-chalkboard-teacher"></i>
+                <p>
+                  Absensi
+                </p>
+              </a>
+            </li>
+
           @elseif(session('user')->role == "adminkeuangan")
 
           @else
@@ -196,6 +219,32 @@
 <script src="{{ asset('assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
 <script src="{{ asset('assets/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
 <script src="{{ asset('assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
+<!-- Select2 -->
+<script src="{{ asset('assets/plugins/select2/js/select2.full.min.js')}}"></script>
+
+<!-- CKEditor -->
+<script>
+  ClassicEditor
+          .create( document.querySelector( 'textarea' ) )
+          .then( editor => {
+                  console.log( editor );
+          } )
+          .catch( error => {
+                  console.error( error );
+          } );
+</script>
+
+<script>
+  $(function () {
+    //Initialize Select2 Elements
+    $('.select2').select2()
+    //Initialize Select2 Elements
+    $('.select2bs4').select2({
+      theme: 'bootstrap4',
+      width: '100%'
+    })
+  })
+  </script>
 
 <!-- bs-custom-file-input -->
 <script src="{{ asset('assets/plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Pengumuman;
+use App\Ukm;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -16,8 +17,14 @@ class PengumumanController extends Controller
      */
     public function index()
     {
-        $pengumuman = Pengumuman::all();
-        return view('pengumuman.index', compact('pengumuman'));
+        if (session('user')->role == 'adminaplikasi') {
+            $pengumuman = Pengumuman::all();
+            return view('pengumuman.index', compact('pengumuman'));
+        } else {
+            $id = session('user')->id;
+            $pengumuman = Ukm::where('pelatih_id', $id)->orWhere('ketuamhs_id', $id)->get();
+            return view('pengumuman.menu', compact('pengumuman'));
+        }
     }
 
     /**
@@ -29,6 +36,12 @@ class PengumumanController extends Controller
     {
         $ukm = DB::select('select id, nama_ukm from ukm');
         return view('pengumuman.create', compact('ukm'));
+    }
+
+    public function createperukm($id)
+    {
+        $ukm = DB::table('ukm')->where('id', $id)->select('id', 'nama_ukm')->first();
+        return view('pengumuman.createperukm', compact('ukm'));
     }
 
     /**
@@ -67,6 +80,13 @@ class PengumumanController extends Controller
         return view('pengumuman.show', compact('pengumuman'));
     }
 
+    public function showperukm($id)
+    {
+        $ukm = Ukm::find($id);
+        $pengumuman = Pengumuman::where(['ukm_id'=>$id])->get();
+        return view('pengumuman.showperukm', compact('pengumuman', 'ukm'));
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -96,6 +116,7 @@ class PengumumanController extends Controller
         ]);
         $pengumuman = Pengumuman::find($id);
         $pengumuman->ukm_id = $request->ukm_id;
+        $pengumuman->judul = $request->judul;
         $pengumuman->isi = $request->isi;
         $pengumuman->nama = $request->nama;
 

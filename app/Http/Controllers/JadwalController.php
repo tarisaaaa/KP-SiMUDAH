@@ -16,8 +16,34 @@ class JadwalController extends Controller
      */
     public function index()
     {
-        $jadwal = Jadwal::all();
-        return view('jadwal.index', compact('jadwal'));
+        //$jadwal = Jadwal::all();
+        $jadwal = DB::table('jadwal')->get()->toArray();
+        $getPelatih = DB::table('ukm')
+                        ->join('pelatihview', 'ukm.pelatih_id', '=', 'pelatihview.id')
+                        ->join('jadwal', 'ukm.id', '=', 'jadwal.ukm_id')
+                        ->select('pelatihview.nama', 'ukm.nama_ukm')
+                        ->get()->toArray();
+        $getKetuamhs = DB::table('ukm')
+                        ->join('ketuamhsview', 'ukm.ketuamhs_id', '=', 'ketuamhsview.id')
+                        ->join('jadwal', 'ukm.id', '=', 'jadwal.ukm_id')
+                        ->select('ketuamhsview.nama')
+                        ->get()->toArray();
+
+        $results = array();
+        foreach($jadwal as $key=>$data){
+            $array=array();
+            $array['id'] = $data->id;
+            $array['nama_ukm'] = $getPelatih[$key]->nama_ukm;
+            $array['waktu_mulai'] = $data->waktu_mulai;
+            $array['waktu_selesai'] = $data->waktu_selesai;
+            $array['hari'] = $data->hari;
+            $array['tempat'] = $data->tempat;
+            $array['pelatih'] = $getPelatih[$key]->nama;
+            $array['ketuamhs'] = $getKetuamhs[$key]->nama;
+            $results[] = $array;
+        }
+        //dd($results);
+        return view('jadwal.index', ['results'=>$results]);
     }
 
     /**
@@ -28,9 +54,7 @@ class JadwalController extends Controller
     public function create()
     {
         $ukm = DB::select('select * from ukm');
-        $pelatih = DB::select('select * from pelatihview');
-        $ketuamhs = DB::select('select * from ketuamhsview');
-        return view('jadwal.create', compact('ukm', 'pelatih', 'ketuamhs'));
+        return view('jadwal.create', compact('ukm'));
     }
 
     /**
@@ -46,9 +70,7 @@ class JadwalController extends Controller
             'waktu_mulai'   => ['required'],
             'waktu_selesai' => ['required'],
             'hari'          => ['required'],
-            'tempat'        => ['required'],
-            'pelatih_id'    => ['required'],
-            'ketuamhs_id'   => ['required']
+            'tempat'        => ['required']
         ]);
         
         $jadwal = new Jadwal;
@@ -56,11 +78,9 @@ class JadwalController extends Controller
         $jadwal->waktu_mulai = $request->waktu_mulai;
         $jadwal->waktu_selesai = $request->waktu_selesai;
         $jadwal = $request->merge([ 
-            'hari' => implode(',', (array) $request->get('hari'))
+            'hari' => implode(', ', (array) $request->get('hari'))
         ]);
         $jadwal->tempat = $request->tempat;
-        $jadwal->pelatih_id = $request->pelatih_id;
-        $jadwal->ketuamhs_id =$request->ketuamhs_id;
 
         //Session::flash('add',$jadwal->save());
         Jadwal::create($request->all());
@@ -86,9 +106,8 @@ class JadwalController extends Controller
      */
     public function edit(Jadwal $jadwal)
     {
-        $pelatih = DB::select('select * from pelatihview');
-        $ketuamhs = DB::select('select * from ketuamhsview');
-        return view('jadwal.edit', compact('jadwal', 'pelatih', 'ketuamhs'));
+        $ukm = DB::select('select id, nama_ukm from ukm');
+        return view('jadwal.edit', compact('jadwal', 'ukm'));
     }
 
     /**
@@ -105,9 +124,7 @@ class JadwalController extends Controller
             'waktu_mulai'   => ['required'],
             'waktu_selesai' => ['required'],
             'hari'          => ['required'],
-            'tempat'        => ['required'],
-            'pelatih_id'    => ['required'],
-            'ketuamhs_id'   => ['required']
+            'tempat'        => ['required']
         ]);
 
         
@@ -117,10 +134,8 @@ class JadwalController extends Controller
                     'ukm_id' => $request->ukm_id,
                     'waktu_mulai' => $request->waktu_mulai,
                     'waktu_selesai' => $request->waktu_selesai,
-                    'hari' => implode(',',$request->hari),
-                    'tempat' => $request->tempat,
-                    'pelatih_id' => $request->pelatih_id,
-                    'ketuamhs_id' => $request->ketuamhs_id
+                    'hari' => implode(', ',$request->hari),
+                    'tempat' => $request->tempat
                 ]);
 
         return redirect('/jadwal')->with('status', 'Data Jadwal berhasil diubah!');

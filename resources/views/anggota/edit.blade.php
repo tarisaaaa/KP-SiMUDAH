@@ -47,6 +47,15 @@
                             </div>
 
                             <div class="form-group mt-3">
+                                <label for="status">Status</label>
+                                <select name="status" id="status" class="form-control @error('status') is-invalid @enderror">
+                                    <option value="Aktif" {{ ($anggota->status == 'Aktif') ? 'selected' : '' }}>Aktif</option>
+                                    <option value="Non-aktif" {{ ($anggota->status == 'Non-aktif') ? 'selected' : '' }}>Non Aktif</option>
+                                </select>
+                                <div class="text-danger">{{ $errors->first('status')}}</div>
+                            </div>
+
+                            <div class="form-group mt-3">
                                 <input type="text" hidden class="form-control" name="ukm_id" id="ukm_id" value="{{ $anggota->ukm_id }}">
                                 <div class="text-danger">{{ $errors->first('ukm_id')}}</div>
                                 @error('ukm_id')<div class="invalid-feedback">{{ $message }}</div>@enderror

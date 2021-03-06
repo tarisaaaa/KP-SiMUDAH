@@ -15,7 +15,7 @@
                 
                 <div class="card-body">
                     <h5 class="card-title mb-3">{{ $pengumuman->judul }}</h5>
-                    <p class="card-text">{!! nl2br(e($pengumuman->isi)) !!}</p>
+                    <p class="card-text">{!! $pengumuman->isi !!}</p>
 
                     <a href="/pengumuman" class="btn btn-info btn-sm">Kembali</a>
                 </div>

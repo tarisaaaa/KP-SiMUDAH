@@ -11,8 +11,8 @@
                 
                 <div class="card-body">
                     <h5 class="card-title mb-3">{{ $kegiatan->tanggal }}</h5>
-                    <p class="card-text">{!! nl2br(e($kegiatan->keterangan)) !!}</p>
-
+                    <p class="card-text">{!! $kegiatan->keterangan !!}</p>
+                    
                     <a href="/kegiatan" class="btn btn-info btn-sm">Kembali</a>
                 </div>
             </div>

@@ -20,8 +20,6 @@ class CreateJadwalTable extends Migration
             $table->time('waktu_selesai')->nullable();
             $table->string('hari');
             $table->string('tempat');
-            $table->string('pelatih_id');
-            $table->string('ketuamhs_id');
             //$table->timestamps();
         });
     }

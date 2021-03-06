@@ -21,18 +21,20 @@
                                 <th>Tempat</th>
                                 <th>Nama Pelatih</th>
                                 <th>Ketua Mahasiswa</th>
+                                <th>Pembina</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($jadwal as $jadwal)
+                            @foreach($results as $jadwal)
                             <tr>
-                                <td>{{ $jadwal->ukm->nama_ukm }}</td>
-                                <td>{{ $jadwal->hari }}</td>
-                                <td>{{ $jadwal->waktu_mulai }}</td>
-                                <td>{{ $jadwal->waktu_selesai }}</td>
-                                <td>{{ $jadwal->tempat }}</td>
-                                <td>{{ $jadwal->pelatih->nama }}</td>
-                                <td>{{ $jadwal->ketuamhs->nama }}</td>
+                                <td>{{ $jadwal['nama_ukm'] }}</td>
+                                <td>{{ $jadwal['hari'] }}</td>
+                                <td>{{ $jadwal['waktu_mulai'] }}</td>
+                                <td>{{ $jadwal['waktu_selesai'] }}</td>
+                                <td>{{ $jadwal['tempat'] }}</td>
+                                <td>{{ $jadwal['pelatih']}}</td>
+                                <td>{{ $jadwal['ketuamhs'] }}</td>
+                                <td>{{ $jadwal['pembina'] }}</td>
                             </tr>
                             @endforeach
                         </tbody>

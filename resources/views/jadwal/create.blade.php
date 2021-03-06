@@ -19,8 +19,7 @@
                             @csrf
                             <div class="form-group mt-3">
                                 <label for="ukm_id">Nama UKM/HMJ</label>
-                                <select name="ukm_id" id="ukm_id" class="form-control @error('ukm_id') is-invalid @enderror">
-                                    <option value="" hidden></option>
+                                <select name="ukm_id" id="ukm_id" class="form-control select2bs4 @error('ukm_id') is-invalid @enderror"> 
                                     @foreach ($ukm as $ukm)
                                         <option value="{{ $ukm->id }} {{ old('ukm_id') }}">{{ $ukm->nama_ukm }}</option>
                                     @endforeach
@@ -80,30 +79,9 @@
                                 @error('tempat')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
 
-                            <div class="form-group mt-3">
-                                <label for="pelatih_id">Nama Pelatih</label>
-                                <select name="pelatih_id" id="pelatih_id" class="form-control @error('pelatih_id') is-invalid @enderror">
-                                    <option value="" hidden></option>
-                                    @foreach ($pelatih as $p)
-                                        <option value="{{ $p->id }} {{ old('pelatih_id') }}">{{ $p->nama }}</option>
-                                    @endforeach
-                                </select>
-                                @error('pelatih_id')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                            </div>
-
-                            <div class="form-group mt-3">
-                                <label for="ketuamhs_id">Nama Ketua Mahasiswa</label>
-                                <select name="ketuamhs_id" id="ketuamhs_id" class="form-control @error('ketuamhs_id') is-invalid @enderror">
-                                    <option value="" hidden></option>
-                                    @foreach ($ketuamhs as $k)
-                                        <option value="{{ $k->id }} {{ old('ketuamhs_id') }}">{{ $k->nama }}</option>
-                                    @endforeach
-                                </select>
-                                @error('ketuamhs_id')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                            </div>
 
                             <button type="submit" class="btn btn-success btn-block border pt-2">Tambah Data</button>
-                            <a href="{{ route('ukm.index') }}" class="btn btn-outline-secondary btn-block">Batal</a>
+                            <a href="{{ route('jadwal.index') }}" class="btn btn-outline-secondary btn-block">Batal</a>
                         </form>
                         
                     </div>

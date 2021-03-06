@@ -41,19 +41,31 @@ Route::resource('ketuamhs', 'KetuamhsController');
 Route::resource('pelatih', 'PelatihController');
 Route::resource('adminkeuangan', 'AdminkeuanganController');
 Route::resource('adminaplikasi', 'AdminaplikasiController');
+Route::resource('pembina', 'PembinaController');
 Route::resource('wk', 'WkController');
 
 Route::resource('ukm', 'UkmController');
 Route::resource('jadwal', 'JadwalController');
 Route::resource('kegiatan', 'KegiatanController');
+Route::get('kegiatan/showperukm/{kegiatan}', 'KegiatanController@showperukm')->name('kegiatan.showperukm');
+Route::get('/kegiatan/createperukm/{kegiatan}', 'KegiatanController@createperukm');
 Route::resource('profile', 'ProfileController');
 Route::resource('pengumuman', 'PengumumanController');
+Route::get('pengumuman/showperukm/{pengumuman}', 'PengumumanController@showperukm');
+Route::get('/pengumuman/createperukm/{pengumuman}', 'PengumumanController@createperukm');
 Route::resource('absensi', 'AbsensiController');
 Route::get('/absensi/create/{absensi}', 'AbsensiController@create');
+// Route::get('/absensi/detail/{absensi}', 'AbsensiController@detail')->name('absensi.detail');
 Route::resource('anggota', 'AnggotaController');
 Route::get('/anggota/create/{anggota}', 'AnggotaController@create');
+Route::get('/anggota/{anggota}/showall', 'AnggotaController@showall');
 
 // Route::get('/ketuamhs', 'UsersController@index');
 // Route::get('/ketuamhs/create', 'UsersController@create');
 // Route::post('/ketuamhs', 'UsersController@store');
 // Route::get('/ketuamhs/{ketuamhs}', 'ProfileController@show');
+
+// Route::get('/absensi/detail/{absensi}', [
+//     'uses' => 'AbsensiController@detail',
+//     'as' => 'absensi.detail'
+// ]);
