@@ -25,18 +25,8 @@
                             </div>
 
                             <div class="form-group mt-3">
-                                <label for="pembina_id">Nama Pembina</label>
-                                <select name="pembina_id" id="pembina_id" class="form-control select2bs4 @error('pembina_id') is-invalid @enderror">
-                                    @foreach ($pembina as $p)
-                                        <option value="{{ $p->id }}" {{ $ukm->pembina_id == $p->id ? 'selected' : ''}}>{{ $p->nama }}</option>
-                                    @endforeach
-                                </select>
-                                @error('pembina_id')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                            </div>
-
-                            <div class="form-group mt-3">
                                 <label for="pelatih_id">Nama Pelatih</label>
-                                <select name="pelatih_id" id="pelatih_id" class="form-control select2bs4 @error('pelatih_id') is-invalid @enderror">
+                                <select name="pelatih_id" id="pelatih_id" class="form-control @error('pelatih_id') is-invalid @enderror">
                                     @foreach ($pelatih as $p)
                                         <option value="{{ $p->id }}" {{ $ukm->pelatih_id == $p->id ? 'selected' : ''}}>{{ $p->nama }}</option>
                                     @endforeach
@@ -46,7 +36,7 @@
 
                             <div class="form-group mt-3">
                                 <label for="ketuamhs_id">Nama Ketua Mahasiswa</label>
-                                <select name="ketuamhs_id" id="ketuamhs_id" class="form-control select2bs4 @error('ketuamhs_id') is-invalid @enderror">
+                                <select name="ketuamhs_id" id="ketuamhs_id" class="form-control @error('ketuamhs_id') is-invalid @enderror">
                                     @foreach ($ketuamhs as $k)
                                         <option value="{{ $k->id }}" {{ $ukm->ketuamhs_id == $k->id ? 'selected' : ''}}>{{ $k->nama }}</option>
                                     @endforeach

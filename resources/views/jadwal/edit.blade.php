@@ -20,11 +20,7 @@
                             @csrf
                             <div class="form-group mt-3">
                                 <label for="ukm_id">UKM/HMJ</label>
-                                <select name="ukm_id" id="ukm_id" class="form-control select2bs4 @error('ukm_id') is-invalid @enderror">
-                                    @foreach ($ukm as $ukm)
-                                        <option value="{{ $ukm->id }}" {{ $jadwal->ukm_id == $ukm->id ? 'selected' : ''}}>{{ $ukm->nama_ukm }}</option>
-                                    @endforeach
-                                </select>
+                                <input type="text" class="form-control @error('ukm_id') is-invalid @enderror" name="ukm_id" id="ukm_id" value="{{ $jadwal->ukm_id }}">
                                 <div class="text-danger">{{ $errors->first('ukm_id')}}</div>
                             </div>
 
@@ -57,6 +53,16 @@
                                 @error('hari')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
 
+                            <div class="form-group mt-3">
+                                <label for="pelatih_id">Nama Pelatih</label>
+                                <select name="pelatih_id" id="pelatih_id" class="form-control @error('pelatih_id') is-invalid @enderror">
+                                    @foreach ($pelatih as $p)
+                                        <option value="{{ $p->id }}" {{ $jadwal->pelatih_id == $p->id ? 'selected' : ''}}>{{ $p->nama }}</option>
+                                    @endforeach
+                                </select>
+                                @error('pelatih_id')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                            </div>
+
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="form-group">
@@ -78,6 +84,16 @@
                                 <label for="tempat">Tempat</label>
                                 <input type="text" class="form-control @error('tempat') is-invalid @enderror" name="tempat" id="tempat" value="{{ $jadwal->tempat }}">
                                 @error('tempat')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                            </div>
+
+                            <div class="form-group mt-3">
+                                <label for="ketuamhs_id">Nama Ketua Mahasiswa</label>
+                                <select name="ketuamhs_id" id="ketuamhs_id" class="form-control @error('ketuamhs_id') is-invalid @enderror">
+                                    @foreach ($ketuamhs as $k)
+                                        <option value="{{ $k->id }}" {{ $jadwal->ketuamhs_id == $k->id ? 'selected' : ''}}>{{ $k->nama }}</option>
+                                    @endforeach
+                                </select>
+                                @error('ketuamhs_id')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
 
                             <button type="submit" class="btn btn-success btn-block border pt-2">Edit Data</button>

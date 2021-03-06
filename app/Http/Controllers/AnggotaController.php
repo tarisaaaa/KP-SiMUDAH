@@ -46,7 +46,6 @@ class AnggotaController extends Controller
             'npm'     => ['required'],
             'nohp'      => ['required'],
             'email'          => ['required'],
-            'status'          => ['required'],
             'ukm_id'      => ['required'],
         ]);
         
@@ -54,7 +53,6 @@ class AnggotaController extends Controller
         $anggota->nama_anggota = $request->nama_anggota;
         $anggota->npm = $request->npm;
         $anggota->nohp =$request->nohp;
-        $anggota->status = $request->status;
         $anggota->email = $request->email;
         $anggota->ukm_id = $request->ukm_id;
 
@@ -72,15 +70,8 @@ class AnggotaController extends Controller
     public function show($id)
     {
         $ukm = Ukm::find($id);
-        $anggota = Anggota::where(['ukm_id'=>$id])->where('status', '=', 'Aktif')->get();
-        return view('anggota.index', compact('anggota','ukm'));
-    }
-
-    public function showall($id)
-    {
-        $ukm = Ukm::find($id);
         $anggota = Anggota::where(['ukm_id'=>$id])->get();
-        return view('anggota.showall', compact('anggota','ukm'));
+        return view('anggota.index', compact('anggota','ukm'));
     }
 
     /**
@@ -108,15 +99,13 @@ class AnggotaController extends Controller
             'nama_anggota' => 'required',
             'npm' => 'required',
             'nohp' => 'required',
-            'email' => 'required',
-            'status' => 'required'
+            'email' => 'required'
         ]);
 
         $anggota = Anggota::find($id);
         $anggota->nama_anggota = $request->nama_anggota;
         $anggota->npm = $request->npm;
         $anggota->nohp = $request->nohp;
-        $anggota->status = $request->status;
         $anggota->email = $request->email;
 
         Session::flash('edit',$anggota->save());
