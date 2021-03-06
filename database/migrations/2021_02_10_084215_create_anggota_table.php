@@ -21,7 +21,6 @@ class CreateAnggotaTable extends Migration
             $table->string('nohp');
             $table->string('email');
             $table->string('ukm_id');
-            $table->string('status');
         });
     }
 

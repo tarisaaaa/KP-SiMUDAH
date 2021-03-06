@@ -9,16 +9,11 @@ class Ukm extends Model
     public $timestamps = false;
     protected $table = 'ukm';
     protected $primaryKey = 'id';
-    protected $fillable = ['nama_ukm', 'pembina_id', 'pelatih_id', 'ketuamhs_id', 'status'];
+    protected $fillable = ['nama_ukm', 'pelatih_id', 'ketuamhs_id', 'status'];
 
     public function pelatih()
     {
         return $this->belongsTo('App\Pelatih', 'pelatih_id', 'id');
-    }
-
-    public function pembina()
-    {
-        return $this->belongsTo('App\Pembina', 'pembina_id', 'id');
     }
 
     public function ketuamhs()

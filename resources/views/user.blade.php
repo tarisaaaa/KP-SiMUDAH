@@ -65,20 +65,6 @@
             <!-- ./col -->
             <div class="col-lg-6">
               <!-- small box -->
-              <div class="small-box bg-purple">
-                <div class="inner">
-                  <h3>Pembina</h3>
-                  <h5><br></h5>
-                </div>
-                <div class="icon">
-                  <i class="fas fa-chalkboard-teacher"></i>
-                </div>
-                <a href="/pembina" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-              </div>
-            </div>
-            <!-- ./col -->
-            <div class="col-lg-6">
-              <!-- small box -->
               <div class="small-box bg-gray">
                 <div class="inner">
                   <h3>WK 3</h3>

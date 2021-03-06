@@ -17,7 +17,6 @@ class LoginController extends Controller
         $user_name = $request->user_name;
         $password = $request->password;
 
-        //dd(Hash::make('123'));
         $user = Login::where(["user_name"=>$user_name])->first();
         if(Hash::check($password,$user->password)){
             Session::put('user',$user);

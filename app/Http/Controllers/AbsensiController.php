@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Absensi;
-use App\AbsensiDetail;
 use App\Ukm;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -19,7 +18,7 @@ class AbsensiController extends Controller
     public function index()
     {
         $id = session('user')->id;
-        $absensi = Ukm::where('pelatih_id', $id)->orWhere('ketuamhs_id', $id)->get();
+        $absensi = Ukm::where('pelatih_id', $id)->get();
         return view('absensi.index', compact('absensi'));
     }
 
@@ -32,8 +31,7 @@ class AbsensiController extends Controller
     {
         $absensi = DB::select('select * from absensi');
         $ukm = DB::table('ukm')->where('id', $id)->select('id', 'nama_ukm')->get();
-        $anggota = DB::table('anggota')->where('ukm_id', $id)->get();
-        return view('absensi.create', compact('absensi', 'ukm', 'anggota'));
+        return view('absensi.create', compact('absensi', 'ukm'));
     }
 
     /**
@@ -45,6 +43,7 @@ class AbsensiController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'jml_kehadiran'      => ['required'],
             'keterangan'     => ['required'],
             'foto'      => ['required'],
             'user_id'          => ['required'],
@@ -52,6 +51,7 @@ class AbsensiController extends Controller
         ]);
         
         $absensi = new Absensi;
+        $absensi->jml_kehadiran = $request->jml_kehadiran;
         $absensi->keterangan = $request->keterangan;
         $absensi->user_id = $request->user_id;
         $absensi->ukm_id = $request->ukm_id;
@@ -61,21 +61,11 @@ class AbsensiController extends Controller
             $foto->move("assets/img/fotolatihan",$foto_name);
             $absensi->foto = $foto_name;
         }
-        
+
+        //Ukm::create($request->all());
         Session::flash('add',$absensi->save());
         return redirect()->route('absensi.show', ['absensi'=>$request->ukm_id])->with('status', 'Absensi Berhasil Ditambahkan!');
-        //dd($absensi->id);
-        //return redirect()->route('absensi.detail', ['absensi'=>$absensi->id])->with('status', 'Absensi Berhasil Ditambahkan! Data absensi yang diinput tidak dapat diubah!')->with(compact('absensi'));
-
-         //return $this->detail(['absensi'=>$absensi->id])->with('status', 'Absensi Berhasil Ditambahkan! Data absensi yang diinput tidak dapat diubah!')->with(compact('absensi'));
     }
-
-    // public function detail($id) 
-    // {
-    //     $absensi_detail = AbsensiDetail::findOrFail($id);
-    //     dd($absensi_detail);
-    //     return view('absensi.detail', compact('absensi_detail'));
-    // }
 
     /**
      * Display the specified resource.

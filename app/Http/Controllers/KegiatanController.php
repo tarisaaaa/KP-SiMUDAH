@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Kegiatan;
-use App\Ukm;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -17,14 +16,8 @@ class KegiatanController extends Controller
      */
     public function index()
     {
-        if (session('user')->role == 'adminaplikasi') {
-            $kegiatan = Kegiatan::all();
-            return view('kegiatan.index', compact('kegiatan'));
-        } else {
-            $id = session('user')->id;
-            $kegiatan = Ukm::Where('ketuamhs_id', $id)->get();
-            return view('kegiatan.menu', compact('kegiatan'));
-        }
+        $kegiatan = Kegiatan::all();
+        return view('kegiatan.index', compact('kegiatan'));
     }
 
     /**
@@ -36,12 +29,6 @@ class KegiatanController extends Controller
     {
         $ukm = DB::select('select id, nama_ukm from ukm');
         return view('kegiatan.create', compact('ukm'));
-    }
-
-    public function createperukm($id)
-    {
-        $ukm = DB::table('ukm')->where('id', $id)->select('id', 'nama_ukm')->first();
-        return view('kegiatan.createperukm', compact('ukm'));
     }
 
     /**
@@ -78,13 +65,6 @@ class KegiatanController extends Controller
     public function show(Kegiatan $kegiatan)
     {
         return view('kegiatan.show', compact('kegiatan'));
-    }
-
-    public function showperukm($id)
-    {
-        $ukm = Ukm::find($id);
-        $kegiatan = Kegiatan::where(['ukm_id'=>$id])->get();
-        return view('kegiatan.showperukm', compact('kegiatan', 'ukm'));
     }
 
     /**

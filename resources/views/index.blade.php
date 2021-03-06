@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', 'SiMUDAH | Sistem Informasi MDP UKM dan HMJ')
+@section('title', 'MDP UKM')
 
 @section('content')
     <div class="container">
@@ -17,7 +17,7 @@
                                     Semua UKM/HMJ
                                 @endif
                         </h4>
-                        <p class="cart-text">{!! $pengumuman->isi !!}</p> 
+                        <p class="cart-text">{!! nl2br(e($pengumuman->isi)) !!}</p> 
                         <p class="card-text mb-2"><small class="text-muted">Diupload pada {{ $pengumuman->created_at}} oleh <strong>{{ $pengumuman->nama }}</strong></small></p>
                     </div>
                 </div>
