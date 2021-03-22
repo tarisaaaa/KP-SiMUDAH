@@ -34,7 +34,10 @@
                                 <th>Ketua Mahasiswa</th>
                                 <th>Status</th>
                                 <th>Anggota</th>
+                                @if (session('user')->role == 'adminaplikasi')
                                 <th>Aksi</th>
+                                @else
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -48,6 +51,7 @@
                                 <td>
                                     <center><a href="/anggota/{{ $u->id }}">Lihat</i></a></center>
                                 </td>
+                                @if (session('user')->role == 'adminaplikasi')
                                 <td>
                                     <center>
                                     <a href="{{ route('ukm.edit',['ukm'=>$u->id]) }}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>
@@ -58,6 +62,8 @@
                                     </form>
                                     </center>
                                 </td>
+                                @else
+                                @endif
                             </tr>
                             @endforeach
                         </tbody>

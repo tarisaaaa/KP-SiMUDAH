@@ -8,7 +8,7 @@
             <div class="col-lg-6">
                 <div class="card">
                     <div class="card-header">
-                        <strong class="card-title">OrMa</strong>
+                        <strong class="card-title">- SiMUDAH -</strong>
                     </div>
                     <div class="card-body">
                         <form action="{{ url('login') }}" method="POST">

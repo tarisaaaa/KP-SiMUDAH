@@ -20,7 +20,7 @@
                 <div class="row">
                     <div class="container">
 
-                        <form method="post" action="{{ route('absensi.store') }}" enctype="multipart/form-data">
+                        <form method="post" enctype="multipart/form-data" data-id="{{$ukm->id}}" id="formabsensi">
                             <div class="row">
                             <div class="col-lg-5">
                                 @csrf
@@ -40,22 +40,12 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group mt-3">
-                                    @foreach ($ukm as $item)
-                                        <input type="hidden" class="form-control @error('ukm_id') is-invalid @enderror" name="ukm_id" id="ukm_id" value="{{ $item->id }}">
-                                    
-                                </div>
-
-                                <div class="form-group mt-3" hidden>
-                                    <label for="user_id">Pelatih</label>
-                                    <input type="text" class="form-control @error('user_id') is-invalid @enderror" name="user_id" id="user_id" value="{{ session('user')->id }}">
-                                    @error('user_id')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                                </div>
+                        
                             </div>
 
                             <div class="col-lg-7 mt-3">
 
-                                <table class="table">
+                                <table class="table" id="listAnggota">
                                     <thead>
                                         <th>No.</th>
                                         <th>Nama Anggota</th>
@@ -66,24 +56,24 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($anggota as $a)
-                                            <tr>
-                                                <td></td>
+                                            <tr data-id="{{ $a->id }}" class="anggota">
+                                                <td>{{ $no++ }}</td>
                                                 <td>{{ $a->nama_anggota }}</td>
-                                                <div class="form-group">
+                                                
                                                     <td>
-                                                        <input type="radio" name="status_absen" value="H">
+                                                        <input type="radio" name="status_absen{{ $a->id }}" value="H">
                                                     </td>
                                                     <td>
-                                                        <input type="radio" name="status_absen" value="I">
+                                                        <input type="radio" name="status_absen{{ $a->id }}" value="I">
                                                     </td>
                                                     <td>
-                                                        <input type="radio" name="status_absen" value="A">
+                                                        <input type="radio" name="status_absen{{ $a->id }}" value="A">
                                                     </td>
-                                                </div>
+                                                
                                                 <td>
                                                     <div class="form-group">
-                                                        <input type="text" class="form-control @error('keterangan') is-invalid @enderror" name="keterangan" id="keterangan" value="{{ old('keterangan') }}">
-                                                        @error('keterangan')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                                                        <input type="text" class="form-control" name="keterangan_absen{{$a->id}}">
+                                                        
                                                     </div>
                                                 </td>
                                             </tr>
@@ -92,17 +82,69 @@
                                 </table>
 
                             </div>
+                            
                         </div>
-
-                                <button type="submit" class="btn btn-success btn-block border pt-2">Tambah Data</button>
-                                <a href="/absensi/{{$item->id}}" class="btn btn-outline-secondary btn-block">Batal</a>
-                                    @endforeach
+                                <button type="button" id="btnTambahData" class="btn btn-success border pt-2 float-right">Tambah Data</button>
+                                <a href="/absensi/{{$ukm->id}}" class="btn btn-outline-secondary">Batal</a>
+                                    
                         </form>
 
                     </div>
                 </div>
             </div>
 
+            <div class="card-footer text-muted">
+                <center><small>{{ date('l, d-m-Y') }}</small></center>
+            </div>
+
         </div>
 </div>
 @endsection
+
+@push('scripts')
+    <script>
+        $(function(){
+            $('#btnTambahData').on('click', function(){
+                
+                
+                let formData = new FormData();
+                formData.append('ukm_id', $('#formabsensi').data('id'))
+                formData.append('keterangan', myEditor.getData());
+                formData.append('foto', $('#foto')[0].files[0]);
+                
+                let listAnggota = $('.anggota')
+                let absensi = []
+                listAnggota.each(function(e){
+                    let id = $(this).data('id')
+                    absensi.push({
+                        anggota_id: id,
+                        status_absen: $(this).find('input[name=status_absen'+id+']:checked').val(),
+                        keterangan: $(this).find('input[name=keterangan_absen'+id+']').val()
+                    })
+                    
+                })
+                formData.append('absensi', JSON.stringify(absensi))
+                formData.append('_token', '{{csrf_token()}}')
+                // console.log(listAnggota)
+                for (var pair of formData.entries()) {
+                console.log(pair[0]+ ', ' + pair[1]); 
+                }
+                $.ajax({
+                    type:'POST',
+                    url: "{{ url('inputabsensi') }}",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(result){
+                        console.log(result)
+                        if (result.success) {
+                            window.location = '{{url("absensi")}}/'+$('#formabsensi').data('id')
+                        } else {
+                            alert("gagal")
+                        }
+                    }
+                })
+            })
+        })
+    </script>
+@endpush

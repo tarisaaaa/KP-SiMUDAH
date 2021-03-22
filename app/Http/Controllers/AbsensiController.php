@@ -30,10 +30,10 @@ class AbsensiController extends Controller
      */
     public function create($id)
     {
-        $absensi = DB::select('select * from absensi');
-        $ukm = DB::table('ukm')->where('id', $id)->select('id', 'nama_ukm')->get();
-        $anggota = DB::table('anggota')->where('ukm_id', $id)->get();
-        return view('absensi.create', compact('absensi', 'ukm', 'anggota'));
+        $ukm = DB::table('ukm')->where('id', $id)->select('id', 'nama_ukm')->first();
+        
+        $anggota = DB::table('anggota')->where('ukm_id', $id)->where('status', '=', 'Aktif')->get();
+        return view('absensi.create', compact('ukm', 'anggota'))->with('no', 1);
     }
 
     /**
@@ -49,6 +49,12 @@ class AbsensiController extends Controller
             'foto'      => ['required'],
             'user_id'          => ['required'],
             'ukm_id'      => ['required'],
+
+            //absensi detail
+            'absensi_id' => ['required'],
+            'anggota_id' => ['required'],
+            'status_absen' => ['required'],
+            'keterangan_absen' => ['required']
         ]);
         
         $absensi = new Absensi;
@@ -62,12 +68,53 @@ class AbsensiController extends Controller
             $absensi->foto = $foto_name;
         }
         
-        Session::flash('add',$absensi->save());
+        //Session::flash('add',$absensi->save());
+        $absensi->save();
+
+        $data = Absensi::find($absensi->id);
+        $anggota = DB::table('anggota')->where('ukm_id', $absensi->ukm_id)->where('status', '=', 'Aktif')->get();
+        //$absensi_detail = new AbsensiDetail;
+        $total = DB::table('anggota')->where('ukm_id', $absensi->ukm_id)->where('status', '=', 'Aktif')->count();
+        for ($i = 1; $i <= $total; $i++) {
+            $data->absensi_detail()->saveMany([
+                new AbsensiDetail(['anggota_id' => $anggota->id]),
+                new AbsensiDetail(['status_absen' => $request->status_absen[$i]]),
+                new AbsensiDetail(['keterangan' => $request->keterangan_absen[$i]]),
+            ]);
+        }
+        Session::flash('add',$data->save());
+
         return redirect()->route('absensi.show', ['absensi'=>$request->ukm_id])->with('status', 'Absensi Berhasil Ditambahkan!');
-        //dd($absensi->id);
+        
         //return redirect()->route('absensi.detail', ['absensi'=>$absensi->id])->with('status', 'Absensi Berhasil Ditambahkan! Data absensi yang diinput tidak dapat diubah!')->with(compact('absensi'));
 
          //return $this->detail(['absensi'=>$absensi->id])->with('status', 'Absensi Berhasil Ditambahkan! Data absensi yang diinput tidak dapat diubah!')->with(compact('absensi'));
+    }
+
+    public function inputabsensi(Request $request)
+    {
+        $absensi = new Absensi;
+        $absensi->ukm_id = $request->ukm_id;
+        $absensi->user_id = Session::get('user')->id;
+        $absensi->keterangan = $request->keterangan;
+        $foto = $request->file('foto');
+        if(!empty($foto)){
+            $foto_name = date('Y-m-d')."_".$foto->getClientOriginalName();
+            $foto->move("assets/img/fotolatihan",$foto_name);
+            $absensi->foto = $foto_name;
+        }
+        $absensi->save();
+
+        $data_absensi = json_decode($request->absensi);
+        foreach ($data_absensi as $a) {
+            $absensi->absensidetail()->create([
+                'anggota_id' => $a->anggota_id,
+                'status_absen' => $a->status_absen,
+                'keterangan' => $a->keterangan
+            ]);
+        }
+        $response['success'] = true;
+        return response()->json($response);
     }
 
     // public function detail($id) 
@@ -87,6 +134,7 @@ class AbsensiController extends Controller
     {
         $ukm = Ukm::find($id);
         $absensi = Absensi::where(['ukm_id'=>$id])->get();
+        
         return view('absensi.show', compact('absensi', 'ukm'));
     }
 
@@ -148,6 +196,9 @@ class AbsensiController extends Controller
      */
     public function destroy($id)
     {
+        // $absensi_detail = AbsensiDetail::findorFail($id);
+        // DB::table('absensi_detail')->where('id',$absensi_detail->id)->delete();
+
         $absensi = Absensi::findorFail($id);
         DB::table('absensi')->where('id',$absensi->id)->delete();
         return back()->with('status', 'Absensi Berhasil Dihapus!');

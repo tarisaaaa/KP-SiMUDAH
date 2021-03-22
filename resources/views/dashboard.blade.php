@@ -48,10 +48,71 @@
 
         <div>
             @if (session('user')->role == 'wk')
-                grafik
-            @elseif (session('user')->role == 'pembina')
+                <div class="card m-5">
+                    <figure class="highcharts-figure">
+                        <div id="grafik"></div>
+                    </figure>
+                </div>
+            @elseif (session('user')->role == 'pembina') 
                 grafik pembina
             @endif
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        var ukm = [];
+        var jml = [];
+        @foreach ($graph as $g)
+            ukm.push('{{ $g->nama_ukm }}');
+            jml.push('{{ $g->jumlah_kehadiran }}');
+        @endforeach
+        jml = jml.map(Number);
+        
+        Highcharts.chart('grafik', {
+            chart: {
+                type: 'bar'
+            },
+            title: {
+                text: 'Grafik Keaktifan Per UKM & HMJ'
+            },
+            subtitle: {
+                text: 'Sumber : Absensi harian per bulan'
+            },
+            xAxis: {
+                //categories: ['Africa', 'America', 'Asia', 'Europe', 'Oceania'],
+                categories: ukm,
+                title: {
+                text: null
+                }
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                text: 'Rata-rata kehadiran (per bulan)',
+                align: 'high'
+                },
+                labels: {
+                overflow: 'justify'
+                }
+            },
+            plotOptions: {
+                bar: {
+                dataLabels: {
+                    enabled: true
+                }
+                }
+            },
+            credits: {
+                enabled: false
+            },
+            series: [{
+                name: '',
+                showInLegend: false,
+                data: jml
+            }]
+            });
+    </script>
+    
+@endpush

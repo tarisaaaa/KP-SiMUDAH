@@ -55,6 +55,7 @@ Route::get('pengumuman/showperukm/{pengumuman}', 'PengumumanController@showperuk
 Route::get('/pengumuman/createperukm/{pengumuman}', 'PengumumanController@createperukm');
 Route::resource('absensi', 'AbsensiController');
 Route::get('/absensi/create/{absensi}', 'AbsensiController@create');
+Route::post('inputabsensi', 'AbsensiController@inputabsensi');
 // Route::get('/absensi/detail/{absensi}', 'AbsensiController@detail')->name('absensi.detail');
 Route::resource('anggota', 'AnggotaController');
 Route::get('/anggota/create/{anggota}', 'AnggotaController@create');
