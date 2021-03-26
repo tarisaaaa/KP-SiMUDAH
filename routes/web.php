@@ -49,6 +49,7 @@ Route::resource('jadwal', 'JadwalController');
 Route::resource('kegiatan', 'KegiatanController');
 Route::get('kegiatan/showperukm/{kegiatan}', 'KegiatanController@showperukm')->name('kegiatan.showperukm');
 Route::get('/kegiatan/createperukm/{kegiatan}', 'KegiatanController@createperukm');
+Route::resource('laporan', 'LaporanController');
 Route::resource('profile', 'ProfileController');
 Route::resource('pengumuman', 'PengumumanController');
 Route::get('pengumuman/showperukm/{pengumuman}', 'PengumumanController@showperukm');

@@ -72,7 +72,7 @@
         
         Highcharts.chart('grafik', {
             chart: {
-                type: 'bar'
+                type: 'column'
             },
             title: {
                 text: 'Grafik Keaktifan Per UKM & HMJ'
