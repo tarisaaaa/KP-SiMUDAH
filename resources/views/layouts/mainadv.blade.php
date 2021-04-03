@@ -169,7 +169,7 @@
               <a href="/laporan" class="nav-link">
                 <i class="nav-icon fas fa-chalkboard-teacher"></i>
                 <p>
-                  Laporan
+                  Laporan Pelatih
                 </p>
               </a>
             </li>

@@ -13,24 +13,26 @@
  
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h1>Laporan</h1>
+                <h1>Laporan Pelatih Bulan {{ date('m Y') }}</h1>
             </div>
             <div class="card-body p-2 m-3">
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th>UKM/HMJ</th>
-                                <th>Bulan</th>
-                                <th>Tahun</th>
+                                <th>UKM</th>
+                                <th>Pelatih</th>
+                                <th>Jumlah Kegiatan</th>
                                 <th>Laporan</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td><center><a href="/laporan/">Lihat</i></a></center></td>
+                            @foreach ($data as $laporan)
+                                <td>{{ $laporan->nama_ukm }}</td>
+                                <td>{{ $laporan->nama }}</td>
+                                <td>{{ $laporan->jumlah_absensi }}</td>                        
+                            @endforeach
+                            <td><center><a href="/laporan/">Download</i></a></center></td>
                         </tbody>
                     </table>
                 </div>

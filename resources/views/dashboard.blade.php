@@ -55,6 +55,12 @@
                 </div>
             @elseif (session('user')->role == 'pembina') 
                 grafik pembina
+            @elseif (session('user')->role == 'adminkeuangan') 
+            <div class="card m-5">
+                <figure class="highcharts-figure">
+                    <div id="grafik"></div>
+                </figure>
+            </div>
             @endif
         </div>
     </div>
@@ -66,7 +72,7 @@
         var jml = [];
         @foreach ($graph as $g)
             ukm.push('{{ $g->nama_ukm }}');
-            jml.push('{{ $g->jumlah_kehadiran }}');
+            jml.push('{{ $g->jumlah_absensi }}');
         @endforeach
         jml = jml.map(Number);
         
