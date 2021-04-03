@@ -56,7 +56,9 @@ class PengumumanController extends Controller
             'ukm_id'      => ['required'],
             'judul'     => ['required'],
             'isi'      => ['required'],
-            'nama'          => ['required']
+            'nama'       => ['required']
+        ],[
+            'required' => ":attribute tidak boleh kosong!"
         ]);
         
         $pengumuman = new Pengumuman;
