@@ -31,8 +31,8 @@
                                 <td>{{ $laporan->nama_ukm }}</td>
                                 <td>{{ $laporan->nama }}</td>
                                 <td>{{ $laporan->jumlah_absensi }}</td>                        
+                                <td><center><a href="/laporan/{{ $laporan->ukm_id }}">Lihat</i></a></center></td>
                             @endforeach
-                            <td><center><a href="/laporan/">Download</i></a></center></td>
                         </tbody>
                     </table>
                 </div>
