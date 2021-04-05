@@ -46,11 +46,10 @@
                                 </td>
                                 <td>
                                     
-                                    <a href="{{ route('absensi.edit',['absensi' => $a->id]) }}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>
                                     <form action="/absensi/{{ $a->id }}" method="POST" class="d-inline">
                                         @method('delete')
                                         @csrf
-                                        <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
+                                        <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i> Hapus</button>
                                     </form>
                                 </td>
                             </tr>

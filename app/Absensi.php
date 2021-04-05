@@ -9,7 +9,7 @@ class Absensi extends Model
     public $timestamps = false;
     protected $table = 'absensi';
     protected $primaryKey = 'id';
-    protected $fillable = ['ukm_id', 'user_id', 'jml_kehadiran', 'keterangan', 'foto', 'created_at'];
+    protected $fillable = ['ukm_id', 'user_id', 'keterangan', 'foto', 'created_at'];
 
     public function ukm()
     {
@@ -23,6 +23,6 @@ class Absensi extends Model
 
     public function absensidetail()
     {
-        return $this->hasOne('App\AbsensiDetail', 'absensi_id', 'id');
+        return $this->hasMany('App\AbsensiDetail', 'absensi_id', 'id');
     }
 }

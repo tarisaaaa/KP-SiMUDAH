@@ -34,7 +34,10 @@
                                 <th>Ketua Mahasiswa</th>
                                 <th>Status</th>
                                 <th>Anggota</th>
+                                @if (session('user')->role == 'adminaplikasi')
                                 <th>Aksi</th>
+                                @else
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -42,12 +45,17 @@
                             <tr>
                                 <td>{{ $u->nama_ukm }}</td>
                                 <td>{{ $u->pembina->nama }}</td>
-                                <td>{{ $u->pelatih->nama }}</td>
+                                @if (!empty($u->pelatih->nama))
+                                    <td>{{ $u->pelatih->nama }}</td>
+                                @else      
+                                    <td>-</td>                          
+                                @endif
                                 <td>{{ $u->ketuamhs->nama }}</td>
                                 <td>{{ $u->status }}</td>
                                 <td>
                                     <center><a href="/anggota/{{ $u->id }}">Lihat</i></a></center>
                                 </td>
+                                @if (session('user')->role == 'adminaplikasi')
                                 <td>
                                     <center>
                                     <a href="{{ route('ukm.edit',['ukm'=>$u->id]) }}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>
@@ -58,6 +66,8 @@
                                     </form>
                                     </center>
                                 </td>
+                                @else
+                                @endif
                             </tr>
                             @endforeach
                         </tbody>

@@ -18,7 +18,23 @@ class ProfileController extends Controller
     {
         $id = session('user')->id;
         $profile = Profile::where('user_id', $id)->first();
-        return view('dashboard', compact('profile'));
+
+        // $graph = DB::table('absensi')
+        // ->join('absensi_detail', 'absensi.id', '=', 'absensi_detail.absensi_id')
+        // ->join('ukm', 'absensi.ukm_id', '=', 'ukm.id')
+        // ->select('ukm.nama_ukm', DB::raw('COUNT(absensi_detail.id) as jumlah_kehadiran'))
+        // ->where('absensi_detail.status_absen', '=', 'H')
+        // ->groupBy('ukm.nama_ukm')
+        // ->get();
+
+        $user = session('user')->role;
+        if ($user == 'adminkeuangan') {
+            $sql = "SELECT a.ukm_id,u.nama_ukm,count(*) as jumlah_absensi FROM absensi as a JOIN ukm as u ON a.ukm_id = u.id WHERE MONTH(a.created_at) = MONTH(CURRENT_DATE()) AND YEAR(a.created_at) = YEAR(CURRENT_DATE()) GROUP BY a.ukm_id,u.nama_ukm";
+            $graph = DB::select($sql);
+        }
+        
+        return view('dashboard', compact('profile', 'graph'));
+        
     }
 
     /**
@@ -40,7 +56,7 @@ class ProfileController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'niknpm'      => ['required', 'numeric'],
+            'niknpm'      => ['required'],
             'nohp'      => ['required', 'numeric'],
             'email'          => ['required', 'email'],
             'alamat'          => ['required'],
@@ -91,7 +107,7 @@ class ProfileController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'niknpm'      => ['required', 'numeric'],
+            'niknpm'      => ['required'],
             'nohp'      => ['required', 'numeric'],
             'email'          => ['required', 'email'],
             'alamat'          => ['required'],

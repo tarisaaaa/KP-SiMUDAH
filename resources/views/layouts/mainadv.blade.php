@@ -6,6 +6,7 @@
   <title>@yield('title')</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="{{ asset('assets/img/favicon.ico' )}}" type="image/x-icon">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome-free/css/all.min.css')}}">
   <!-- Ionicons -->
@@ -53,7 +54,9 @@
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
-     <center><b>SiMUDAH</b></center>
+      <img src="{{ asset('assets/img/icnwhite.png') }}" alt="SiMUDAH Logo" class="brand-image img-circle elevation-3"
+           style="opacity: .8">
+      <span class="brand-text font-weight-light">SiMUDAH</span>
     </a>
 
     <!-- Sidebar -->
@@ -162,7 +165,14 @@
             </li>
 
           @elseif(session('user')->role == "adminkeuangan")
-
+            <li class="nav-item">
+              <a href="/laporan" class="nav-link">
+                <i class="nav-icon fas fa-chalkboard-teacher"></i>
+                <p>
+                  Laporan Pelatih
+                </p>
+              </a>
+            </li>
           @else
 
           @endif
@@ -199,9 +209,6 @@
 <!-- jQuery -->
 <script src="{{ asset('assets/plugins/jquery/jquery.min.js') }}"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-<script>
-  $.widget.bridge('uibutton', $.ui.button)
-</script>
 <!-- Bootstrap 4 -->
 <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <!-- ChartJS -->
@@ -221,19 +228,26 @@
 <script src="{{ asset('assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
 <!-- Select2 -->
 <script src="{{ asset('assets/plugins/select2/js/select2.full.min.js')}}"></script>
-
+<!-- Highcharts -->
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
 <!-- CKEditor -->
 <script>
+  let myEditor
   ClassicEditor
           .create( document.querySelector( 'textarea' ) )
           .then( editor => {
-                  console.log( editor );
+            console.log( editor );
+            myEditor = editor;
           } )
           .catch( error => {
                   console.error( error );
           } );
 </script>
 
+@stack('scripts')
 <script>
   $(function () {
     //Initialize Select2 Elements
@@ -252,14 +266,14 @@
   $(document).ready(function () {
     bsCustomFileInput.init();
   });
-  </script>
-  <script>
-    $(function () {
-      $("#dataTable").DataTable({
-        "responsive": true,
-        "autoWidth": false,
-      });
+</script>
+<script>
+  $(function () {
+    $("#dataTable").DataTable({
+      "responsive": true,
+      "autoWidth": false,
     });
-    </script>
+  });
+</script>
 </body>
 </html>

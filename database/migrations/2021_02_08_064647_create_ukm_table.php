@@ -17,7 +17,7 @@ class CreateUkmTable extends Migration
             $table->id();
             $table->string('nama_ukm');
             $table->string('pembina_id');
-            $table->string('pelatih_id');
+            $table->string('pelatih_id')->nullable();
             $table->string('ketuamhs_id');
             $table->string('status');
             //$table->timestamps();
