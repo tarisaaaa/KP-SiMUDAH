@@ -13,7 +13,7 @@
 </head>
 <body>
     <div class="container-fluid">
-        <center><img src="{{ asset('assets/img/icn.png')}}" alt="" ></center>
+        <center><img src="{{ asset('assets/img/logolaporan.png')}}" alt="laporan" width="270px"></center>
         <h2 class="mt-3"><center>Laporan Pelatih UKM {{ $data->nama_ukm }}</center></h2>
         <hr width="95%">
         <table class="table border ml-5" style="width: 93%">  
@@ -30,10 +30,22 @@
                 <td>{{ $data->jumlah_absensi }}</td>
             </tbody>
         </table>
-        <a href="" class="btn btn-sm btn-secondary ml-5"><i class="nav-icon fas fa-print mr-2"></i>Cetak Laporan</a>
+
+        <div style="text-align: right; margin-right: 4%">
+            Palembang, {{ date('d-m-Y') }}
+            <br> Wakil Ketua II
+            <br><br><br><br>
+            <p>Kathryn Sugara, S.E., M.Si, CFP®</p>
+        </div>
+
     </div>
+
+        <a href="" class="btn btn-sm btn-outline-secondary ml-5" onclick="window.print();">
+            <i class="nav-icon fas fa-print mr-2"></i>Cetak Laporan
+        </a>
+
 </body>
 <footer>
-    <p class="ml-5"><i>Laporan ini dicetak pada {{ date('d-m-Y') }}</i></p>
+    <p class="ml-5 mt-2"><i>Laporan ini dicetak pada {{ date('d-m-Y') }}</i></p>
 </footer>
 </html>

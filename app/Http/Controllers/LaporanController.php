@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+// use Barryvdh\DomPDF\PDF;
+use Barryvdh\DomPDF\Facade as PDF;
 
 class LaporanController extends Controller
 {
@@ -30,6 +32,14 @@ class LaporanController extends Controller
                 GROUP BY a.ukm_id,u.nama_ukm";
         $data = collect(DB::select($sql))->first();
         // dd($data);
+        // $pdf = PDF::loadview('laporan.show',['data'=>$data])->setPaper('A4','potrait');
+	    // return $pdf->stream();
         return view('laporan.show', compact('data'));
     }
+
+    // public function print()
+    // {
+    //     $pdf = PDF::loadview('laporan.show')->setPaper('A4','potrait');
+    //     return $pdf->stream();
+    // }
 }
