@@ -47,20 +47,15 @@
         </div>
 
         <div>
-            @if (session('user')->role == 'wk')
-                <div class="card m-5">
-                    <figure class="highcharts-figure">
-                        <div id="grafik"></div>
-                    </figure>
-                </div>
-            @elseif (session('user')->role == 'pembina') 
-                grafik pembina
-            @elseif (session('user')->role == 'adminkeuangan') 
             <div class="card m-5">
                 <figure class="highcharts-figure">
                     <div id="grafik"></div>
                 </figure>
             </div>
+            @if(!empty($graph2))
+            <figure class="highcharts-figure">
+                <div id="grafik2"></div>
+            </figure>
             @endif
         </div>
     </div>
@@ -72,7 +67,7 @@
         var jml = [];
         @foreach ($graph as $g)
             ukm.push('{{ $g->nama_ukm }}');
-            jml.push('{{ $g->jumlah_absensi }}');
+            jml.push('{{ $g->graph_value }}');
         @endforeach
         jml = jml.map(Number);
         
@@ -81,13 +76,9 @@
                 type: 'column'
             },
             title: {
-                text: 'Grafik Keaktifan Per UKM & HMJ'
-            },
-            subtitle: {
-                text: 'Sumber : Absensi harian per bulan'
+                text: '{{ $graph_title }}'
             },
             xAxis: {
-                //categories: ['Africa', 'America', 'Asia', 'Europe', 'Oceania'],
                 categories: ukm,
                 title: {
                 text: null
@@ -119,6 +110,56 @@
                 data: jml
             }]
             });
+
+            @if(!empty($graph2))
+                var ukm2 = [];
+                var jml2 = [];
+                @foreach ($graph2 as $g)
+                    ukm2.push('{{ $g->nama_ukm }}');
+                    jml2.push('{{ $g->graph_value }}');
+                @endforeach
+                jml2 = jml2.map(Number);
+                
+                Highcharts.chart('grafik2', {
+                    chart: {
+                        type: 'column'
+                    },
+                    title: {
+                        text: 'GRAFIK PERBULAN'
+                    },
+                    xAxis: {
+                        categories: ukm2,
+                        title: {
+                        text: null
+                        }
+                    },
+                    yAxis: {
+                        min: 0,
+                        title: {
+                        text: 'Rata-rata kehadiran (per bulan)',
+                        align: 'high'
+                        },
+                        labels: {
+                        overflow: 'justify'
+                        }
+                    },
+                    plotOptions: {
+                        bar: {
+                        dataLabels: {
+                            enabled: true
+                        }
+                        }
+                    },
+                    credits: {
+                        enabled: false
+                    },
+                    series: [{
+                        name: '',
+                        showInLegend: false,
+                        data: jml2
+                    }]
+                    });
+            @endif
     </script>
     
 @endpush

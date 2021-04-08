@@ -36,7 +36,7 @@
                             <tr>
                                 <td>{{ $a->created_at }}</td>
                                 <td>{{ $a->jml_kehadiran }}</td>
-                                <td>{{ $a->keterangan }}</td>
+                                <td>{!! $a->keterangan !!}</td>
                                 <td>
                                     @if(file_exists( public_path()."/assets/img/fotolatihan/".$a->foto))
                                         <img src="{{ asset('assets/img/fotolatihan/'.$a->foto) }}" width="100px" class="img-thumbnail">

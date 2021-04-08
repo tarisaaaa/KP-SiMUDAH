@@ -18,23 +18,26 @@ class ProfileController extends Controller
     {
         $id = session('user')->id;
         $profile = Profile::where('user_id', $id)->first();
-
-        // $graph = DB::table('absensi')
-        // ->join('absensi_detail', 'absensi.id', '=', 'absensi_detail.absensi_id')
-        // ->join('ukm', 'absensi.ukm_id', '=', 'ukm.id')
-        // ->select('ukm.nama_ukm', DB::raw('COUNT(absensi_detail.id) as jumlah_kehadiran'))
-        // ->where('absensi_detail.status_absen', '=', 'H')
-        // ->groupBy('ukm.nama_ukm')
-        // ->get();
-
+        
         $user = session('user')->role;
+        $graph2 = [];
         if ($user == 'adminkeuangan') {
-            $sql = "SELECT a.ukm_id,u.nama_ukm,count(*) as jumlah_absensi FROM absensi as a JOIN ukm as u ON a.ukm_id = u.id WHERE MONTH(a.created_at) = MONTH(CURRENT_DATE()) AND YEAR(a.created_at) = YEAR(CURRENT_DATE()) GROUP BY a.ukm_id,u.nama_ukm";
-            $graph = DB::select($sql);
+            $sql = "SELECT a.ukm_id,u.nama_ukm,count(*) as graph_value FROM absensi as a JOIN ukm as u ON a.ukm_id = u.id WHERE MONTH(a.created_at) = MONTH(CURRENT_DATE()) AND YEAR(a.created_at) = YEAR(CURRENT_DATE()) GROUP BY a.ukm_id,u.nama_ukm";
+            $graph_title = "Grafik Keaktifan Per UKM & HMJ";
+        } else if ($user == 'wk') {
+            $sql = "SELECT a.id,u.nama_ukm, SUM(ad.status_absen = 'H') as graph_value, a.created_at FROM absensi as a RIGHT JOIN absensi_detail as ad ON a.id=ad.absensi_id LEFT JOIN ukm as u ON u.id = a.ukm_id WHERE DATE(a.created_at) = CURRENT_DATE() GROUP BY a.id,u.nama_ukm";
+            $graph_title = "Grafik Keaktifan Per UKM & HMJ";
+            $sql2 = "SELECT nama_ukm,SUM(rata_rata)/COUNT(*) as graph_value FROM v_absensi_harian GROUP BY ukm_id";
+            $graph2 = DB::select($sql2);
+        } else if($user == "pembina"){
+            $pembina_id = Session::get('user')->id;
+            $sql = "SELECT a.ukm_id,u.nama_ukm,count(*) as graph_value FROM absensi as a JOIN ukm as u ON a.ukm_id = u.id WHERE MONTH(a.created_at) = MONTH(CURRENT_DATE()) AND YEAR(a.created_at) = YEAR(CURRENT_DATE()) AND u.pembina_id = '".$pembina_id."' GROUP BY a.ukm_id,u.nama_ukm";
+            $graph_title = "Grafik Keaktifan Per UKM & HMJ";
+        }else{
+            return view('dashboard', compact('profile'));
         }
-        
-        return view('dashboard', compact('profile', 'graph'));
-        
+        $graph = DB::select($sql);
+        return view('dashboard', compact('profile', 'graph','graph2','graph_title'));
     }
 
     /**
