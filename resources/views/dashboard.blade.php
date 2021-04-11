@@ -46,22 +46,32 @@
             </div>
         </div>
 
-        <div>
-            <div class="card m-5">
-                <figure class="highcharts-figure">
-                    <div id="grafik"></div>
-                </figure>
+        @if (session('user')->role == 'wk' || session('user')->role == 'adminkeuangan' || session('user')->role == 'pembina')
+
+            <div>
+                <div class="card m-5">
+                    <figure class="highcharts-figure">
+                        <div id="grafik"></div>
+                    </figure>
+                </div>
+
+                @if(!empty($graph2))
+                    <div class="card m-5">
+                        <figure class="highcharts-figure">
+                            <div id="grafik2"></div>
+                        </figure>
+                    </div>
+                @endif
+
             </div>
-            @if(!empty($graph2))
-            <figure class="highcharts-figure">
-                <div id="grafik2"></div>
-            </figure>
-            @endif
-        </div>
+        
+        @endif
+        
     </div>
 @endsection
 
-@push('scripts')
+@if (session('user')->role == 'wk' || session('user')->role == 'adminkeuangan' || session('user')->role == 'pembina')
+    @push('scripts')
     <script>
         var ukm = [];
         var jml = [];
@@ -161,5 +171,9 @@
                     });
             @endif
     </script>
+    @endpush 
+
+@else
     
-@endpush
+@endif
+

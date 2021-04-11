@@ -37,6 +37,7 @@ class ProfileController extends Controller
             return view('dashboard', compact('profile'));
         }
         $graph = DB::select($sql);
+        
         return view('dashboard', compact('profile', 'graph','graph2','graph_title'));
     }
 
