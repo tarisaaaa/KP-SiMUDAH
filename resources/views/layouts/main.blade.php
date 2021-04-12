@@ -31,8 +31,37 @@
 </head>
 <body>
     <div id="app">
+
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand text-white" href="{{ url('/') }}">
+                    <img src="{{ asset('assets/img/icon2white.png') }}" alt="SiMUDAH Logo" width="90px">
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <!-- Left Side Of Navbar -->
+                    <ul class="nav navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/jadwal-ukm">Jadwal</a>
+                        </li>
+                    </ul>
+                    
+
+                    <!-- Right Side Of Navbar -->
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/login">Login</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        
         <!--CAROUSEL-->
-        <div id="demo" class="carousel slide" data-ride="carousel">
+        <div id="demo" class="carousel slide" data-ride="carousel"">
             <!-- Indicators -->
             <ul class="carousel-indicators">
             <li data-target="#demo" data-slide-to="0" class="active"></li>
@@ -60,33 +89,7 @@
             </a>
         </div>
 
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <div class="container-fluid">
-                <a class="navbar-brand text-white" href="{{ url('/') }}">
-                    <img src="{{ asset('assets/img/icon2white.png') }}" alt="SiMUDAH Logo">
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="nav navbar-nav mr-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="/jadwal-ukm">Jadwal</a>
-                        </li>
-                    </ul>
-                    
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="/login">Login</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+        
 
         <main class="py-4">
             @yield('content')
