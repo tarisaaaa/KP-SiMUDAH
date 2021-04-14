@@ -32,21 +32,22 @@
                         </thead>
                         <tbody>
                             
-                            @foreach($absensi as $a)
+                            @foreach($results as $a)
                             <tr>
-                                <td>{{ $a->created_at }}</td>
-                                <td>{{ $a->jml_kehadiran }}</td>
-                                <td>{!! $a->keterangan !!}</td>
+                                <td>{{ $a["created_at"] }}</td>
+                                <td>{{ $a["jumlah_hadir"] }}</td>
+                                
+                                <td>{!! $a["keterangan"] !!}</td>
                                 <td>
-                                    @if(file_exists( public_path()."/assets/img/fotolatihan/".$a->foto))
-                                        <img src="{{ asset('assets/img/fotolatihan/'.$a->foto) }}" width="100px" class="img-thumbnail">
+                                    @if(file_exists( public_path()."/assets/img/fotolatihan/".$a["foto"]))
+                                        <img src="{{ asset('assets/img/fotolatihan/'.$a["foto"]) }}" width="100px" class="img-thumbnail">
                                     @else
                                         -
                                     @endif
                                 </td>
                                 <td>
                                     
-                                    <form action="/absensi/{{ $a->id }}" method="POST" class="d-inline">
+                                    <form action="/absensi/{{ $a["id"] }}" method="POST" class="d-inline">
                                         @method('delete')
                                         @csrf
                                         <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i> Hapus</button>

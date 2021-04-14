@@ -17,32 +17,47 @@ class JadwalController extends Controller
     public function index()
     {
         //$jadwal = Jadwal::all();
+        // $sql = "SELECT jadwal.id, ukm.nama_ukm, pelatihview.nama, ketuamhsview.nama, pembinaview.nama
+        //         FROM jadwal
+        //         INNER JOIN ukm ON jadwal.ukm_id = ukm.id
+        //         INNER JOIN pelatihview ON ukm.pelatih_id = pelatihview.id
+        //         INNER JOIN ketuamhsview ON ukm.ketuamhs_id = ketuamhsview.id
+        //         INNER JOIN pembinaview ON ukm.pembina_id = pembinaview.id";
+        // $results = DB::select($sql);
+
         $jadwal = DB::table('jadwal')->get()->toArray();
         $getPelatih = DB::table('ukm')
                         ->join('pelatihview', 'ukm.pelatih_id', '=', 'pelatihview.id')
                         ->join('jadwal', 'ukm.id', '=', 'jadwal.ukm_id')
-                        ->select('pelatihview.nama', 'ukm.nama_ukm')
+                        ->select('pelatihview.nama')
                         ->get()->toArray();
         $getKetuamhs = DB::table('ukm')
                         ->join('ketuamhsview', 'ukm.ketuamhs_id', '=', 'ketuamhsview.id')
                         ->join('jadwal', 'ukm.id', '=', 'jadwal.ukm_id')
-                        ->select('ketuamhsview.nama')
+                        ->select('ketuamhsview.nama', 'ukm.nama_ukm')
                         ->get()->toArray();
 
         $results = array();
+        
         foreach($jadwal as $key=>$data){
             $array=array();
             $array['id'] = $data->id;
-            $array['nama_ukm'] = $getPelatih[$key]->nama_ukm;
+            $array['nama_ukm'] = $getKetuamhs[$key]->nama_ukm;
             $array['waktu_mulai'] = $data->waktu_mulai;
             $array['waktu_selesai'] = $data->waktu_selesai;
             $array['hari'] = $data->hari;
             $array['tempat'] = $data->tempat;
-            $array['pelatih'] = $getPelatih[$key]->nama;
+            if (empty($getPelatih[$key])) {
+                $array['pelatih'] = "-";
+            } else {
+                $array['pelatih'] = $getPelatih[$key]->nama;
+            }
+            
             $array['ketuamhs'] = $getKetuamhs[$key]->nama;
             $results[] = $array;
         }
-        //dd($results);
+        
+        // dd($results);
         return view('jadwal.index', ['results'=>$results]);
     }
 

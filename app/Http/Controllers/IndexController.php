@@ -12,6 +12,7 @@ class IndexController extends Controller
     public function index()
     {
         $pengumuman = Pengumuman::latest()->get();
+        // dd($pengumuman);
         return view('index', compact('pengumuman'));
     }
 
@@ -48,7 +49,7 @@ class IndexController extends Controller
             $array['pembina'] = $getPembina[$key]->nama;
             $results[] = $array;
         }
-        //dd($results);
+        // dd($getKetuamhs);
         return view('jadwal', ['results'=>$results]);
 
         // $jadwal = Jadwal::all();

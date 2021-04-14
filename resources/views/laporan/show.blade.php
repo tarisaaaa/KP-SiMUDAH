@@ -10,6 +10,14 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" >
     <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome-free/css/all.min.css')}}">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+    <style>
+        @media print {
+            #printPageButton {
+                display: none;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="container-fluid">
@@ -40,7 +48,7 @@
 
     </div>
 
-        <a href="" class="btn btn-sm btn-outline-secondary ml-5" onclick="window.print();">
+        <a href="" id="printPageButton" class="btn btn-sm btn-outline-secondary ml-5" onclick="window.print();">
             <i class="nav-icon fas fa-print mr-2"></i>Cetak Laporan
         </a>
 

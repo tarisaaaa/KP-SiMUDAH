@@ -20,6 +20,7 @@ class AbsensiController extends Controller
     {
         $id = session('user')->id;
         $absensi = Ukm::where('pelatih_id', $id)->orWhere('ketuamhs_id', $id)->get();
+        
         return view('absensi.index', compact('absensi'));
     }
 
@@ -134,8 +135,35 @@ class AbsensiController extends Controller
     {
         $ukm = Ukm::find($id);
         $absensi = Absensi::where(['ukm_id'=>$id])->get();
+        $sql = "SELECT absensi.id, absensi.created_at, COUNT(*) as jumlahs
+                FROM absensi
+                INNER JOIN absensi_detail ON absensi.id = absensi_detail.absensi_id
+                WHERE absensi_detail.status_absen = 'H' AND absensi.ukm_id = $id
+                GROUP BY absensi.id";
+        $jumlah = DB::select($sql);
+        // foreach ($jumlah['jumlah'] as $key => $jumlah_absen) {
+        //     $jumlah['jumlah'][$key] = (object) $jumlah_absen;
+        // }
+
+        // $jml = collect($jumlah['jumlahs'])->map(function ($j) {
+        //     return (object) $j;
+        // });
+
+
+        $results = array();
         
-        return view('absensi.show', compact('absensi', 'ukm'));
+        foreach($absensi as $key=>$data){
+            $array=array();
+            $array['id'] = $data->id;
+            $array['keterangan'] = $data->keterangan;
+            $array['foto'] = $data->foto;
+            $array['created_at'] = $data->created_at;
+            $array['jumlah_hadir'] = $jumlah[$key]->jumlahs;
+            $results[] = $array;
+        }
+        
+        // dd($results);
+        return view('absensi.show', compact('results', 'ukm'));
     }
 
     /**

@@ -62,6 +62,7 @@ class UkmController extends Controller
         $ukm = new Ukm;
         $ukm->nama_ukm = $request->nama_ukm;
         $ukm->pembina_id = $request->pembina_id;
+        $ukm->pelatih_id = $request->pelatih_id;
         $ukm->ketuamhs_id =$request->ketuamhs_id;
         $ukm->status = $request->status;
 
@@ -107,7 +108,6 @@ class UkmController extends Controller
         $request->validate([
             'nama_ukm' => 'required',
             'pembina_id' => 'required',
-            'pelatih_id' => 'required',
             'ketuamhs_id' => 'required',
             'status' => 'required'
         ]);
