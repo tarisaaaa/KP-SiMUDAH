@@ -63,7 +63,9 @@ class WkController extends Controller
         $user = Users::find($id);
         $user->nama = $request->nama;
         $user->user_name = $request->user_name;
-        $user->password = Hash::make($request->password);
+        if ($request->password != null) {
+            $user->password = Hash::make($request->password);
+        }
 
         Session::flash('edit',$user->save());
         return redirect()->route('wk.index')->with('status','Data User Berhasil Diubah');

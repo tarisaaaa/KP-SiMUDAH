@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Profile;
+use App\Users;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
 {
@@ -98,7 +100,8 @@ class ProfileController extends Controller
     public function edit($id)
     {
         $profile = Profile::findOrFail($id);
-        return view('profile.edit', compact('profile'));
+        $users = Users::findOrFail($id);
+        return view('profile.edit', compact('profile', 'users'));
     }
 
     /**
@@ -116,6 +119,9 @@ class ProfileController extends Controller
             'email'          => ['required', 'email'],
             'alamat'          => ['required'],
             'user_id'      => ['required'],
+
+            'nama'      => ['required'],
+            'user_name'     => ['required'],
         ]);
         
         $profile = Profile::find($id);
@@ -126,6 +132,16 @@ class ProfileController extends Controller
         $profile->user_id = $request->user_id;
 
         Session::flash('edit',$profile->save());
+
+        $user = Users::find($id);
+        $user->nama = $request->nama;
+        $user->user_name = $request->user_name;
+        if ($request->password != null) {
+            $user->password = Hash::make($request->password);
+        }
+
+        Session::flash('edit',$user->save());
+
         return redirect('dashboard')->with('status', 'Profil Berhasil Diubah!');
     }
 

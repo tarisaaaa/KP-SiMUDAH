@@ -23,7 +23,9 @@
                     @else
                         <a href="/profile/create">Edit Profil</a>
                         <br>
-                        <small style="color: red">Harap segera melengkapi data profil!</small>
+                        <small style="color: red">
+                            Jika ingin mengubah username/password lengkapi data profil terlebih dahulu!
+                        </small>
                     @endif
                     <hr>
                 </div>
