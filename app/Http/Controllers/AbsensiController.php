@@ -141,17 +141,8 @@ class AbsensiController extends Controller
                 WHERE absensi_detail.status_absen = 'H' AND absensi.ukm_id = $id
                 GROUP BY absensi.id";
         $jumlah = DB::select($sql);
-        // foreach ($jumlah['jumlah'] as $key => $jumlah_absen) {
-        //     $jumlah['jumlah'][$key] = (object) $jumlah_absen;
-        // }
-
-        // $jml = collect($jumlah['jumlahs'])->map(function ($j) {
-        //     return (object) $j;
-        // });
-
 
         $results = array();
-        
         foreach($absensi as $key=>$data){
             $array=array();
             $array['id'] = $data->id;

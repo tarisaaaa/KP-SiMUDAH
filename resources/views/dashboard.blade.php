@@ -88,7 +88,7 @@
                 type: 'column'
             },
             title: {
-                text: '{{ $graph_title }}'
+                text: 'Grafik Keaktifan Per UKM & HMJ'
             },
             xAxis: {
                 categories: ukm,
@@ -99,7 +99,7 @@
             yAxis: {
                 min: 0,
                 title: {
-                text: 'Rata-rata kehadiran (per bulan)',
+                text: '{{ $graph_title }}',
                 align: 'high'
                 },
                 labels: {
@@ -137,7 +137,7 @@
                         type: 'column'
                     },
                     title: {
-                        text: 'GRAFIK PERBULAN'
+                        text: 'Grafik Keaktifan Per Bulan'
                     },
                     xAxis: {
                         categories: ukm2,
