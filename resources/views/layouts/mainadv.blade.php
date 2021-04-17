@@ -129,6 +129,14 @@
                 </p>
               </a>
             </li>
+            <li class="nav-item">
+              <a href="/pengumuman" class="nav-link">
+                <i class="nav-icon fas fa-bullhorn"></i>
+                <p>
+                  Pengumuman
+                </p>
+              </a>
+            </li>
 
           @elseif(session('user')->role == "ketuamahasiswa")
             <li class="nav-item">

@@ -9,7 +9,7 @@
 
         <div class="row">
 
-            <div class="col-lg-7">
+            <div class="col-lg-7 left">
 
                 <div class="card">
 
@@ -66,7 +66,7 @@
 
             </div>
 
-            <div class="col-lg-5">
+            <div class="col-lg-5 right">
                 
                 @if (!empty($pengumuman))
                     <center><h1>PENGUMUMAN</h1></center>
