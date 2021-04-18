@@ -23,19 +23,44 @@ class ProfileController extends Controller
         
         $user = session('user')->role;
         $graph2 = [];
-        if ($user == 'adminkeuangan') {
-            $sql = "SELECT a.ukm_id,u.nama_ukm,count(*) as graph_value FROM absensi as a JOIN ukm as u ON a.ukm_id = u.id WHERE MONTH(a.created_at) = MONTH(CURRENT_DATE()) AND YEAR(a.created_at) = YEAR(CURRENT_DATE()) GROUP BY a.ukm_id,u.nama_ukm";
+        if ($user == 'adminkeuangan') 
+        {
+            $sql = "SELECT a.ukm_id,u.nama_ukm,count(*) as graph_value 
+                    FROM absensi as a 
+                    JOIN ukm as u ON a.ukm_id = u.id 
+                    WHERE MONTH(a.created_at) = MONTH(CURRENT_DATE()) 
+                    AND YEAR(a.created_at) = YEAR(CURRENT_DATE()) 
+                    GROUP BY a.ukm_id,u.nama_ukm";
             $graph_title = "Jumlah login pelatih";
-        } else if ($user == 'wk') {
-            $sql = "SELECT a.id,u.nama_ukm, SUM(ad.status_absen = 'H') as graph_value, a.created_at FROM absensi as a RIGHT JOIN absensi_detail as ad ON a.id=ad.absensi_id LEFT JOIN ukm as u ON u.id = a.ukm_id WHERE DATE(a.created_at) = CURRENT_DATE() GROUP BY a.id,u.nama_ukm";
+        } 
+        else if ($user == 'wk') 
+        {
+            $sql = "SELECT a.id,u.nama_ukm, SUM(ad.status_absen = 'H') as graph_value, a.created_at 
+                    FROM absensi as a 
+                    RIGHT JOIN absensi_detail as ad ON a.id=ad.absensi_id 
+                    LEFT JOIN ukm as u ON u.id = a.ukm_id 
+                    WHERE DATE(a.created_at) = CURRENT_DATE() 
+                    GROUP BY a.id,u.nama_ukm";
             $graph_title = "Jumlah kehadiran hari ini";
-            $sql2 = "SELECT nama_ukm,SUM(rata_rata)/COUNT(*) as graph_value FROM v_absensi_harian GROUP BY ukm_id";
+            $sql2 = "SELECT nama_ukm, SUM(rata_rata)/COUNT(*) as graph_value 
+                    FROM v_absensi_harian 
+                    GROUP BY ukm_id";
             $graph2 = DB::select($sql2);
-        } else if($user == "pembina"){
+        } 
+        else if($user == "pembina") 
+        {
             $pembina_id = Session::get('user')->id;
-            $sql = "SELECT a.ukm_id,u.nama_ukm,count(*) as graph_value FROM absensi as a JOIN ukm as u ON a.ukm_id = u.id WHERE MONTH(a.created_at) = MONTH(CURRENT_DATE()) AND YEAR(a.created_at) = YEAR(CURRENT_DATE()) AND u.pembina_id = '".$pembina_id."' GROUP BY a.ukm_id,u.nama_ukm";
+            $sql = "SELECT a.ukm_id,u.nama_ukm,count(*) as graph_value 
+                    FROM absensi as a 
+                    JOIN ukm as u ON a.ukm_id = u.id 
+                    WHERE MONTH(a.created_at) = MONTH(CURRENT_DATE()) 
+                    AND YEAR(a.created_at) = YEAR(CURRENT_DATE()) 
+                    AND u.pembina_id = '".$pembina_id."' 
+                    GROUP BY a.ukm_id,u.nama_ukm";
             $graph_title = "Rata-rata jumlah kehadiran";
-        }else{
+        }
+        else
+        {
             return view('dashboard', compact('profile'));
         }
         $graph = DB::select($sql);
