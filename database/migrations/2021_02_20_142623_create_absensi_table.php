@@ -19,6 +19,7 @@ class CreateAbsensiTable extends Migration
             $table->string('user_id');
             $table->text('keterangan');
             $table->text('foto')->nullable();
+            $table->text('kehadiran_pelatih')->nullable();
             $table->timestamp('created_at')->useCurrent();
         });
     }

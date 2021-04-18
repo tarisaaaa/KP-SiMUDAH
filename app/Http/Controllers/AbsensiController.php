@@ -31,7 +31,7 @@ class AbsensiController extends Controller
      */
     public function create($id)
     {
-        $pelatih = DB::table('ukm')->join('pelatihview', 'ukm.pelatih_id', '=', 'pelatihview.id')->join('jadwal', 'ukm.id', '=', 'jadwal.ukm_id')->select('pelatihview.id','pelatihview.nama as nama_anggota')->first();
+        $pelatih = DB::table('ukm')->join('pelatihview', 'ukm.pelatih_id', '=', 'pelatihview.id')->join('jadwal', 'ukm.id', '=', 'jadwal.ukm_id')->select('pelatihview.id','pelatihview.nama')->first();
         $ukm = DB::table('ukm')->where('id', $id)->select('id', 'nama_ukm')->first();   
         $anggota = DB::table('anggota')->where('ukm_id', $id)->where('status', '=', 'Aktif')->select('id','nama_anggota')->get();
         return view('absensi.create', compact('ukm', 'anggota', 'pelatih'))->with('no', 1);
@@ -60,6 +60,7 @@ class AbsensiController extends Controller
             $foto->move("assets/img/fotolatihan",$foto_name);
             $absensi->foto = $foto_name;
         }
+        $absensi->kehadiran_pelatih = $request->kehadiran_pelatih;
         $absensi->save();
 
         $data_absensi = json_decode($request->absensi);
