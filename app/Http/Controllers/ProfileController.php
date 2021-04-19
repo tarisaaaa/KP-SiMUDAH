@@ -25,11 +25,14 @@ class ProfileController extends Controller
         $graph2 = [];
         if ($user == 'adminkeuangan') 
         {
-            $sql = "SELECT a.ukm_id,u.nama_ukm,count(*) as graph_value 
+            $sql = "SELECT a.ukm_id,p.nama,u.nama_ukm,count(*) as graph_value  
                     FROM absensi as a 
                     JOIN ukm as u ON a.ukm_id = u.id 
+                    JOIN pelatihview as p ON u.pelatih_id = p.id
                     WHERE MONTH(a.created_at) = MONTH(CURRENT_DATE()) 
                     AND YEAR(a.created_at) = YEAR(CURRENT_DATE()) 
+                    AND u.pelatih_id IS NOT NULL
+                    AND a.kehadiran_pelatih = 'Hadir'
                     GROUP BY a.ukm_id,u.nama_ukm";
             $graph_title = "Jumlah login pelatih";
         } 
