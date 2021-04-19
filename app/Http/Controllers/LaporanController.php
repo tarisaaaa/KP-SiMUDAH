@@ -16,6 +16,7 @@ class LaporanController extends Controller
                 JOIN ukm as u ON a.ukm_id = u.id 
                 JOIN pelatihview as p ON u.pelatih_id = p.id
                 WHERE MONTH(a.created_at) = MONTH(CURRENT_DATE()) AND YEAR(a.created_at) = YEAR(CURRENT_DATE())
+                AND a.kehadiran_pelatih = 'Hadir'
                 GROUP BY a.ukm_id,u.nama_ukm";
         $data = DB::select($sql);
         // dd($data);
@@ -32,6 +33,7 @@ class LaporanController extends Controller
                 GROUP BY a.ukm_id,u.nama_ukm";
         $data = collect(DB::select($sql))->first();
         // dd($data);
+        
         // $pdf = PDF::loadview('laporan.show',['data'=>$data])->setPaper('A4','potrait');
 	    // return $pdf->stream();
         return view('laporan.show', compact('data'));
