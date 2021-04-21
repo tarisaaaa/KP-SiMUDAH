@@ -51,6 +51,10 @@ Route::get('kegiatan/showperukm/{kegiatan}', 'KegiatanController@showperukm')->n
 Route::get('/kegiatan/createperukm/{kegiatan}', 'KegiatanController@createperukm');
 Route::resource('laporan', 'LaporanController');
 Route::get('/laporan/{tahun}/{bulan}', 'LaporanController@show');
+Route::get('/laporan-pdf/{tahun}/{bulan}','LaporanController@exportPDF');
+Route::resource('laporanmhs', 'LaporanMhsController');
+Route::get('/laporanmhs/{id_ukm}/{tahun}/{bulan}', 'LaporanMhsController@show');
+Route::get('/laporanmhs-pdf/{id_ukm}/{tahun}/{bulan}','LaporanMhsController@exportPDF');
 Route::resource('profile', 'ProfileController');
 Route::resource('pengumuman', 'PengumumanController');
 Route::get('pengumuman/showperukm/{pengumuman}', 'PengumumanController@showperukm');

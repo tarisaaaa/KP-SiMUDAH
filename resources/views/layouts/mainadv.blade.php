@@ -175,14 +175,21 @@
           @elseif(session('user')->role == "adminkeuangan")
             <li class="nav-item">
               <a href="/laporan" class="nav-link">
-                <i class="nav-icon fas fa-chalkboard-teacher"></i>
+                <i class="nav-icon fas fa-file-pdf"></i>
                 <p>
                   Laporan Pelatih
                 </p>
               </a>
             </li>
           @else
-
+            <li class="nav-item">
+              <a href="/laporanmhs" class="nav-link">
+                <i class="nav-icon fas fa-file-pdf"></i>
+                <p>
+                  Laporan Mahasiswa
+                </p>
+              </a>
+            </li>
           @endif
 
         </ul>
