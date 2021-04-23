@@ -48,20 +48,46 @@
             </div>
         </div>
 
-        @if (session('user')->role == 'wk' || session('user')->role == 'adminkeuangan' || session('user')->role == 'pembina')
+        @if (session('user')->role == 'wk' || session('user')->role == 'adminkeuangan' || session('user')->role == 'pembina' || session('user')->role == 'pelatih')
 
             <div>
                 <div class="card m-5">
                     <figure class="highcharts-figure">
                         <div id="grafik"></div>
                     </figure>
+
+                    @if (session('user')->role == 'wk')
+                        <form action="" method="post">
+                            <p class="ml-4">Lihat grafik per UKM</p>
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <select name="grafik_ukm" id="grafik_ukm" class="custom-select ml-4">
+                                            @foreach ($graph as $ukm)
+                                                <option value="{{ $ukm->ukm_id }}">{{ $ukm->nama_ukm }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <button type="submit" class="btn btn-primary ml-4" data-toggle="modal" data-target="#exampleModalCenter">
+                                        Tampilkan Grafik
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    @endif
                 </div>
+
+                    
 
                 @if(!empty($graph2))
                     <div class="card m-5">
-                        <figure class="highcharts-figure">
+                        
+
+                        {{-- <figure class="highcharts-figure">
                             <div id="grafik2"></div>
-                        </figure>
+                        </figure> --}}
                     </div>
                 @endif
 
@@ -72,13 +98,18 @@
     </div>
 @endsection
 
-@if (session('user')->role == 'wk' || session('user')->role == 'adminkeuangan' || session('user')->role == 'pembina')
+@if (session('user')->role == 'wk' || session('user')->role == 'adminkeuangan' || session('user')->role == 'pembina' || session('user')->role == 'pelatih')
+    
     @push('scripts')
     <script>
         var ukm = [];
         var jml = [];
         @foreach ($graph as $g)
-            ukm.push('{{ $g->nama_ukm }}');
+            @if (session('user')->role == 'pelatih')
+                ukm.push('Pertemuan ke-{{ $loop->iteration }}');
+            @else
+                ukm.push('{{ $g->nama_ukm }}');
+            @endif
             jml.push('{{ $g->graph_value }}');
         @endforeach
         jml = jml.map(Number);
@@ -88,29 +119,29 @@
                 type: 'column'
             },
             title: {
-                text: 'Grafik Keaktifan Per UKM & HMJ'
+                text: '{{ $graph_title }}'
             },
             xAxis: {
                 categories: ukm,
                 title: {
-                text: null
+                    text: null
                 }
             },
             yAxis: {
                 min: 0,
                 title: {
-                text: '{{ $graph_title }}',
-                align: 'high'
+                    text: '{{ $graph_yaxis }}',
+                    align: 'high'
                 },
                 labels: {
-                overflow: 'justify'
+                    overflow: 'justify'
                 }
             },
             plotOptions: {
                 bar: {
-                dataLabels: {
-                    enabled: true
-                }
+                    dataLabels: {
+                        enabled: true
+                    }
                 }
             },
             credits: {
@@ -121,13 +152,13 @@
                 showInLegend: false,
                 data: jml
             }]
-            });
+        });
 
             @if(!empty($graph2))
                 var ukm2 = [];
                 var jml2 = [];
                 @foreach ($graph2 as $g)
-                    ukm2.push('{{ $g->nama_ukm }}');
+                    ukm2.push('{{ $loop->iteration }}');
                     jml2.push('{{ $g->graph_value }}');
                 @endforeach
                 jml2 = jml2.map(Number);
@@ -137,29 +168,29 @@
                         type: 'column'
                     },
                     title: {
-                        text: 'Grafik Keaktifan Per Bulan'
+                        text: 'Grafik Keaktifan {{ $g->nama_ukm }}'
                     },
                     xAxis: {
                         categories: ukm2,
                         title: {
-                        text: null
+                            text: 'Pertemuan ke-'
                         }
                     },
                     yAxis: {
                         min: 0,
                         title: {
-                        text: 'Rata-rata kehadiran (per bulan)',
-                        align: 'high'
+                            text: 'Jumlah kehadiran mahasiswa',
+                            align: 'high'
                         },
                         labels: {
-                        overflow: 'justify'
+                            overflow: 'justify'
                         }
                     },
                     plotOptions: {
                         bar: {
-                        dataLabels: {
-                            enabled: true
-                        }
+                            dataLabels: {
+                                enabled: true
+                            }
                         }
                     },
                     credits: {
@@ -170,7 +201,7 @@
                         showInLegend: false,
                         data: jml2
                     }]
-                    });
+                });
             @endif
     </script>
     @endpush 

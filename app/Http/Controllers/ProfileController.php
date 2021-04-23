@@ -34,22 +34,29 @@ class ProfileController extends Controller
                     AND u.pelatih_id IS NOT NULL
                     AND a.kehadiran_pelatih = 'Hadir'
                     GROUP BY a.ukm_id,u.nama_ukm";
-            $graph_title = "Jumlah login pelatih";
+            $graph_title = "Grafik Kehadiran Pelatih Bulan Ini";
+            $graph_yaxis = "Jumlah kehadiran";
         } 
         else if ($user == 'wk') 
         {
-            $sql = "SELECT a.id,u.nama_ukm, SUM(ad.status_absen = 'H') as graph_value, a.created_at 
-                    FROM absensi as a 
-                    RIGHT JOIN absensi_detail as ad ON a.id=ad.absensi_id 
-                    LEFT JOIN ukm as u ON u.id = a.ukm_id 
-                    WHERE DATE(a.created_at) = CURRENT_DATE() 
-                    GROUP BY a.id,u.nama_ukm";
-            $graph_title = "Jumlah kehadiran hari ini";
-            $sql2 = "SELECT nama_ukm, SUM(rata_rata)/COUNT(*) as graph_value 
+            $sql = "SELECT ukm_id, nama_ukm, SUM(rata_rata)/COUNT(*) as graph_value 
                     FROM v_absensi_harian 
                     GROUP BY ukm_id";
+            $graph_title = "Grafik Keaktifan UKM dan HMJ";
+            $graph_yaxis = "Rata-rata kehadiran mahasiswa";
+
+            $idukm = 0;
+            $sql2 = "SELECT a.ukm_id,u.nama_ukm, SUM(ad.status_absen = 'H') as graph_value, DAY(a.created_at)
+                    FROM absensi as a 
+                    RIGHT JOIN absensi_detail as ad ON a.id=ad.absensi_id 
+                    JOIN ukm as u ON a.ukm_id = u.id 
+                    WHERE MONTH(a.created_at) = MONTH(CURRENT_DATE()) 
+                    AND YEAR(a.created_at) = YEAR(CURRENT_DATE()) 
+                    AND u.id = $idukm -- SEMENTARA
+                    GROUP BY a.ukm_id,u.nama_ukm, day(a.created_at)";
             $graph2 = DB::select($sql2);
-        } 
+            // dd($graph2);
+        }  
         else if($user == "pembina") 
         {
             $pembina_id = Session::get('user')->id;
@@ -60,7 +67,21 @@ class ProfileController extends Controller
                     AND YEAR(a.created_at) = YEAR(CURRENT_DATE()) 
                     AND u.pembina_id = '".$pembina_id."' 
                     GROUP BY a.ukm_id,u.nama_ukm";
-            $graph_title = "Rata-rata jumlah kehadiran";
+            $graph_title = "Grafik Keaktifan UKM dan HMJ";
+            $graph_yaxis = "Rata-rata jumlah kehadiran";
+        }
+        else if($user == "pelatih") 
+        {
+            $sql = "SELECT a.ukm_id,u.nama_ukm, SUM(ad.status_absen = 'H') as graph_value, DAY(a.created_at)
+                    FROM absensi as a 
+                    RIGHT JOIN absensi_detail as ad ON a.id=ad.absensi_id 
+                    JOIN ukm as u ON a.ukm_id = u.id 
+                    WHERE MONTH(a.created_at) = MONTH(CURRENT_DATE()) 
+                    AND YEAR(a.created_at) = YEAR(CURRENT_DATE()) 
+                    AND u.pelatih_id = $id
+                    GROUP BY a.ukm_id,u.nama_ukm, day(a.created_at)";
+            $graph_title = "Grafik Kehadiran Mahasiswa";
+            $graph_yaxis = "Jumlah mahasiswa";
         }
         else
         {
@@ -68,7 +89,7 @@ class ProfileController extends Controller
         }
         $graph = DB::select($sql);
         
-        return view('dashboard', compact('profile', 'graph','graph2','graph_title'));
+        return view('dashboard', compact('profile', 'graph','graph2','graph_title', 'graph_yaxis'));
     }
 
     /**

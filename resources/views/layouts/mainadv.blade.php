@@ -122,14 +122,6 @@
           
           @elseif(session('user')->role == "pelatih")
             <li class="nav-item">
-              <a href="/absensi" class="nav-link">
-                <i class="nav-icon fas fa-chalkboard-teacher"></i>
-                <p>
-                  Absensi
-                </p>
-              </a>
-            </li>
-            <li class="nav-item">
               <a href="/pengumuman" class="nav-link">
                 <i class="nav-icon fas fa-bullhorn"></i>
                 <p>
