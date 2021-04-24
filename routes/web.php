@@ -56,6 +56,7 @@ Route::resource('laporanmhs', 'LaporanMhsController');
 Route::get('/laporanmhs/{id_ukm}/{tahun}/{bulan}', 'LaporanMhsController@show');
 Route::get('/laporanmhs-pdf/{id_ukm}/{tahun}/{bulan}','LaporanMhsController@exportPDF');
 Route::resource('profile', 'ProfileController');
+Route::get('/grafik/{id_ukm}', 'ProfileController@grafik');
 Route::resource('pengumuman', 'PengumumanController');
 Route::get('pengumuman/showperukm/{pengumuman}', 'PengumumanController@showperukm');
 Route::get('/pengumuman/createperukm/{pengumuman}', 'PengumumanController@createperukm');

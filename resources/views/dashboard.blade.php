@@ -51,45 +51,33 @@
         @if (session('user')->role == 'wk' || session('user')->role == 'adminkeuangan' || session('user')->role == 'pembina' || session('user')->role == 'pelatih')
 
             <div>
+
+                <div class="card m-5">
+                    @if (session('user')->role == 'wk')
+                        <div class="row">
+                            <div class="col-lg-4 m-4">
+                                <p>Lihat grafik per UKM/HMJ</p>
+                                <div class="dropdown">
+                                    <a class="btn btn-info dropdown-toggle btn-sm" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Pilih UKM/HMJ
+                                    </a>
+                                    
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                        @foreach ($graph as $ukm)
+                                            <a class="dropdown-item" href="/grafik/{{ $ukm->ukm_id }}">{{ $ukm->nama_ukm }}</a>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+                </div>
+
                 <div class="card m-5">
                     <figure class="highcharts-figure">
                         <div id="grafik"></div>
                     </figure>
-
-                    @if (session('user')->role == 'wk')
-                        <form action="" method="post">
-                            <p class="ml-4">Lihat grafik per UKM</p>
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <select name="grafik_ukm" id="grafik_ukm" class="custom-select ml-4">
-                                            @foreach ($graph as $ukm)
-                                                <option value="{{ $ukm->ukm_id }}">{{ $ukm->nama_ukm }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <button type="submit" class="btn btn-primary ml-4" data-toggle="modal" data-target="#exampleModalCenter">
-                                        Tampilkan Grafik
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    @endif
                 </div>
-
-                    
-
-                @if(!empty($graph2))
-                    <div class="card m-5">
-                        
-
-                        {{-- <figure class="highcharts-figure">
-                            <div id="grafik2"></div>
-                        </figure> --}}
-                    </div>
-                @endif
 
             </div>
         
@@ -153,56 +141,6 @@
                 data: jml
             }]
         });
-
-            @if(!empty($graph2))
-                var ukm2 = [];
-                var jml2 = [];
-                @foreach ($graph2 as $g)
-                    ukm2.push('{{ $loop->iteration }}');
-                    jml2.push('{{ $g->graph_value }}');
-                @endforeach
-                jml2 = jml2.map(Number);
-                
-                Highcharts.chart('grafik2', {
-                    chart: {
-                        type: 'column'
-                    },
-                    title: {
-                        text: 'Grafik Keaktifan {{ $g->nama_ukm }}'
-                    },
-                    xAxis: {
-                        categories: ukm2,
-                        title: {
-                            text: 'Pertemuan ke-'
-                        }
-                    },
-                    yAxis: {
-                        min: 0,
-                        title: {
-                            text: 'Jumlah kehadiran mahasiswa',
-                            align: 'high'
-                        },
-                        labels: {
-                            overflow: 'justify'
-                        }
-                    },
-                    plotOptions: {
-                        bar: {
-                            dataLabels: {
-                                enabled: true
-                            }
-                        }
-                    },
-                    credits: {
-                        enabled: false
-                    },
-                    series: [{
-                        name: '',
-                        showInLegend: false,
-                        data: jml2
-                    }]
-                });
-            @endif
     </script>
     @endpush 
 

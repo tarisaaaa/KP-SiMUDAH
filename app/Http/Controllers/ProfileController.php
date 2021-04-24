@@ -44,18 +44,6 @@ class ProfileController extends Controller
                     GROUP BY ukm_id";
             $graph_title = "Grafik Keaktifan UKM dan HMJ";
             $graph_yaxis = "Rata-rata kehadiran mahasiswa";
-
-            $idukm = 0;
-            $sql2 = "SELECT a.ukm_id,u.nama_ukm, SUM(ad.status_absen = 'H') as graph_value, DAY(a.created_at)
-                    FROM absensi as a 
-                    RIGHT JOIN absensi_detail as ad ON a.id=ad.absensi_id 
-                    JOIN ukm as u ON a.ukm_id = u.id 
-                    WHERE MONTH(a.created_at) = MONTH(CURRENT_DATE()) 
-                    AND YEAR(a.created_at) = YEAR(CURRENT_DATE()) 
-                    AND u.id = $idukm -- SEMENTARA
-                    GROUP BY a.ukm_id,u.nama_ukm, day(a.created_at)";
-            $graph2 = DB::select($sql2);
-            // dd($graph2);
         }  
         else if($user == "pembina") 
         {
@@ -89,7 +77,27 @@ class ProfileController extends Controller
         }
         $graph = DB::select($sql);
         
-        return view('dashboard', compact('profile', 'graph','graph2','graph_title', 'graph_yaxis'));
+        return view('dashboard', compact('profile', 'graph','graph_title', 'graph_yaxis'));
+    }
+
+    public function grafik($id_ukm) 
+    {
+        $sql = "SELECT a.ukm_id,u.nama_ukm, SUM(ad.status_absen = 'H') as graph_value, DAY(a.created_at)
+                FROM absensi as a 
+                RIGHT JOIN absensi_detail as ad ON a.id=ad.absensi_id 
+                JOIN ukm as u ON a.ukm_id = u.id 
+                WHERE MONTH(a.created_at) = MONTH(CURRENT_DATE()) 
+                AND YEAR(a.created_at) = YEAR(CURRENT_DATE()) 
+                AND u.id = $id_ukm
+                GROUP BY a.ukm_id,u.nama_ukm, day(a.created_at)";
+        $graph = DB::select($sql);
+        
+        $sql_ukm = "SELECT ukm_id, nama_ukm, SUM(rata_rata)/COUNT(*) as graph_value 
+                    FROM v_absensi_harian 
+                    GROUP BY ukm_id";
+        $list_ukm = DB::select($sql_ukm);
+        
+        return view('grafik', compact('graph', 'list_ukm'));
     }
 
     /**
