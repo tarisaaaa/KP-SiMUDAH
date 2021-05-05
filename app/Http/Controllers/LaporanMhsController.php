@@ -64,7 +64,8 @@ class LaporanMhsController extends Controller
                 GROUP BY a.ukm_id";
         $query2 = DB::selectOne($sql2);
         
-        $pdf = PDF::loadview('laporanmhs.laporan-pdf', compact('query', 'query2', 'bulan', 'tahun'))->setPaper('A4','potrait');
-	    return $pdf->stream('laporanmahasiswa'.$id_ukm. '-'. $bulan. $tahun. '.pdf');
+        // $pdf = PDF::loadview('laporanmhs.laporan-pdf', compact('query', 'query2', 'bulan', 'tahun'))->setPaper('A4','potrait');
+	// return $pdf->stream('laporanmahasiswa'.$id_ukm. '-'. $bulan. $tahun. '.pdf');
+        return view('laporanmhs.laporan-pdf', compact('query', 'query2', 'bulan', 'tahun'));
     }
 }

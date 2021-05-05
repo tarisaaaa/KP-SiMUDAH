@@ -6,28 +6,14 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>SiMUDAH | Laporan Mahasiswa</title>
 
-    <style>
-        table, td, th {
-            border: 1px solid black;
-            padding: 5px;
-        }
-
-        th {
-            background-color: darkgrey;
-        }
-        
-        table {
-            margin: auto;
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 10px;
-        }
-        </style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" >
+    <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome-free/css/all.min.css')}}">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 </head>
-<body>
+<body onload="window.print();">
     <div class="container-fluid">
 
-        {{-- <center><img src="{{ asset('/assets/img/logolaporan.png')}}" alt="laporan" width="270px"></center> --}}
+        <center><img src="{{ asset('/assets/img/logolaporan.png')}}" alt="laporan" width="370px"></center>
         <h2 class=""><center>
             LAPORAN KEHADIRAN MAHASISWA
             <br>
@@ -68,7 +54,7 @@
     
         <div style="text-align: right;">
             Palembang, {{ date('d-m-Y') }}
-            <br> Wakil Ketua III
+            <br> Wakil Rektor III
             <br><br><br><br>
             <p>Dedy Hermanto, S.Kom, M.T.I</p>
         </div>

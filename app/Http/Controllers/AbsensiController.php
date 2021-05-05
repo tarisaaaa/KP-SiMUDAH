@@ -60,7 +60,9 @@ class AbsensiController extends Controller
             $foto->move("assets/img/fotolatihan",$foto_name);
             $absensi->foto = $foto_name;
         }
-        $absensi->kehadiran_pelatih = $request->kehadiran_pelatih;
+        if(!empty($request->kehadiran_pelatih)) {
+            $absensi->kehadiran_pelatih = $request->kehadiran_pelatih;
+        }
         $absensi->save();
 
         $data_absensi = json_decode($request->absensi);

@@ -44,7 +44,7 @@
 
                 </div>
 
-                <div class="row">
+                {{-- <div class="row">
                     <div class="col-lg-6 ml-3 mt-4 mr-5">
                         <img src="{{ asset('assets/img/logomdp.png')}}" alt="logomdp" width="200px">
                         <ul class="list-unstyled mt-3">
@@ -62,7 +62,7 @@
                             </li>
                         </ul>
                     </div>
-                </div>
+                </div> --}}
 
             </div>
 

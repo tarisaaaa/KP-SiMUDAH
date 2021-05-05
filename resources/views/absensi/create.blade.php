@@ -40,11 +40,15 @@
                                     </div>
                                 </div>
 
+                                @if (!empty($pelatih->nama))
+
                                 <div class="form-group">
                                     <label for="absen_pelatih">Kehadiran Pelatih ({{ $pelatih->nama }})</label><br>
                                     <input type="radio" name="kehadiran_pelatih" class="ml-3" value="Hadir"> Hadir <br>
                                     <input type="radio" name="kehadiran_pelatih" class="ml-3" value="Tidak Hadir"> Tidak Hadir
                                 </div>
+                                    
+                                @endif
 
                         
                             </div>
@@ -117,7 +121,9 @@
                 formData.append('ukm_id', $('#formabsensi').data('id'))
                 formData.append('keterangan', myEditor.getData());
                 formData.append('foto', $('#foto')[0].files[0]);
+                @if (!empty($pelatih->nama))
                 formData.append('kehadiran_pelatih', $('input[name=kehadiran_pelatih]:checked').val());
+                @endif
                 
                 let listAnggota = $('.anggota')
                 let absensi = []

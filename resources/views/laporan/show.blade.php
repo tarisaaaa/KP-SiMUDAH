@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="container">
-        <center><img src="{{ asset('/assets/img/logolaporan.png')}}" alt="laporan" width="300px"></center>
+        {{-- <center><img src="{{ asset('/assets/img/logolaporan.png')}}" alt="laporan" width="300px"></center> --}}
         <div class="card ml-5 mr-5">
             <div class="card-header">
                 <a href="/laporan" class="btn btn-outline-dark btn-sm m-2 float-left">Kembali</a>

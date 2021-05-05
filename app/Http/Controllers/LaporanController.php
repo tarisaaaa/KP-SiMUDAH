@@ -89,8 +89,8 @@ class LaporanController extends Controller
             $array['jumlah_latihan'] = $query2[$key]->jumlah_latihan;
             $results[] = $array;
         }
-        $pdf = PDF::loadview('laporan.laporan-pdf', compact('results', 'bulan', 'tahun'))->setPaper('A4','potrait');
-        return $pdf->stream('laporanpelatih'. $bulan. $tahun. '.pdf');
-        // return view('laporan.laporan-pdf', compact('results', 'bulan', 'tahun'));
+        // $pdf = PDF::loadview('laporan.laporan-pdf', compact('results', 'bulan', 'tahun'))->setPaper('A4','potrait');
+        // return $pdf->stream('laporanpelatih'. $bulan. $tahun. '.pdf');
+        return view('laporan.laporan-pdf', compact('results', 'bulan', 'tahun'));
     }
 }

@@ -7,31 +7,14 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>SiMUDAH | Laporan Pelatih</title>
 
-    <style>
-        table, td, th {
-            border: 1px solid black;
-            padding: 5px;
-        }
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" >
+    <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome-free/css/all.min.css')}}">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
-        th {
-            background-color: darkgrey;
-        }
-        
-        table {
-            margin: auto;
-            border-collapse: collapse;
-            margin-bottom: 10px;
-        }
-
-        p {
-            margin-left: 4%;
-            font-size: 16px;
-        }
-    </style>
 </head>
-<body>
+<body onload="window.print();">
     <div class="container-fluid">
-        {{-- <center><img src="{{ asset('/assets/img/logolaporan.png')}}" alt="laporan" width="270px"></center> --}}
+        <center><img src="{{ asset('/assets/img/logolaporan.png')}}" alt="laporan" width="370px"></center>
         <h2><center>
             LAPORAN KEHADIRAN PELATIH
             <br>
@@ -71,7 +54,7 @@
 
         <div style="text-align: right;">
             Palembang, {{ date('d-m-Y') }}
-            <br> Wakil Ketua II
+            <br> Wakil Rektor II
             <br><br><br><br>
             <p>Kathryn Sugara, S.E., M.Si, CFP®</p>
         </div>
