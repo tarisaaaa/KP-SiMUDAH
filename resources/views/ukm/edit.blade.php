@@ -8,7 +8,7 @@
         <div class="card shadow mb-4">
 
             <div class="card-header py-3">
-                <h3 class="">Edit Data UKM</h3>
+                <h3 class="">Edit Data UKM/HMJ</h3>
             </div>
 
             <div class="card-body p-2 m-2">
@@ -19,7 +19,7 @@
                             @method('put')
                             @csrf
                             <div class="form-group mt-3">
-                                <label for="nama_ukm">Nama UKM</label>
+                                <label for="nama_ukm">Nama UKM/HMJ</label>
                                 <input type="text" class="form-control @error('nama_ukm') is-invalid @enderror" name="nama_ukm" id="nama_ukm" value="{{ $ukm->nama_ukm }}">
                                 <div class="text-danger">{{ $errors->first('nama_ukm')}}</div>
                             </div>
