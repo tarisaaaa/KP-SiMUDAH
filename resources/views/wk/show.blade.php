@@ -1,10 +1,10 @@
 @extends('layouts.mainadv')
 
-@section('title', 'Profil Wakil Ketua 3')
+@section('title', 'Profil Wakil Rektor III')
 
 @section('content')
     <div class="container">
-        <h1 class="ml-3 mb-3">Profil Wakil Ketua 3</h1>
+        <h1 class="ml-3 mb-3">Profil Wakil Rektor III</h1>
 
         <div class="col-lg-7">
             <div class="card card-outline card-info m-3">

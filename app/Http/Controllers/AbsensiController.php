@@ -50,6 +50,7 @@ class AbsensiController extends Controller
 
     public function inputabsensi(Request $request)
     {
+
         $absensi = new Absensi;
         $absensi->ukm_id = $request->ukm_id;
         $absensi->user_id = Session::get('user')->id;

@@ -1,6 +1,6 @@
 @extends('layouts.mainadv')
 
-@section('title', 'MDP UKM | Wakil Ketua 3')
+@section('title', 'MDP UKM | Wakil Rektor III')
 
 @section('content')
     <div class="container">
@@ -15,7 +15,7 @@
         <div class="card shadow m-4">
             <div class="card-header py-3">
                 <a href="/wk/create" class="btn btn-outline-secondary btn-flat">
-                    <span class="text">Tambah WK</span>
+                    <span class="text">Tambah Wakil Rektor III</span>
                 </a>
             </div>
             <div class="card-body p-2 m-3">

@@ -1,6 +1,6 @@
 @extends('layouts.mainadv')
 
-@section('title', 'Edit Data UKM')
+@section('title', 'Edit Data UKM/HMJ')
 
 @section('content')
 <div class="container">

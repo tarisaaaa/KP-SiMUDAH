@@ -13,7 +13,7 @@
             @endif
 
             <div class="card-header py-3">
-                <h3 class="mt-2">Tambah Absensi</h3>
+                <h3 class="mt-2">Tambah Absensi {{ $ukm->nama_ukm }}</h3>
             </div>
 
             <div class="card-body p-2 m-2">
@@ -34,7 +34,7 @@
                                 <div class="form-group mt-3">
                                     <label for="foto">Foto</label>
                                     <div class="custom-file">
-                                        <input type="file" class="form-control custom-file-input @error('foto') is-invalid @enderror" name="foto" id="foto" value="{{ old('foto') }}">
+                                        <input type="file" accept="img/png, image/jpeg" class="form-control custom-file-input @error('foto') is-invalid @enderror" name="foto" id="foto" value="{{ old('foto') }}">
                                         <label class="custom-file-label" for="foto">Upload foto</label>
                                         @error('foto')<div class="invalid-feedback">{{ $message }}</div>@enderror
                                     </div>
@@ -77,7 +77,7 @@
                                                         <input type="radio" name="status_absen{{ $a->id }}" value="I">
                                                     </td>
                                                     <td>
-                                                        <input type="radio" name="status_absen{{ $a->id }}" value="A">
+                                                        <input type="radio" name="status_absen{{ $a->id }}" value="A" checked>
                                                     </td>
                                                 
                                                 <td>
@@ -94,8 +94,8 @@
                             </div>
                             
                         </div>
-                                <button type="button" id="btnTambahData" class="btn btn-success border pt-2 float-right">Tambah Data</button>
-                                <a href="/absensi/{{$ukm->id}}" class="btn btn-outline-secondary">Batal</a>
+                                <button type="button" id="btnTambahData" class="btn btn-success border pt-2 float-right">SIMPAN</button>
+                                <a href="/absensi/{{$ukm->id}}" class="btn btn-outline-secondary">BATAL</a>
                                     
                         </form>
 

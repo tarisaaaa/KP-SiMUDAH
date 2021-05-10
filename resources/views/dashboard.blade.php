@@ -12,7 +12,7 @@
                     <h3><b>{{ session('user')->nama }}</b></h3>
                     <h6>
                         @if (session('user')->role == 'wk')
-                            Wakil Ketua III
+                            Wakil Rektor III
                         @else
                             {{ session('user')->role }}     
                         @endif

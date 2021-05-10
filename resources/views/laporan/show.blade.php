@@ -15,7 +15,7 @@
                 <h2><center>Laporan Kehadiran Pelatih</center></h2>
                 <center><h5>Bulan {{ $bulan }} Tahun {{ $tahun }}</h5></center>
                 
-                <table class="table table-bordered">  
+                <table class="table table-bordered" id="dataTable">  
                     <thead>
                         <th>UKM</th>
                         <th>Nama Pelatih</th>

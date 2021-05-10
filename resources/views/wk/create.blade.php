@@ -1,6 +1,6 @@
 @extends('layouts.mainadv')
 
-@section('title', 'Tambah Data Wakil Ketua 3')
+@section('title', 'Tambah Data Wakil Rektor III')
 
 @section('content')
 <div class="container">
@@ -8,7 +8,7 @@
         <div class="card shadow m-4">
 
             <div class="card-header py-3">
-                <h3 class="mt-2">Tambah Data Wakil Ketua 3</h3>
+                <h3 class="mt-2">Tambah Data Wakil Rektor 3</h3>
             </div>
 
             <div class="card-body p-2 m-2">
