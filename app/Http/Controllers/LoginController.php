@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Session;
 class LoginController extends Controller
 {
     public function index() {
+        // dd(Hash::make('123'));
         return view('login');
     }
 

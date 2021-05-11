@@ -34,7 +34,6 @@ class WkController extends Controller
         $users->nama = $request->nama;
         $users->user_name = $request->user_name;
         $users->role =$request->role;
-        $users->status_user = "Aktif";
         $users->password = Hash::make($request->password);
 
         Session::flash('add',$users->save());
