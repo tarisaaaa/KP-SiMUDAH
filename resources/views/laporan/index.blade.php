@@ -14,11 +14,17 @@
                     <div class="col-lg-6">
                         <div class="list-group">
                             <b>bulan/tahun</b>
-                            @foreach ($data as $date)
-                                <a href="/laporan/{{ $date->tahun }}/{{ $date->bulan }}" class="list-group-item list-group-item-action">
-                                    {{ $date->bulan }}/{{ $date->tahun }}
-                                </a>                            
-                            @endforeach
+                            @if ($data->count())
+                                @foreach ($data as $date)
+                                    <a href="/laporan/{{ $date->tahun }}/{{ $date->bulan }}" class="list-group-item list-group-item-action">
+                                        {{ $date->bulan }}/{{ $date->tahun }}
+                                    </a>                            
+                                @endforeach
+
+                                <div class="mt-2">
+                                    {{ $data->render() }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                     <div class="col-lg-6 my-auto">

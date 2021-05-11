@@ -54,7 +54,6 @@ class UkmController extends Controller
     {
         $request->validate([
             'nama_ukm'      => ['required'],
-            'pembina_id'     => ['required'],
             'ketuamhs_id'      => ['required'],
             'status'          => ['required']
         ]);
@@ -107,7 +106,6 @@ class UkmController extends Controller
     {
         $request->validate([
             'nama_ukm' => 'required',
-            'pembina_id' => 'required',
             'ketuamhs_id' => 'required',
             'status' => 'required'
         ]);

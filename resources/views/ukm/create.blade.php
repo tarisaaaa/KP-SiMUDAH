@@ -26,6 +26,7 @@
                             <div class="form-group mt-3">
                                 <label for="pembina_id">Nama Pembina</label>
                                 <select name="pembina_id" id="pembina_id" class="form-control select2bs4 @error('pembina_id') is-invalid @enderror">
+                                    <option value="">-</option>
                                     @foreach ($pembina as $p)
                                         <option value="{{ $p->id }} {{ old('pembina_id') }}">{{ $p->nama }}</option>
                                     @endforeach

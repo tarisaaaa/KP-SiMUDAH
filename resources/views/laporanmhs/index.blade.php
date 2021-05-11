@@ -11,16 +11,31 @@
             </div>
             <div class="card-body p-2 m-3">
                 <div class="row">
-                    <div class="col-lg-6">
-                        <div class="list-group">
-                            @foreach ($data as $date)
-                                <a href="/laporanmhs/{{ $date->id_ukm }}/{{ $date->tahun }}/{{ $date->bulan }}" class="list-group-item list-group-item-action">
-                                    {{ $date->nama_ukm }} | {{ $date->bulan }}/{{ $date->tahun }}
-                                </a>                            
-                            @endforeach
+                    <div class="col-lg-8">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>UKM/HMJ</th>
+                                        <th>Bulan</th>
+                                        <th>Tahun</th>
+                                        <th>Laporan</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($data as $date)
+                                    <tr>
+                                        <td>{{ $date->nama_ukm }}</td>
+                                        <td>{{ $date->bulan }}</td>
+                                        <td>{{ $date->tahun }}</td>
+                                        <td><center><a href="/laporanmhs/{{ $date->id_ukm }}/{{ $date->tahun }}/{{ $date->bulan }}">Lihat</a></center></td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-                    <div class="col-lg-6 my-auto">
+                    <div class="col-lg-4 my-auto">
                         <center>
                         <img src="{{asset('assets/img/logo.png')}}" alt="" width="80%" class="align-middle">
                     </center>

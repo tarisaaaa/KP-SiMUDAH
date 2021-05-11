@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Absensi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 // use Barryvdh\DomPDF\PDF;
@@ -11,10 +12,10 @@ class LaporanController extends Controller
 {
     public function index() 
     {
-        $sql = "SELECT DISTINCT YEAR(a.created_at) as tahun, MONTH(a.created_at) as bulan 
-                FROM absensi as a ";
-        $data = DB::select($sql);
-        // dd($data);
+        $data = DB::table('absensi')
+                    ->select(DB::raw('YEAR(created_at) as tahun, MONTH(created_at) as bulan'))
+                    ->distinct()
+                    ->paginate(10);
         return view('laporan.index', compact('data'));
     }
 

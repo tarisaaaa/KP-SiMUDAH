@@ -87,6 +87,9 @@
                         </div>
                     @endforeach
 
+                    <div class="pagination justify-content-center">
+                        {{ $pengumuman->render() }}
+                    </div>
                 @endif
                 
             </div>

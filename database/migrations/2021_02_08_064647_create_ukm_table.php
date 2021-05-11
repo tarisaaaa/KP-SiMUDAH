@@ -16,7 +16,7 @@ class CreateUkmTable extends Migration
         Schema::create('ukm', function (Blueprint $table) {
             $table->id();
             $table->string('nama_ukm');
-            $table->string('pembina_id');
+            $table->string('pembina_id')->nullable();
             $table->string('pelatih_id')->nullable();
             $table->string('ketuamhs_id');
             $table->string('status');

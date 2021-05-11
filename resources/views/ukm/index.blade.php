@@ -44,7 +44,11 @@
                             @foreach($ukm as $u)
                             <tr>
                                 <td>{{ $u->nama_ukm }}</td>
-                                <td>{{ $u->pembina->nama }}</td>
+                                @if (!empty($u->pembina->nama))
+                                    <td>{{ $u->pembina->nama }}</td>
+                                @else      
+                                    <td>-</td>                          
+                                @endif
                                 @if (!empty($u->pelatih->nama))
                                     <td>{{ $u->pelatih->nama }}</td>
                                 @else      
