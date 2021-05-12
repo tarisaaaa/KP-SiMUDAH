@@ -31,9 +31,10 @@ class AbsensiController extends Controller
      */
     public function create($id)
     {
-        $pelatih = DB::table('ukm')->join('pelatihview', 'ukm.pelatih_id', '=', 'pelatihview.id')->join('jadwal', 'ukm.id', '=', 'jadwal.ukm_id')->where('ukm.id', $id)->select('pelatihview.id','pelatihview.nama')->first();
-        $ukm = DB::table('ukm')->where('id', $id)->select('id', 'nama_ukm')->first();   
+        $pelatih = DB::table('ukm')->join('pelatihview', 'ukm.pelatih_id', '=', 'pelatihview.id')->where('ukm.id', $id)->where('pelatihview.status_user', '=', 'Aktif')->select('pelatihview.id','pelatihview.nama')->first();
+        $ukm = DB::table('ukm')->where('id', $id)->select('id', 'nama_ukm', 'pelatih_id')->first();   
         $anggota = DB::table('anggota')->where('ukm_id', $id)->where('status', '=', 'Aktif')->select('id','nama_anggota')->get();
+        // dd($pelatih);
         return view('absensi.create', compact('ukm', 'anggota', 'pelatih'))->with('no', 1);
     }
 

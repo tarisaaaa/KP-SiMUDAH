@@ -29,6 +29,7 @@ class LaporanController extends Controller
                 AND YEAR(a.created_at) = $tahun
                 AND u.pelatih_id IS NOT NULL
                 AND a.kehadiran_pelatih = 'Hadir'
+                AND p.status_user = 'Aktif'
                 GROUP BY a.ukm_id,u.nama_ukm";
         $query = DB::select($sql);
 
@@ -68,6 +69,7 @@ class LaporanController extends Controller
                 AND YEAR(a.created_at) = $tahun
                 AND u.pelatih_id IS NOT NULL
                 AND a.kehadiran_pelatih = 'Hadir'
+                AND p.status_user = 'Aktif'
                 GROUP BY a.ukm_id,u.nama_ukm";
         $query = DB::select($sql);
 

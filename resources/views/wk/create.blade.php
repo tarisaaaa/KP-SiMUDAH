@@ -38,7 +38,7 @@
                             <div class="form-group mt-3">
                                 <label for="role">Role</label>
                                 <select name="role" id="role" class="form-control @error('role') is-invalid @enderror">
-                                    <option value="wk">Wakil Ketua 3</option>
+                                    <option value="wk">Wakil Rektor 3</option>
                                 </select>
                                 @error('role')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>

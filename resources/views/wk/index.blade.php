@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="container">
-        <h1 class="ml-3">Wakil Ketua 3</h1>
+        <h1 class="ml-3">Wakil Rektor 3</h1>
 
         @if (session('status'))
             <div class="alert alert-success">
