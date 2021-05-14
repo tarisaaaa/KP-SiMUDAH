@@ -1,6 +1,6 @@
 @extends('layouts.mainadv')
 
-@section('title', 'MDP UKM | Absensi')
+@section('title', 'SiMUDAH | Absensi')
 
 @section('content')
     <div class="container">
@@ -34,7 +34,7 @@
                             
                             @foreach($results as $a)
                             <tr>
-                                <td>{{ $a["created_at"] }}</td>
+                                <td>{{ date('d-m-Y / H:i', strtotime($a["created_at"])) }} WIB</td>
                                 <td>{{ $a["jumlah_hadir"] }}</td>
                                 
                                 <td>{!! $a["keterangan"] !!}</td>

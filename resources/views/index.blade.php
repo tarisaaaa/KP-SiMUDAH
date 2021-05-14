@@ -82,7 +82,7 @@
                                     @endif
                                 </h4>
                                 <p class="cart-text">{!! $p->isi !!}</p> 
-                                <p class="card-text mb-2"><small class="text-muted">Diupload pada {{ $p->created_at }} oleh <strong>{{ $p->nama }}</strong></small></p>
+                                <p class="card-text mb-2"><small class="text-muted">Diupload pada {{ date('d-m-Y H:i', strtotime($p->created_at)) }} WIB oleh <strong>{{ $p->nama }}</strong></small></p>
                             </div>
                         </div>
                     @endforeach

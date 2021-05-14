@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Absensi;
 use App\AbsensiDetail;
 use App\Ukm;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -20,7 +21,6 @@ class AbsensiController extends Controller
     {
         $id = session('user')->id;
         $absensi = Ukm::where('pelatih_id', $id)->orWhere('ketuamhs_id', $id)->get();
-        
         return view('absensi.index', compact('absensi'));
     }
 
@@ -34,8 +34,11 @@ class AbsensiController extends Controller
         $pelatih = DB::table('ukm')->join('pelatihview', 'ukm.pelatih_id', '=', 'pelatihview.id')->where('ukm.id', $id)->where('pelatihview.status_user', '=', 'Aktif')->select('pelatihview.id','pelatihview.nama')->first();
         $ukm = DB::table('ukm')->where('id', $id)->select('id', 'nama_ukm', 'pelatih_id')->first();   
         $anggota = DB::table('anggota')->where('ukm_id', $id)->where('status', '=', 'Aktif')->select('id','nama_anggota')->get();
-        // dd($pelatih);
-        return view('absensi.create', compact('ukm', 'anggota', 'pelatih'))->with('no', 1);
+        $jam = DB::table('jadwal')->where('ukm_id', $id)->first();
+        $jam_mulai = Carbon::createFromFormat('H:i:s', $jam->waktu_mulai)->format('H:i');
+        $jam_selesai = Carbon::createFromFormat('H:i:s', $jam->waktu_selesai)->format('H:i');
+        
+        return view('absensi.create', compact('ukm', 'anggota', 'pelatih', 'jam_mulai', 'jam_selesai'))->with('no', 1);
     }
 
     /**

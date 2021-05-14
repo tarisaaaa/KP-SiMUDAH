@@ -1,6 +1,6 @@
 @extends('layouts.mainadv')
 
-@section('title', 'SiMUDAH| Absensi')
+@section('title', 'SiMUDAH | Absensi')
 
 @section('content')
     <div class="container">
