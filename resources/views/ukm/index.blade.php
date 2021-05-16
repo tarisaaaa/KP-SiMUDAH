@@ -50,7 +50,21 @@
                                     <td>-</td>                          
                                 @endif
                                 @if (!empty($u->pelatih->nama))
-                                    <td>{{ $u->pelatih->nama }}</td>
+                                
+                                    @if (count(explode(',', $u->pelatih_id)) > 1)
+                                    <td>
+                                        @php
+                                            $pelatih = App\Users::whereIn('id', explode(',', $u->pelatih_id))->get()
+                                        @endphp
+                                        @foreach ($pelatih as $item)
+                                            <li>{{ $item->nama}}</li>
+                                            <i class="ml-3">({{ $item->status_user }})</i>
+                                        @endforeach
+                                    </td>
+                                    @else
+                                        <td>{{ $u->pelatih->nama }}</td>
+                                    @endif
+                                    
                                 @else      
                                     <td>-</td>                          
                                 @endif

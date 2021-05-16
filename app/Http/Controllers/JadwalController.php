@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Jadwal;
+use App\Users;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -31,6 +32,11 @@ class JadwalController extends Controller
                         ->join('jadwal', 'ukm.id', '=', 'jadwal.ukm_id')
                         ->select('pelatihview.nama')
                         ->get()->toArray();
+        
+        // $getPelatih = DB::table('users')
+        //                 ->join('ukm', 'ukm.pelatih_id', '=', 'users.id')
+        //                 ->select('pelatih_id', 'nama')
+        //                 ->get();
         $getKetuamhs = DB::table('ukm')
                         ->join('ketuamhsview', 'ukm.ketuamhs_id', '=', 'ketuamhsview.id')
                         ->join('jadwal', 'ukm.id', '=', 'jadwal.ukm_id')
@@ -57,7 +63,7 @@ class JadwalController extends Controller
             $results[] = $array;
         }
         
-        // dd($results);
+        // dd($getPelatih);
         return view('jadwal.index', ['results'=>$results]);
     }
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Ukm;
+use App\Users;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -19,6 +20,9 @@ class UkmController extends Controller
         if (session('user')->role == 'adminaplikasi') 
         {
             $ukm = Ukm::all();
+            $pelatih = Ukm::where('id', 3)->select('pelatih_id')->get();
+            $pelatihh = explode(',', $pelatih);
+            // dd($pelatihh);
             return view('ukm.index', compact('ukm'));
         } 
         else if (session('user')->role == 'ketuamahasiswa') 
@@ -61,12 +65,12 @@ class UkmController extends Controller
         $ukm = new Ukm;
         $ukm->nama_ukm = $request->nama_ukm;
         $ukm->pembina_id = $request->pembina_id;
-        $ukm->pelatih_id = $request->pelatih_id;
+        $ukm = $request->merge([ 
+            'pelatih_id' => implode(', ', (array) $request->get('pelatih_id'))
+        ]);
         $ukm->ketuamhs_id =$request->ketuamhs_id;
-        $ukm->status = $request->status;
 
-        //Ukm::create($request->all());
-        Session::flash('add',$ukm->save());
+        Ukm::create($request->all());
         return redirect('/ukm')->with('status', 'Data UKM/HMJ Berhasil Ditambahkan!');
     }
 
@@ -87,11 +91,16 @@ class UkmController extends Controller
      * @param  \App\Ukm  $ukm
      * @return \Illuminate\Http\Response
      */
-    public function edit(Ukm $ukm)
+    public function edit($id)
     {
+        $ukm = UKM::find($id);
         $pembina = DB::select('select * from pembinaview');
-        $pelatih = DB::select('select * from pelatihview');
         $ketuamhs = DB::select('select * from ketuamhsview');
+        $pelatih = DB::select('select * from pelatihview');
+        // $pelatih = UKM::whereHas('pelatih', function($p){
+        //     $p->where('status_user', 'Aktif');
+        // })->where('id', $id)->get();
+        // dd($pelatih);
         return view('ukm.edit', compact('ukm', 'pembina', 'pelatih', 'ketuamhs'));
     }
 
@@ -114,10 +123,15 @@ class UkmController extends Controller
                 ->update([
                     'nama_ukm' => $request->nama_ukm,
                     'pembina_id' => $request->pembina_id,
-                    'pelatih_id' => $request->pelatih_id,
+                    'pelatih_id' => implode(', ',$request->pelatih_id),
                     'ketuamhs_id' => $request->ketuamhs_id,
                     'status' => $request->status
                 ]);
+
+        $idpelatih = Users::whereIn('id', explode(',', $ukm->pelatih_id))->get();
+        foreach ($idpelatih as $pelatih) {
+            Users::where('id', $pelatih->id)->update(['status_user' => $request->status_user[$pelatih->id]]);
+        }
 
         return redirect('/ukm')->with('status', 'Data UKM/HMJ berhasil diubah!');
     }
