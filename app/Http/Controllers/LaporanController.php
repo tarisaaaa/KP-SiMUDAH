@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Absensi;
+use App\Ukm;
+use App\Users;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 // use Barryvdh\DomPDF\PDF;
@@ -52,7 +54,6 @@ class LaporanController extends Controller
             $array['jumlah_latihan'] = $query2[$key]->jumlah_latihan;
             $results[] = $array;
         }
-        // dd($results);
         
         // $pdf = PDF::loadview('laporan.show',['data'=>$data])->setPaper('A4','potrait');
 	    // return $pdf->stream();

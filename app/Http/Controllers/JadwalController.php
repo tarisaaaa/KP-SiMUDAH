@@ -86,6 +86,7 @@ class JadwalController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->hari);
         $request->validate([
             'ukm_id'        => ['required'],
             'waktu_mulai'   => ['required'],

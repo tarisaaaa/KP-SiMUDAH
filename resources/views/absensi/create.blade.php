@@ -44,12 +44,28 @@
 
                                     @if (!empty($pelatih->nama))
 
-                                    <div class="form-group">
-                                        <label for="absen_pelatih">Kehadiran Pelatih ({{ $pelatih->nama }})</label><br>
-                                        <input type="radio" name="kehadiran_pelatih" class="ml-3" value="Hadir"> Hadir <br>
-                                        <input type="radio" name="kehadiran_pelatih" class="ml-3" value="Tidak Hadir"> Tidak Hadir
-                                    </div>
-                                        
+                                        @if (count(explode(',', $pelatih_ids->pelatih_id)) > 1)
+                                            @php
+                                            $idpelatih = App\Users::whereIn('id', explode(',', $pelatih_ids->pelatih_id))->get()
+                                            @endphp
+
+                                            @foreach ($idpelatih as $pelatih)
+                                                <div class="form-group">
+                                                    <label for="kehadiran_pelatih[{{$pelatih->id}}]">Kehadiran Pelatih ({{ $pelatih->nama }})</label><br>
+                                                    <input type="radio" name="kehadiran_pelatih[{{$pelatih->id}}]" class="ml-3" value="Hadir"> Hadir <br>
+                                                    <input type="radio" name="kehadiran_pelatih[{{$pelatih->id}}]" class="ml-3" value="Tidak Hadir"> Tidak Hadir
+                                                </div>
+                                            @endforeach
+
+                                        @else
+                                            <div class="form-group">
+                                                <label for="kehadiran_pelatih">Kehadiran Pelatih ({{ $pelatih->nama }})</label><br>
+                                                <input type="radio" name="kehadiran_pelatih" class="ml-3" value="Hadir"> Hadir <br>
+                                                <input type="radio" name="kehadiran_pelatih" class="ml-3" value="Tidak Hadir"> Tidak Hadir
+                                            </div>
+
+                                        @endif
+
                                     @endif
 
                             
@@ -134,8 +150,17 @@
                 formData.append('keterangan', myEditor.getData());
                 formData.append('foto', $('#foto')[0].files[0]);
                 @if (!empty($pelatih->nama))
-                formData.append('kehadiran_pelatih', $('input[name=kehadiran_pelatih]:checked').val());
+                    @if (count(explode(',', $pelatih_ids->pelatih_id)) > 1)
+                        var kehadiran_pelatih = []
+                        @foreach ($idpelatih as $pelatih)
+                            kehadiran_pelatih.push($('input[name="kehadiran_pelatih[{{$pelatih->id}}]"]:checked').val())
+                        @endforeach
+                        formData.append('kehadiran_pelatih', JSON.stringify(kehadiran_pelatih))
+                    @else
+                        formData.append('kehadiran_pelatih', $('input[name=kehadiran_pelatih]:checked').val());
+                    @endif
                 @endif
+                // console.log(formData)
                 
                 let listAnggota = $('.anggota')
                 let absensi = []
