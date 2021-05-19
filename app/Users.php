@@ -21,4 +21,9 @@ class Users extends Model
     {
         return $this->hasMany('App\Absensi', 'user_id', 'id');
     }
+
+    public function laporan()
+    {
+        return $this->hasMany('App\Laporan', 'pelatih_id', 'id');
+    }
 }

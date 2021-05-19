@@ -46,7 +46,7 @@
 
                                         @if (count(explode(',', $pelatih_ids->pelatih_id)) > 1)
                                             @php
-                                            $idpelatih = App\Users::whereIn('id', explode(',', $pelatih_ids->pelatih_id))->get()
+                                                $idpelatih = App\Users::whereIn('id', explode(',', $pelatih_ids->pelatih_id))->get()
                                             @endphp
 
                                             @foreach ($idpelatih as $pelatih)
@@ -152,12 +152,21 @@
                 @if (!empty($pelatih->nama))
                     @if (count(explode(',', $pelatih_ids->pelatih_id)) > 1)
                         var kehadiran_pelatih = []
+                        var pelatih_id = []
+                        @php
+                            $idpelatih = App\Users::whereIn('id', explode(',', $pelatih_ids->pelatih_id))->get()
+                        @endphp
                         @foreach ($idpelatih as $pelatih)
-                            kehadiran_pelatih.push($('input[name="kehadiran_pelatih[{{$pelatih->id}}]"]:checked').val())
+                            // kehadiran_pelatih.push($('input[name="kehadiran_pelatih[{{$pelatih->id}}]"]:checked').val())
+                            // kehadiran_pelatih[{{$pelatih->id}}].push($('input[name="kehadiran_pelatih[{{$pelatih->id}}]"]:checked').val())
+                            formData.append('kehadiran_pelatih[{{$pelatih->id}}]', $('input[name="kehadiran_pelatih[{{$pelatih->id}}]"]:checked').val());
+                            pelatih_id.push({{$pelatih->id}})
                         @endforeach
-                        formData.append('kehadiran_pelatih', JSON.stringify(kehadiran_pelatih))
+                        // formData.append('kehadiran_pelatih', JSON.stringify(kehadiran_pelatih));
+                        formData.append('pelatih_id', JSON.stringify(pelatih_id));
                     @else
                         formData.append('kehadiran_pelatih', $('input[name=kehadiran_pelatih]:checked').val());
+                        formData.append('pelatih_id', {{$ukm->pelatih_id}});
                     @endif
                 @endif
                 // console.log(formData)

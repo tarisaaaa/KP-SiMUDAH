@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Absensi;
 use App\AbsensiDetail;
+use App\Laporan;
 use App\Ukm;
 use App\Users;
 use Carbon\Carbon;
@@ -87,6 +88,25 @@ class AbsensiController extends Controller
                 'keterangan' => $a->keterangan
             ]);
         }
+
+        if(!empty($request->kehadiran_pelatih)) {
+            if (count(explode(',', $request->pelatih_id)) > 1) {
+                
+                    $laporan = new Laporan;
+                    $laporan->ukm_id = $request->ukm_id;
+                    $laporan->pelatih_id = 2;
+                    $laporan->kehadiran = $request->kehadiran_pelatih[2];
+                    $laporan->save();
+                
+            } else {
+                $laporan = new Laporan;
+                $laporan->ukm_id = $request->ukm_id;
+                $laporan->pelatih_id = $request->pelatih_id;
+                $laporan->kehadiran = $request->kehadiran_pelatih;
+                $laporan->save();
+            }
+        }
+
         $response['success'] = true;
         return response()->json($response);
     }

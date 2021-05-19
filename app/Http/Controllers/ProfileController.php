@@ -157,7 +157,7 @@ class ProfileController extends Controller
     public function edit($id)
     {
         $profile = Profile::findOrFail($id);
-        $users = Users::findOrFail($id);
+        $users = Users::findOrFail($profile->user_id);
         return view('profile.edit', compact('profile', 'users'));
     }
 
@@ -190,7 +190,7 @@ class ProfileController extends Controller
 
         Session::flash('edit',$profile->save());
 
-        $user = Users::find($id);
+        $user = Users::find($profile->user_id);
         $user->nama = $request->nama;
         $user->user_name = $request->user_name;
         if ($request->password != null) {
