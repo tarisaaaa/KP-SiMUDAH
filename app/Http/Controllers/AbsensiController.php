@@ -10,6 +10,7 @@ use App\Users;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 
 class AbsensiController extends Controller
@@ -58,6 +59,24 @@ class AbsensiController extends Controller
 
     public function inputabsensi(Request $request)
     {
+        if(!empty($request->kehadiran_pelatih)) {
+            if (count(explode(',', $request->pelatih_id)) > 1) {
+                $pelatih = json_decode($request->pelatih_id);
+                foreach($pelatih as $idpelatih) {
+                    $laporan = new Laporan;
+                    $laporan->ukm_id = $request->ukm_id;
+                    $laporan->pelatih_id = $idpelatih;
+                    $laporan->kehadiran = $request->kehadiran_pelatih[$idpelatih];
+                    $laporan->save();
+                }
+            } else {
+                $laporan = new Laporan;
+                $laporan->ukm_id = $request->ukm_id;
+                $laporan->pelatih_id = $request->pelatih_id;
+                $laporan->kehadiran = $request->kehadiran_pelatih;
+                $laporan->save();
+            }
+        }
 
         $absensi = new Absensi;
         $absensi->ukm_id = $request->ukm_id;
@@ -71,9 +90,7 @@ class AbsensiController extends Controller
         }
         if(!empty($request->kehadiran_pelatih)) {
             if (count(explode(',', $request->pelatih_id)) > 1) {
-                $absensi = $request->merge([  
-                    'kehadiran_pelatih' => implode(', ', (array) $request->get('kehadiran_pelatih'))
-                ]);
+                $absensi->kehadiran_pelatih = implode(', ', (array) $request->get('kehadiran_pelatih'));
             } else {
                 $absensi->kehadiran_pelatih = $request->kehadiran_pelatih;
             }
@@ -87,24 +104,6 @@ class AbsensiController extends Controller
                 'status_absen' => $a->status_absen,
                 'keterangan' => $a->keterangan
             ]);
-        }
-
-        if(!empty($request->kehadiran_pelatih)) {
-            if (count(explode(',', $request->pelatih_id)) > 1) {
-                
-                    $laporan = new Laporan;
-                    $laporan->ukm_id = $request->ukm_id;
-                    $laporan->pelatih_id = 2;
-                    $laporan->kehadiran = $request->kehadiran_pelatih[2];
-                    $laporan->save();
-                
-            } else {
-                $laporan = new Laporan;
-                $laporan->ukm_id = $request->ukm_id;
-                $laporan->pelatih_id = $request->pelatih_id;
-                $laporan->kehadiran = $request->kehadiran_pelatih;
-                $laporan->save();
-            }
         }
 
         $response['success'] = true;
@@ -209,3 +208,4 @@ class AbsensiController extends Controller
         return back()->with('status', 'Absensi Berhasil Dihapus!');
     }
 }
+ 
