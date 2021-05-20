@@ -23,13 +23,17 @@
                         <th>Total Latihan</th>
                     </thead>
                     <tbody>
-                        @foreach ($results as $laporan)
+                        @foreach ($query as $laporan)
                         <tr>
-                            <td>{{ $laporan['nama_ukm'] }}</td>
-                            <td>{{ $laporan['nama'] }}</td>
-                            <td>{{ $laporan['jumlah_absensi'] }}</td>
-                            <td>{{ $laporan['jumlah_latihan'] }}</td>
-                            
+                            <td>{{ $laporan->nama_ukm }}</td>
+                            <td>{{ $laporan->nama }}</td>
+                            <td>{{ $laporan->jumlah_absensi }}</td>
+                            <td>
+                                @php
+                                    $latihan = App\Absensi::where('ukm_id', $laporan->ukm_id)->count();
+                                @endphp
+                                {{ $latihan }}
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>

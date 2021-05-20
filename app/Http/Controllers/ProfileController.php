@@ -25,15 +25,14 @@ class ProfileController extends Controller
         $graph2 = [];
         if ($user == 'adminkeuangan') 
         {
-            $sql = "SELECT a.ukm_id,p.nama,u.nama_ukm,count(*) as graph_value  
-                    FROM absensi as a 
-                    JOIN ukm as u ON a.ukm_id = u.id 
-                    JOIN pelatihview as p ON u.pelatih_id = p.id
-                    WHERE MONTH(a.created_at) = MONTH(CURRENT_DATE()) 
-                    AND YEAR(a.created_at) = YEAR(CURRENT_DATE()) 
-                    AND u.pelatih_id IS NOT NULL
-                    AND a.kehadiran_pelatih = 'Hadir'
-                    GROUP BY a.ukm_id,u.nama_ukm";
+            $sql =  "SELECT users.nama, laporan.ukm_id, ukm.nama_ukm, COUNT(*) as graph_value
+                    FROM laporan
+                    JOIN users ON users.id = laporan.pelatih_id
+                    JOIN ukm ON ukm.id = laporan.ukm_id
+                    WHERE YEAR(laporan.created_at) = YEAR(CURRENT_DATE()) 
+                    AND MONTH(laporan.created_at) = MONTH(CURRENT_DATE()) 
+                    AND laporan.kehadiran = 'Hadir'
+                    GROUP BY laporan.pelatih_id";
             $graph_title = "Grafik Kehadiran Pelatih Bulan Ini";
             $graph_yaxis = "Jumlah kehadiran";
         } 
@@ -66,7 +65,8 @@ class ProfileController extends Controller
                     JOIN ukm as u ON a.ukm_id = u.id 
                     WHERE MONTH(a.created_at) = MONTH(CURRENT_DATE()) 
                     AND YEAR(a.created_at) = YEAR(CURRENT_DATE()) 
-                    AND u.pelatih_id = $id
+                    -- AND u.pelatih_id = $id
+                    AND u.pelatih_id LIKE '%".$id."%'
                     GROUP BY a.ukm_id,u.nama_ukm, day(a.created_at)";
             $graph_title = "Grafik Kehadiran Mahasiswa";
             $graph_yaxis = "Jumlah mahasiswa";

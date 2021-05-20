@@ -95,6 +95,8 @@
         @foreach ($graph as $g)
             @if (session('user')->role == 'pelatih')
                 ukm.push('Pertemuan ke-{{ $loop->iteration }}');
+            @elseif (session('user')->role == 'adminkeuangan')
+                ukm.push('{{ $g->nama_ukm }} ({{$g->nama}})');
             @else
                 ukm.push('{{ $g->nama_ukm }}');
             @endif

@@ -46,7 +46,7 @@
 
                                         @if (count(explode(',', $pelatih_ids->pelatih_id)) > 1)
                                             @php
-                                                $idpelatih = App\Users::whereIn('id', explode(',', $pelatih_ids->pelatih_id))->get()
+                                                $idpelatih = App\Users::whereIn('id', explode(',', $pelatih_ids->pelatih_id))->where('status_user', 'Aktif')->get()
                                             @endphp
 
                                             @foreach ($idpelatih as $pelatih)

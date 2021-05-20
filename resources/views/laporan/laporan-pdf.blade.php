@@ -34,16 +34,21 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($results as $laporan)
+                @foreach ($query as $laporan)
                 <tr>
                     <td style="width: 30px; text-align: center">{{ $loop->iteration }}</td>
-                    <td>{{ $laporan['nama_ukm'] }}</td>
-                    <td>{{ $laporan['nama'] }}</td>
-                    <td>{{ $laporan['jumlah_absensi'] }}</td>
-                    <td>{{ $laporan['jumlah_latihan'] }}</td>
+                    <td>{{ $laporan->nama_ukm }}</td>
+                    <td>{{ $laporan->nama }}</td>
+                    <td>{{ $laporan->jumlah_absensi }}</td>
+                    <td>
+                        @php
+                            $latihan = App\Absensi::where('ukm_id', $laporan->ukm_id)->count();
+                        @endphp
+                        {{ $latihan }}
+                    </td>
                     <td>
                     @php
-                        $persen = ($laporan['jumlah_absensi'] / $laporan['jumlah_latihan']) * 100
+                        $persen = ($laporan->jumlah_absensi / $latihan) * 100
                     @endphp
                     {{$persen}}%
                     </td>
