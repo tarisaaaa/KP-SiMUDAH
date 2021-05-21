@@ -53,7 +53,7 @@
                                                 <div class="form-group">
                                                     <label for="kehadiran_pelatih[{{$pelatih->id}}]">Kehadiran Pelatih ({{ $pelatih->nama }})</label><br>
                                                     <input type="radio" name="kehadiran_pelatih[{{$pelatih->id}}]" class="ml-3" value="Hadir"> Hadir <br>
-                                                    <input type="radio" name="kehadiran_pelatih[{{$pelatih->id}}]" class="ml-3" value="Tidak Hadir"> Tidak Hadir
+                                                    <input type="radio" name="kehadiran_pelatih[{{$pelatih->id}}]" class="ml-3" value="Tidak Hadir" checked> Tidak Hadir
                                                 </div>
                                             @endforeach
 
@@ -61,7 +61,7 @@
                                             <div class="form-group">
                                                 <label for="kehadiran_pelatih">Kehadiran Pelatih ({{ $pelatih->nama }})</label><br>
                                                 <input type="radio" name="kehadiran_pelatih" class="ml-3" value="Hadir"> Hadir <br>
-                                                <input type="radio" name="kehadiran_pelatih" class="ml-3" value="Tidak Hadir"> Tidak Hadir
+                                                <input type="radio" name="kehadiran_pelatih" class="ml-3" value="Tidak Hadir" checked> Tidak Hadir
                                             </div>
 
                                         @endif
