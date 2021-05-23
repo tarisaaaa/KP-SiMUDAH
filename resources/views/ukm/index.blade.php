@@ -62,7 +62,7 @@
                                         @endforeach
                                     </td>
                                     @else
-                                        <td>{{ $u->pelatih->nama }}</td>
+                                        <td>{{ $u->pelatih->nama }} <i>({{ $u->pelatih->status_user }})</i></td>
                                     @endif
                                     
                                 @else      

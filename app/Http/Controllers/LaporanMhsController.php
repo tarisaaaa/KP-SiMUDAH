@@ -10,10 +10,21 @@ class LaporanMhsController extends Controller
 {
     public function index() 
     {
-        $sql = "SELECT DISTINCT YEAR(a.created_at) as tahun, MONTH(a.created_at) as bulan, u.nama_ukm, u.id as id_ukm
-                FROM absensi as a
-                INNER JOIN ukm as u ON a.ukm_id = u.id";
-        $data = DB::select($sql);
+        $role = session('user')->role;
+        if ($role == 'pembina') {
+                $id = session('user')->id;
+                $sql = "SELECT DISTINCT YEAR(a.created_at) as tahun, MONTH(a.created_at) as bulan, u.nama_ukm, u.id as id_ukm
+                        FROM absensi as a
+                        INNER JOIN ukm as u ON a.ukm_id = u.id
+                        WHERE u.pembina_id = $id";
+                $data = DB::select($sql);
+        } else if ($role == 'wk') {
+                $sql = "SELECT DISTINCT YEAR(a.created_at) as tahun, MONTH(a.created_at) as bulan, u.nama_ukm, u.id as id_ukm
+                        FROM absensi as a
+                        INNER JOIN ukm as u ON a.ukm_id = u.id";
+                $data = DB::select($sql);
+        }
+        
         // dd($data);
         return view('laporanmhs.index', compact('data'));
     }
