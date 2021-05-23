@@ -13,6 +13,16 @@
                     <h6>
                         @if (session('user')->role == 'wk')
                             Wakil Rektor III
+                        @elseif (session('user')->role == 'pelatih')
+                            Pelatih: 
+                            @foreach ($graph as $item)
+                                {{ $item->nama_ukm }}
+                            @endforeach 
+                        @elseif (session('user')->role == 'pembina')
+                            Pembina: 
+                            @foreach ($graph as $item)
+                                {{ $item->nama_ukm }}
+                            @endforeach                                 
                         @else
                             {{ session('user')->role }}     
                         @endif
