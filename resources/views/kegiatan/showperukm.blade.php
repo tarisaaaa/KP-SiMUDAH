@@ -15,7 +15,9 @@
         <div class="card shadow m-4">
             <div class="card-header py-3">
                 <a href="/kegiatan/createperukm/{{$ukm->id}}" class="btn btn-outline-secondary btn-flat">
-                    <span class="text">Tambah Kegiatan</span>
+                    <span class="icon text-white-50">
+                        <i class="fas fa-plus-square"></i>
+                    </span>Tambah Kegiatan</span>
                 </a>
             </div>
             <div class="card-body p-2 m-3">

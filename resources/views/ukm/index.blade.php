@@ -15,8 +15,10 @@
         <div class="card shadow m-4">
             @if (session('user')->role == 'adminaplikasi')
                 <div class="card-header py-3">
-                    <a href="{{ route('ukm.create') }}" class="btn btn-outline-secondary">
-                        <span class="glyphicon glyphicon-plus">TAMBAH UKM/HMJ</span> 
+                    <a href="{{ route('ukm.create') }}" class="btn btn-outline-secondary btn-flat">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-plus-square"></i>
+                    </span>TAMBAH UKM/HMJ</span> 
                     </a>
                 </div>    
             @else

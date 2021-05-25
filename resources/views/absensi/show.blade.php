@@ -15,7 +15,9 @@
         <div class="card shadow m-4">
             <div class="card-header py-3">
                 <a href="/absensi/create/{{$ukm->id}}" class="btn btn-outline-secondary btn-flat">
-                    <span class="text">Tambah Absensi</span>
+                    <span class="icon text-white-50">
+                        <i class="fas fa-plus-square"></i>
+                    </span>Tambah Absensi</span>
                 </a>
             </div>
             <div class="card-body p-2 m-3">

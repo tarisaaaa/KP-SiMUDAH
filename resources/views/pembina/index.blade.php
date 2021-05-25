@@ -15,7 +15,9 @@
         <div class="card shadow m-4">
             <div class="card-header py-3">
                 <a href="/pembina/create" class="btn btn-outline-secondary btn-flat">
-                    <span class="text">Tambah Pembina</span>
+                    <span class="icon text-white-50">
+                        <i class="fas fa-plus-square"></i>
+                    </span>Tambah Pembina</span>
                 </a>
             </div>
             <div class="card-body p-2 m-3">

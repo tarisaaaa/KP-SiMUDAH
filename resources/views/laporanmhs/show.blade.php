@@ -1,6 +1,5 @@
 @extends('layouts.mainadv')
 
-<<<<<<< HEAD
 @section('title', 'SiMUDAH | Laporan Mahasiswa')
 
 @section('content')

@@ -14,8 +14,10 @@
 
         <div class="card shadow m-4">
             <div class="card-header py-3">
-                <a href="/anggota/create/{{$ukm->id}}" class="btn btn-outline-secondary btn-flat">
-                    <span class="text">Tambah Anggota</span>
+                <a href="/anggota/create/{{$ukm->id}}"class="btn btn-outline-secondary btn-flat">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-plus-square"></i>
+                    </span>Tambah Anggota</span>
                 </a>
                 <a href="/anggota/{{ $ukm->id }}/showall" class="btn btn-default btn-flat float-right">Lihat Semua Anggota</a>
             </div>
