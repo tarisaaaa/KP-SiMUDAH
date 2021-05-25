@@ -4,7 +4,9 @@
 
 @section('content')
     <div class="container">
+
         {{-- <center><img src="{{ asset('/assets/img/logolaporan.png')}}" alt="laporan" width="300px"></center> --}}
+
         <div class="card ml-5 mr-5">
             <div class="card-header">
                 <a href="/laporan" class="btn btn-outline-dark btn-sm m-2 float-left">Kembali</a>
@@ -14,7 +16,6 @@
                 
                 <h2><center>Laporan Kehadiran Pelatih</center></h2>
                 <center><h5>Bulan {{ $bulan }} Tahun {{ $tahun }}</h5></center>
-                
                 <table class="table table-bordered" id="dataTable">  
                     <thead>
                         <th>UKM</th>

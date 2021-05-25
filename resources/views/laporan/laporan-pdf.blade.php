@@ -59,7 +59,11 @@
 
         <div style="text-align: right;">
             Palembang, {{ date('d-m-Y') }}
+<<<<<<< HEAD
             <br> Wakil Rektor II
+=======
+            <br> Wakil Ketua II
+>>>>>>> leonica
             <br><br><br><br>
             <p>Kathryn Sugara, S.E., M.Si, CFP®</p>
         </div>

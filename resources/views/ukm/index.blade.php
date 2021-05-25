@@ -15,8 +15,8 @@
         <div class="card shadow m-4">
             @if (session('user')->role == 'adminaplikasi')
                 <div class="card-header py-3">
-                    <a href="{{ route('ukm.create') }}" class="btn btn-outline-secondary btn-flat">
-                        <span class="text">Tambah UKM/HMJ</span>
+                    <a href="{{ route('ukm.create') }}" class="btn btn-outline-secondary">
+                        <span class="glyphicon glyphicon-plus">TAMBAH UKM/HMJ</span> 
                     </a>
                 </div>    
             @else
@@ -44,6 +44,7 @@
                             @foreach($ukm as $u)
                             <tr>
                                 <td>{{ $u->nama_ukm }}</td>
+                                
                                 @if (!empty($u->pembina->nama))
                                     <td>{{ $u->pembina->nama }}</td>
                                 @else      

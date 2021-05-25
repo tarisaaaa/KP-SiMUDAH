@@ -44,7 +44,7 @@
 
                 </div>
 
-                {{-- <div class="row">
+                <div class="row">
                     <div class="col-lg-6 ml-3 mt-4 mr-5">
                         <img src="{{ asset('assets/img/logomdp.png')}}" alt="logomdp" width="200px">
                         <ul class="list-unstyled mt-3">
@@ -62,8 +62,8 @@
                             </li>
                         </ul>
                     </div>
-                </div> --}}
 
+                </div>
             </div>
 
             <div class="col-lg-5 right">
@@ -83,6 +83,7 @@
                                 </h4>
                                 <p class="cart-text">{!! $p->isi !!}</p> 
                                 <p class="card-text mb-2"><small class="text-muted">Diupload pada {{ date('d-m-Y H:i', strtotime($p->created_at)) }} WIB oleh <strong>{{ $p->nama }}</strong></small></p>
+
                             </div>
                         </div>
                     @endforeach

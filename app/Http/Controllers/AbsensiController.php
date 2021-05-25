@@ -24,6 +24,7 @@ class AbsensiController extends Controller
     {
         $id = session('user')->id;
         $absensi = Ukm::where('pelatih_id', $id)->orWhere('ketuamhs_id', $id)->get();
+        
         return view('absensi.index', compact('absensi'));
     }
 
@@ -44,6 +45,7 @@ class AbsensiController extends Controller
         
         // dd($pelatih_ids);
         return view('absensi.create', compact('ukm', 'anggota', 'pelatih', 'jam_mulai', 'jam_selesai', 'pelatih_ids'))->with('no', 1);
+
     }
 
     /**
@@ -95,6 +97,7 @@ class AbsensiController extends Controller
                 $absensi->kehadiran_pelatih = $request->kehadiran_pelatih;
             }
         }
+
         $absensi->save();
 
         $data_absensi = json_decode($request->absensi);

@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', 'MDP UKM | Login')
+@section('title', 'SiMUDAH | Login')
 
 @section('content')
     <div class="container">

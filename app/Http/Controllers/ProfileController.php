@@ -77,6 +77,7 @@ class ProfileController extends Controller
         }
         $graph = DB::select($sql);
         // dd($graph);
+
         return view('dashboard', compact('profile', 'graph','graph_title', 'graph_yaxis'));
     }
 

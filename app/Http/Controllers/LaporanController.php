@@ -20,6 +20,7 @@ class LaporanController extends Controller
                     // ->distinct()
                     ->groupBy(['bulan', 'tahun'])
                     ->paginate(10);
+
         return view('laporan.index', compact('data'));
     }
 
@@ -35,6 +36,28 @@ class LaporanController extends Controller
                 AND users.status_user = 'Aktif'
                 GROUP BY laporan.pelatih_id";
         $query = DB::select($sql);
+
+        $sql2 = "SELECT count(*)  as jumlah_latihan
+                FROM absensi as a 
+                JOIN ukm as u ON a.ukm_id = u.id 
+                WHERE MONTH(a.created_at) = $bulan
+                AND YEAR(a.created_at) = $tahun
+                AND u.pelatih_id IS NOT NULL
+                GROUP BY a.ukm_id";
+        $query2 = DB::select($sql2);
+
+        $results = array();
+        foreach($query as $key=>$data){
+            $array=array();
+            $array['ukm_id'] = $data->ukm_id;
+            $array['nama_ukm'] = $data->nama_ukm;
+            $array['nama'] = $data->nama;
+            $array['jumlah_absensi'] = $data->jumlah_absensi;
+            $array['jumlah_latihan'] = $query2[$key]->jumlah_latihan;
+            $results[] = $array;
+        }
+        // dd($results);
+
         
         // $pdf = PDF::loadview('laporan.show',['data'=>$data])->setPaper('A4','potrait');
 	    // return $pdf->stream();
@@ -52,6 +75,7 @@ class LaporanController extends Controller
                 AND laporan.kehadiran = 'Hadir'
                 AND users.status_user = 'Aktif'
                 GROUP BY laporan.pelatih_id";
+
         $query = DB::select($sql);
 
         // $pdf = PDF::loadview('laporan.laporan-pdf', compact('results', 'bulan', 'tahun'))->setPaper('A4','potrait');

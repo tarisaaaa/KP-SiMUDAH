@@ -62,7 +62,6 @@ class JadwalController extends Controller
             $array['ketuamhs'] = $getKetuamhs[$key]->nama;
             $results[] = $array;
         }
-        
         // dd($getPelatih);
         return view('jadwal.index', ['results'=>$results]);
     }

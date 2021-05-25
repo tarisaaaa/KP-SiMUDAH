@@ -1,5 +1,6 @@
 @extends('layouts.mainadv')
 
+<<<<<<< HEAD
 @section('title', 'SiMUDAH | Laporan Mahasiswa')
 
 @section('content')
@@ -14,8 +15,9 @@
                 <h2><center>Laporan Kehadiran Mahasiswa</center></h2>
                 <center><h5>Bulan {{ $bulan }} Tahun {{ $tahun }}</h5></center>
                 <center><h5>UKM {{ $query2->nama_ukm }}</h5></center>
-                
+        
                 <table class="table table-bordered" id="dataTable">  
+
                     <thead>
                         <tr>
                             <th>No</th>

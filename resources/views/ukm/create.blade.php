@@ -35,8 +35,10 @@
                             </div>
 
                             <div class="form-group mt-3">
+
                                 <label for="pelatih_id[]">Nama Pelatih</label>
                                 <select name="pelatih_id[]" id="pelatih_id[]" class="form-control select2bs4 @error('pelatih_id') is-invalid @enderror" multiple="multiple">
+
                                     <option value="">-</option>
                                     @foreach ($pelatih as $p)
                                         <option value="{{ $p->id }} {{ old('pelatih_id[]') }}">{{ $p->nama }}</option>

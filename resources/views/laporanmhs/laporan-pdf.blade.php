@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>SiMUDAH | Laporan Mahasiswa</title>
 
+<<<<<<< HEAD
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" >
     <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome-free/css/all.min.css')}}">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
@@ -54,7 +55,11 @@
     
         <div style="text-align: right;">
             Palembang, {{ date('d-m-Y') }}
+<<<<<<< HEAD
             <br> Wakil Rektor III
+=======
+            <br> Wakil Ketua III
+>>>>>>> leonica
             <br><br><br><br>
             <p>Dedy Hermanto, S.Kom, M.T.I</p>
         </div>

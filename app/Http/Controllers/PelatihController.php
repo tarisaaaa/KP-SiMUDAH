@@ -38,6 +38,7 @@ class PelatihController extends Controller
 
         Session::flash('add',$users->save());
         return redirect('/pelatih')->with('status', 'Data User Berhasil Ditambahkan!');
+        
     }
 
     public function show($id)

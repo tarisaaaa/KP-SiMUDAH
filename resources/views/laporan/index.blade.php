@@ -13,6 +13,7 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="list-group">
+
                             <b>bulan/tahun</b>
                             @if ($data->count())
                                 @foreach ($data as $date)
