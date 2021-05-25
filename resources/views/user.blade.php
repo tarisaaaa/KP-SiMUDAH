@@ -1,6 +1,6 @@
 @extends('layouts.mainadv')
 
-@section('title', 'MDP UKM | User')
+@section('title', 'SiMUDAH | User')
 
 @section('content')
     <div class="container">
@@ -81,7 +81,7 @@
               <!-- small box -->
               <div class="small-box bg-gray">
                 <div class="inner">
-                  <h3>WK 3</h3>
+                  <h3>WR III</h3>
                   <h5><br></h5>
                 </div>
                 <div class="icon">

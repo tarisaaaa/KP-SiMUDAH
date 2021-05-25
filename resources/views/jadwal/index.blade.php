@@ -45,6 +45,7 @@
                                 <td>{{ $jadwal['waktu_selesai'] }}</td>
                                 <td>{{ $jadwal['tempat'] }}</td>
                                 <td>{{ $jadwal['pelatih']}}</td>
+
                                 <td>{{ $jadwal['ketuamhs'] }}</td>
                                 <td>
                                     <a href="/jadwal/{{ $jadwal['id']}}/edit" class="btn btn-info btn-circle btn-sm"><i class="fas fa-edit"></i></a>

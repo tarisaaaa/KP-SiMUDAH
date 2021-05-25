@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAbsensiTable extends Migration
+class CreateLaporanTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,11 @@ class CreateAbsensiTable extends Migration
      */
     public function up()
     {
-        Schema::create('absensi', function (Blueprint $table) {
+        Schema::create('laporan', function (Blueprint $table) {
             $table->id();
             $table->string('ukm_id');
-            $table->string('user_id');
-            $table->text('keterangan');
-            $table->text('foto')->nullable();
-            $table->text('kehadiran_pelatih')->nullable();
+            $table->string('pelatih_id');
+            $table->string('kehadiran');
             $table->timestamp('created_at')->useCurrent();
         });
     }
@@ -31,6 +29,6 @@ class CreateAbsensiTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('absensi');
+        Schema::dropIfExists('laporan');
     }
 }

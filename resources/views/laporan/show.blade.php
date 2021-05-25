@@ -1,39 +1,45 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <link rel="shortcut icon" href="{{ asset('assets/img/favicon.ico' )}}" type="image/x-icon">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Laporan Absensi {{ $data->nama_ukm }}</title>
+@extends('layouts.mainadv')
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" >
-    <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome-free/css/all.min.css')}}">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-</head>
-<body>
-    <div class="container-fluid">
-        <center><img src="{{ asset('assets/img/icn.png')}}" alt="" ></center>
-        <h2 class="mt-3"><center>Laporan Pelatih UKM {{ $data->nama_ukm }}</center></h2>
-        <hr width="95%">
-        <table class="table border ml-5" style="width: 93%">  
-            <thead>
-                <th>UKM</th>
-                <th>Nama Pelatih</th>
-                <th>Bulan/Tahun</th>
-                <th>Jumlah Latihan</th>
-            </thead>
-            <tbody>
-                <td>{{ $data->nama_ukm }}</td>
-                <td>{{ $data->nama }}</td>
-                <td>{{ date('m/Y') }}</td>
-                <td>{{ $data->jumlah_absensi }}</td>
-            </tbody>
-        </table>
-        <a href="" class="btn btn-sm btn-secondary ml-5"><i class="nav-icon fas fa-print mr-2"></i>Cetak Laporan</a>
+@section('title', 'SiMUDAH | Laporan Pelatih')
+
+@section('content')
+    <div class="container">
+        {{-- <center><img src="{{ asset('/assets/img/logolaporan.png')}}" alt="laporan" width="300px"></center> --}}
+        <div class="card ml-5 mr-5">
+            <div class="card-header">
+                <a href="/laporan" class="btn btn-outline-dark btn-sm m-2 float-left">Kembali</a>
+                <a href="/laporan-pdf/{{ $tahun }}/{{ $bulan }}" class="btn btn-info btn-sm m-2 float-right">Export PDF</a>
+            </div>
+            <div class="card-body ml-3 mr-3">
+                
+                <h2><center>Laporan Kehadiran Pelatih</center></h2>
+                <center><h5>Bulan {{ $bulan }} Tahun {{ $tahun }}</h5></center>
+                
+                <table class="table table-bordered" id="dataTable">  
+                    <thead>
+                        <th>UKM</th>
+                        <th>Nama Pelatih</th>
+                        <th>Jumlah Kehadiran</th>
+                        <th>Total Latihan</th>
+                    </thead>
+                    <tbody>
+                        @foreach ($query as $laporan)
+                        <tr>
+                            <td>{{ $laporan->nama_ukm }}</td>
+                            <td>{{ $laporan->nama }}</td>
+                            <td>{{ $laporan->jumlah_absensi }}</td>
+                            <td>
+                                @php
+                                    $latihan = App\Absensi::where('ukm_id', $laporan->ukm_id)->count();
+                                @endphp
+                                {{ $latihan }}
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
     </div>
-</body>
-<footer>
-    <p class="ml-5"><i>Laporan ini dicetak pada {{ date('d-m-Y') }}</i></p>
-</footer>
-</html>
+@endsection

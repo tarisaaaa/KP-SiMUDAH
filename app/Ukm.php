@@ -50,4 +50,9 @@ class Ukm extends Model
     {
         return $this->hasMany('App\Absensi', 'ukm_id', 'id');
     }
+
+    public function laporan()
+    {
+        return $this->hasMany('App\Laporan', 'ukm_id', 'id');
+    }
 }

@@ -2,34 +2,60 @@
 
 namespace App\Http\Controllers;
 
+use App\Absensi;
+use App\Laporan;
+use App\Ukm;
+use App\Users;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+// use Barryvdh\DomPDF\PDF;
+use Barryvdh\DomPDF\Facade as PDF;
 
 class LaporanController extends Controller
 {
     public function index() 
     {
-        $sql = "SELECT a.ukm_id,p.nama,u.nama_ukm,count(*) as jumlah_absensi 
-                FROM absensi as a 
-                JOIN ukm as u ON a.ukm_id = u.id 
-                JOIN pelatihview as p ON u.pelatih_id = p.id
-                WHERE MONTH(a.created_at) = MONTH(CURRENT_DATE()) AND YEAR(a.created_at) = YEAR(CURRENT_DATE())
-                GROUP BY a.ukm_id,u.nama_ukm";
-        $data = DB::select($sql);
-        // dd($data);
+        $data = DB::table('laporan')
+                    ->select([DB::raw('YEAR(created_at) as tahun, MONTH(created_at) as bulan')])
+                    // ->distinct()
+                    ->groupBy(['bulan', 'tahun'])
+                    ->paginate(10);
         return view('laporan.index', compact('data'));
     }
 
-    public function show($id) 
+    public function show($tahun, $bulan) 
     {
-        $sql = "SELECT a.ukm_id,p.nama,u.nama_ukm,count(*) as jumlah_absensi 
-                FROM absensi as a 
-                JOIN ukm as u ON a.ukm_id = u.id 
-                JOIN pelatihview as p ON u.pelatih_id = p.id
-                WHERE MONTH(a.created_at) = MONTH(CURRENT_DATE()) AND YEAR(a.created_at) = YEAR(CURRENT_DATE()) AND a.ukm_id = $id
-                GROUP BY a.ukm_id,u.nama_ukm";
-        $data = collect(DB::select($sql))->first();
-        // dd($data);
-        return view('laporan.show', compact('data'));
+        $sql = "SELECT users.nama, laporan.ukm_id, ukm.nama_ukm, COUNT(*) as jumlah_absensi
+                FROM laporan
+                JOIN users ON users.id = laporan.pelatih_id
+                JOIN ukm ON ukm.id = laporan.ukm_id
+                WHERE YEAR(laporan.created_at) = 2021
+                AND MONTH(laporan.created_at) = 5
+                AND laporan.kehadiran = 'Hadir'
+                AND users.status_user = 'Aktif'
+                GROUP BY laporan.pelatih_id";
+        $query = DB::select($sql);
+        
+        // $pdf = PDF::loadview('laporan.show',['data'=>$data])->setPaper('A4','potrait');
+	    // return $pdf->stream();
+        return view('laporan.show', compact('query', 'bulan', 'tahun'));
+    }
+
+    public function exportPDF($tahun, $bulan)
+    {
+        $sql = "SELECT users.nama, laporan.ukm_id, ukm.nama_ukm, COUNT(*) as jumlah_absensi
+                FROM laporan
+                JOIN users ON users.id = laporan.pelatih_id
+                JOIN ukm ON ukm.id = laporan.ukm_id
+                WHERE YEAR(laporan.created_at) = 2021
+                AND MONTH(laporan.created_at) = 5
+                AND laporan.kehadiran = 'Hadir'
+                AND users.status_user = 'Aktif'
+                GROUP BY laporan.pelatih_id";
+        $query = DB::select($sql);
+
+        // $pdf = PDF::loadview('laporan.laporan-pdf', compact('results', 'bulan', 'tahun'))->setPaper('A4','potrait');
+        // return $pdf->stream('laporanpelatih'. $bulan. $tahun. '.pdf');
+        return view('laporan.laporan-pdf', compact('query', 'bulan', 'tahun'));
     }
 }
