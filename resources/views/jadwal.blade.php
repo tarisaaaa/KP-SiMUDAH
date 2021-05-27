@@ -25,29 +25,39 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($results as $jadwal)
-                            <tr>
-                                <td>{{ $jadwal['nama_ukm'] }}</td>
-                                <td>{{ $jadwal['hari'] }}</td>
-                                <td>{{ $jadwal['waktu_mulai'] }}</td>
-                                <td>{{ $jadwal['waktu_selesai'] }}</td>
-                                <td>{{ $jadwal['tempat'] }}</td>
-                                @if (count(explode(',', $jadwal['pelatih_id'])) > 1)
-                                    <td>
-                                    @php
-                                        $pelatih = App\Users::whereIn('id', explode(',', $jadwal['pelatih_id']))->get()
-                                    @endphp
-                                     @foreach ($pelatih as $item)
-                                     <li>{{ $item->nama}}</li>
-                                 @endforeach
-                                    </td>
-                                @else
-                                    <td>{{ $jadwal['pelatih']}}</td>
-                                @endif
-                                <td>{{ $jadwal['ketuamhs'] }}</td>
-                                <td>{{ $jadwal['pembina'] }}</td>
-                            </tr>
+
+                            @foreach ($jadwal as $item)
+                                <tr>
+                                    <td>{{ $item->ukm->nama_ukm }}</td>
+                                    <td>{{ $item->hari }}</td>
+                                    <td>{{ $item->waktu_mulai }}</td>
+                                    <td>{{ $item->waktu_selesai }}</td>
+                                    <td>{{ $item->tempat }}</td>
+                                    @if (empty($item->ukm->pelatih->nama))
+                                        <td>-</td>
+                                    @else
+                                        @if (count(explode(',', $item->ukm->pelatih_id)) > 1)
+                                            <td>
+                                                @php
+                                                    $pelatih = App\Users::whereIn('id', explode(',', $item->ukm->pelatih_id))->get()
+                                                @endphp
+                                                @foreach ($pelatih as $p)
+                                                    <li>{{ $p->nama}}</li>
+                                                @endforeach
+                                            </td>
+                                        @else
+                                            <td>{{ $item->ukm->pelatih->nama }}</td> 
+                                        @endif
+                                    @endif
+                                    <td>{{ $item->ukm->ketuamhs->nama }}</td>
+                                    @if (empty($item->ukm->pembina->nama))
+                                        <td>-</td>
+                                    @else
+                                        <td>{{ $item->ukm->pembina->nama }}</td>
+                                    @endif
+                                </tr>
                             @endforeach
+                            
                         </tbody>
                     </table>
                 </div>

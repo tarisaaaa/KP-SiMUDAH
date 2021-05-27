@@ -28,39 +28,47 @@
                             <tr>
                                 <th>UKM/HMJ</th>
                                 <th>Hari</th>
-                                <th>Waktu Mulai</th>
-                                <th>Waktu Selesai</th>
+                                <th>Waktu</th>
                                 <th>Tempat</th>
-                                <th>Pelatih</th>
+                                <th>Nama Pelatih</th>
                                 <th>Ketua Mahasiswa</th>
+                                <th>Pembina</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($results as $jadwal)
-                            <tr>
-                                <td>{{ $jadwal['nama_ukm'] }}</td>
-                                <td>{{ $jadwal['hari'] }}</td>
-                                <td>{{ $jadwal['waktu_mulai'] }}</td>
-                                <td>{{ $jadwal['waktu_selesai'] }}</td>
-                                <td>{{ $jadwal['tempat'] }}</td>
-                                @if (count(explode(',', $jadwal['pelatih_id'])) > 1)
-                                    <td>
-                                    @php
-                                        $pelatih = App\Users::whereIn('id', explode(',', $jadwal['pelatih_id']))->get()
-                                    @endphp
-                                     @foreach ($pelatih as $item)
-                                     <li>{{ $item->nama}}</li>
-                                 @endforeach
-                                    </td>
-                                @else
-                                    <td>{{ $jadwal['pelatih']}}</td>
-                                @endif
 
-                                <td>{{ $jadwal['ketuamhs'] }}</td>
+                            @foreach ($jadwal as $item)
+                                <tr>
+                                    <td>{{ $item->ukm->nama_ukm }}</td>
+                                    <td>{{ $item->hari }}</td>
+                                    <td>{{ date('H.i', strtotime($item->waktu_mulai)) }} - {{ date('H.i', strtotime($item->waktu_selesai)) }}</td>
+                                    <td>{{ $item->tempat }}</td>
+                                    @if (empty($item->ukm->pelatih->nama))
+                                        <td>-</td>
+                                    @else
+                                        @if (count(explode(',', $item->ukm->pelatih_id)) > 1)
+                                            <td>
+                                                @php
+                                                    $pelatih = App\Users::whereIn('id', explode(',', $item->ukm->pelatih_id))->get()
+                                                @endphp
+                                                @foreach ($pelatih as $p)
+                                                    <li>{{ $p->nama}}</li>
+                                                @endforeach
+                                            </td>
+                                        @else
+                                            <td>{{ $item->ukm->pelatih->nama }}</td> 
+                                        @endif
+                                    @endif
+                                    <td>{{ $item->ukm->ketuamhs->nama }}</td>
+                                    @if (empty($item->ukm->pembina->nama))
+                                        <td>-</td>
+                                    @else
+                                        <td>{{ $item->ukm->pembina->nama }}</td>
+                                    @endif
                                 <td>
-                                    <a href="/jadwal/{{ $jadwal['id']}}/edit" class="btn btn-info btn-circle btn-sm"><i class="fas fa-edit"></i></a>
-                                    <form action="/jadwal/{{ $jadwal['id']}}" method="POST" class="d-inline">
+                                    <a href="/jadwal/{{ $item->id}}/edit" class="btn btn-info btn-circle btn-sm"><i class="fas fa-edit"></i></a>
+                                    <form action="/jadwal/{{ $item->id}}" method="POST" class="d-inline">
                                         @method('delete')
                                         @csrf
                                         <button type="submit" class="btn btn-danger btn-circle btn-sm"><i class="fas fa-trash-alt"></i></button>
