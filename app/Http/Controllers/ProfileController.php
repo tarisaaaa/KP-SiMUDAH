@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Profile;
+use App\Ukm;
 use App\Users;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -23,7 +24,6 @@ class ProfileController extends Controller
         
         $user = session('user')->role;
         $graph2 = [];
-        $namaukm = '';
         if ($user == 'adminkeuangan') 
         {
             $sql =  "SELECT users.nama, laporan.ukm_id, ukm.nama_ukm, COUNT(*) as graph_value
@@ -73,6 +73,7 @@ class ProfileController extends Controller
             $graph_title = "Grafik Kehadiran Mahasiswa";
             $graph_yaxis = "Jumlah mahasiswa";
             $namaukm = DB::table('ukm')->join('users', 'ukm.pelatih_id', '=', 'users.id')->where('ukm.pelatih_id', $id)->first();
+            
         }
         else
         {

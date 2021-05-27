@@ -14,11 +14,19 @@
                         @if (session('user')->role == 'wk')
                             Wakil Rektor III
                         @elseif (session('user')->role == 'pelatih')
-                            Pelatih: 
-                            {{ $namaukm->nama_ukm }}
+                            @if (!empty($namaukm))
+                                Pelatih: 
+                                {{ $namaukm->nama_ukm }}    
+                            @else
+                                Pelatih
+                            @endif
                         @elseif (session('user')->role == 'pembina')
-                            Pembina: 
-                            {{ $namaukm->nama_ukm }}                              
+                            @if (!empty($namaukm))
+                                Pembina: 
+                                {{ $namaukm->nama_ukm }}      
+                            @else
+                                Pembina
+                            @endif                        
                         @else
                             {{ session('user')->role }}     
                         @endif
