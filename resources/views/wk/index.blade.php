@@ -25,6 +25,7 @@
                             <tr>
                                 <th>Nama</th>
                                 <th>User Name</th>
+                                <th>Email</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -33,6 +34,7 @@
                             <tr>
                                 <td>{{ $wk->nama }}</td>
                                 <td>{{ $wk->user_name }}</td>
+                                <td>{{ $wk->email }}</td>
                                 <td>
                                     <a href="/wk/{{ $wk->id}}" class="btn btn-warning btn-sm"><i class="fas fa-info"></i></a>
                                     <a href="{{ route('wk.edit',['wk'=>$wk->id]) }}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>

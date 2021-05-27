@@ -31,7 +31,7 @@
                         <p class="card-text">{{ $adminaplikasi->niknpm }}</p>
 
                         <p class="mb-0"><strong>Email</strong></p>
-                        <p class="card-text">{{ $adminaplikasi->email }}</p>
+                        <p class="card-text">{{ $adminaplikasi->users->email }}</p>
                     
                         <p class="mb-0"><strong>Nomor HP</strong></p>
                         <p class="card-text">{{ $adminaplikasi->nohp }}</p>

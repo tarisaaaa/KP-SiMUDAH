@@ -25,6 +25,7 @@
                             <tr>
                                 <th>Nama Admin Aplikasi</th>
                                 <th>User Name</th>
+                                <th>Email</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -33,6 +34,7 @@
                             <tr>
                                 <td>{{ $adminaplikasi->nama }}</td>
                                 <td>{{ $adminaplikasi->user_name }}</td>
+                                <td>{{ $adminaplikasi->email }}</td>
                                 <td>
                                     <a href="/adminaplikasi/{{ $adminaplikasi->id}}" class="btn btn-warning btn-sm"><i class="fas fa-info"></i></a>
                                     <a href="{{ route('adminaplikasi.edit',['adminaplikasi'=>$adminaplikasi->id]) }}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>

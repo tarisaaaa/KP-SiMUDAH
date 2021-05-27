@@ -37,6 +37,11 @@ Route::get('/login', 'LoginController@index');
 Route::post("/login", 'LoginController@login');
 Route::get('/logout', 'LoginController@logout');
 
+Route::get('/forgotpassword', 'ForgotPasswordController@index');
+Route::post('/forgotpassword', 'ForgotPasswordController@sendEmail');
+Route::get('/{token}/resetpassword', 'ForgotPasswordController@getPassword')->name('forgotpasssword.resetpassword');
+Route::post('/resetpassword', 'ForgotPasswordController@updatePassword');
+
 Route::resource('ketuamhs', 'KetuamhsController');
 Route::resource('pelatih', 'PelatihController');
 Route::resource('adminkeuangan', 'AdminkeuanganController');

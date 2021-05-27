@@ -18,16 +18,30 @@
                         <form method="post" action="{{ route('pengumuman.update',['pengumuman'=>$pengumuman->id]) }}">
                             @method('put')
                             @csrf
-                            <div class="form-group mt-3">
-                                <label for="ukm_id">UKM / HMJ</label>
-                                <select name="ukm_id" id="ukm_id" class="form-control select2bs4 @error('ukm_id') is-invalid @enderror">
-                                    <option value="Semua UKM/HMJ" {{ $pengumuman->ukm_id == 'Semua UKM/HMJ' ? 'selected' : ''}}>Semua UKM/HMJ</option>
-                                    @foreach ($ukm as $ukm)
-                                        <option value="{{ $ukm->id }}" {{ $pengumuman->ukm_id == $ukm->id ? 'selected' : ''}}>{{ $ukm->nama_ukm }}</option>
-                                    @endforeach
-                                </select>
-                                <div class="text-danger">{{ $errors->first('ukm_id')}}</div>
-                            </div>
+
+                            @if (session('user')->role == 'ketuamahasiswa' || session('user')->role == 'pelatih')
+                                <div class="form-group mt-3" hidden>
+                                    <label for="ukm_id">UKM / HMJ</label>
+                                    <select name="ukm_id" id="ukm_id" class="form-control select2bs4 @error('ukm_id') is-invalid @enderror">
+                                        <option value="Semua UKM/HMJ" {{ $pengumuman->ukm_id == 'Semua UKM/HMJ' ? 'selected' : ''}}>Semua UKM/HMJ</option>
+                                        @foreach ($ukm as $ukm)
+                                            <option value="{{ $ukm->id }}" {{ $pengumuman->ukm_id == $ukm->id ? 'selected' : ''}}>{{ $ukm->nama_ukm }}</option>
+                                        @endforeach
+                                    </select>
+                                    <div class="text-danger">{{ $errors->first('ukm_id')}}</div>
+                                </div>
+                            @else
+                                <div class="form-group mt-3">
+                                    <label for="ukm_id">UKM / HMJ</label>
+                                    <select name="ukm_id" id="ukm_id" class="form-control select2bs4 @error('ukm_id') is-invalid @enderror">
+                                        <option value="Semua UKM/HMJ" {{ $pengumuman->ukm_id == 'Semua UKM/HMJ' ? 'selected' : ''}}>Semua UKM/HMJ</option>
+                                        @foreach ($ukm as $ukm)
+                                            <option value="{{ $ukm->id }}" {{ $pengumuman->ukm_id == $ukm->id ? 'selected' : ''}}>{{ $ukm->nama_ukm }}</option>
+                                        @endforeach
+                                    </select>
+                                    <div class="text-danger">{{ $errors->first('ukm_id')}}</div>
+                                </div>
+                            @endif
 
                             <div class="form-group mt-3">
                                 <label for="judul">Judul</label>

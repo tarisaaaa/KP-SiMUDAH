@@ -12,7 +12,7 @@ class IndexController extends Controller
     public function index()
     {
         $pengumuman = Pengumuman::latest()->paginate(2);
-        // dd($pengumuman);
+        
         return view('index', compact('pengumuman'));
     }
 

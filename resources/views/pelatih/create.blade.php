@@ -36,11 +36,9 @@
                             </div>
 
                             <div class="form-group mt-3">
-                                <label for="role">Role</label>
-                                <select name="role" id="role" class="form-control @error('role') is-invalid @enderror">
-                                    <option value="pelatih">Pelatih</option>
-                                </select>
-                                @error('role')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" id="email" value="{{ old('email') }}">
+                                @error('email')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
 
                             <button type="submit" class="btn btn-success btn-block border pt-2">Tambah Data</button>

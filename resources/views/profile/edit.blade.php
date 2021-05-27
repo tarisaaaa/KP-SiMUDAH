@@ -26,7 +26,7 @@
 
                             <div class="form-group mt-3">
                                 <label for="email">Email</label>
-                                <input type="text" class="form-control @error('email') is-invalid @enderror" name="email" id="email" value="{{ $profile->email }}">
+                                <input type="text" class="form-control @error('email') is-invalid @enderror" name="email" id="email" value="{{ $users->email }}">
                                 @error('email')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
 

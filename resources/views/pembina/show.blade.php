@@ -31,7 +31,7 @@
                         <p class="card-text">{{ $pembina->niknpm }}</p>
 
                         <p class="mb-0"><strong>Email</strong></p>
-                        <p class="card-text">{{ $pembina->email }}</p>
+                        <p class="card-text">{{ $pembina->users->email }}</p>
                     
                         <p class="mb-0"><strong>Nomor HP</strong></p>
                         <p class="card-text">{{ $pembina->nohp }}</p>

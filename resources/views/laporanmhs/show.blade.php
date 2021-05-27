@@ -13,7 +13,7 @@
             <div class="card-body ml-3 mr-3">
                 <h2><center>Laporan Kehadiran Mahasiswa</center></h2>
                 <center><h5>Bulan {{ $bulan }} Tahun {{ $tahun }}</h5></center>
-                <center><h5>UKM {{ $query2->nama_ukm }}</h5></center>
+                <center><h5>{{ $query2->nama_ukm }}</h5></center>
                 
                 <table class="table table-bordered" id="dataTable">  
                     <thead>

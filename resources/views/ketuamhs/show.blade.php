@@ -31,7 +31,7 @@
                         <p class="card-text">{{ $ketuamhs->niknpm }}</p>
 
                         <p class="mb-0"><strong>Email</strong></p>
-                        <p class="card-text">{{ $ketuamhs->email }}</p>
+                        <p class="card-text">{{ $ketuamhs->users->email }}</p>
                     
                         <p class="mb-0"><strong>Nomor HP</strong></p>
                         <p class="card-text">{{ $ketuamhs->nohp }}</p>

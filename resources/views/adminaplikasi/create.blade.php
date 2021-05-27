@@ -18,7 +18,7 @@
                         <form method="post" action="{{ route('adminaplikasi.store') }}">
                             @csrf
                             <div class="form-group mt-3">
-                                <label for="nama">Nama adminaplikasi</label>
+                                <label for="nama">Nama Admin Aplikasi</label>
                                 <input type="text" class="form-control @error('nama') is-invalid @enderror" name="nama" id="nama" value="{{ old('nama') }}">
                                 @error('nama')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
@@ -36,11 +36,9 @@
                             </div>
 
                             <div class="form-group mt-3">
-                                <label for="role">Role</label>
-                                <select name="role" id="role" class="form-control @error('role') is-invalid @enderror">
-                                    <option value="adminaplikasi">Admin Aplikasi</option>
-                                </select>
-                                @error('role')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" id="email" value="{{ old('email') }}">
+                                @error('email')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
 
                             <button type="submit" class="btn btn-success btn-block border pt-2">Tambah Data</button>
