@@ -81,12 +81,9 @@ class ProfileController extends Controller
         }
         $graph = DB::select($sql);
         // dd($graph);
-<<<<<<< HEAD
 
         return view('dashboard', compact('profile', 'graph','graph_title', 'graph_yaxis'));
-=======
-        return view('dashboard', compact('profile', 'graph','graph_title', 'graph_yaxis', 'namaukm'));
->>>>>>> tarisa3
+
     }
 
     public function grafik($id_ukm) 
