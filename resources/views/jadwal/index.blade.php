@@ -44,7 +44,18 @@
                                 <td>{{ $jadwal['waktu_mulai'] }}</td>
                                 <td>{{ $jadwal['waktu_selesai'] }}</td>
                                 <td>{{ $jadwal['tempat'] }}</td>
-                                <td>{{ $jadwal['pelatih']}}</td>
+                                @if (count(explode(',', $jadwal['pelatih_id'])) > 1)
+                                    <td>
+                                    @php
+                                        $pelatih = App\Users::whereIn('id', explode(',', $jadwal['pelatih_id']))->get()
+                                    @endphp
+                                     @foreach ($pelatih as $item)
+                                     <li>{{ $item->nama}}</li>
+                                 @endforeach
+                                    </td>
+                                @else
+                                    <td>{{ $jadwal['pelatih']}}</td>
+                                @endif
 
                                 <td>{{ $jadwal['ketuamhs'] }}</td>
                                 <td>

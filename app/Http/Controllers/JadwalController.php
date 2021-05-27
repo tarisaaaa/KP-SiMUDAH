@@ -30,7 +30,7 @@ class JadwalController extends Controller
         $getPelatih = DB::table('ukm')
                         ->join('pelatihview', 'ukm.pelatih_id', '=', 'pelatihview.id')
                         ->join('jadwal', 'ukm.id', '=', 'jadwal.ukm_id')
-                        ->select('pelatihview.nama')
+                        ->select('pelatihview.nama', 'ukm.pelatih_id')
                         ->get()->toArray();
         
         // $getPelatih = DB::table('users')
@@ -56,6 +56,7 @@ class JadwalController extends Controller
             if (empty($getPelatih[$key])) {
                 $array['pelatih'] = "-";
             } else {
+                $array['pelatih_id'] = $getPelatih[$key]->pelatih_id;
                 $array['pelatih'] = $getPelatih[$key]->nama;
             }
             
