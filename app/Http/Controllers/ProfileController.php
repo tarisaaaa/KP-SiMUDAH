@@ -23,6 +23,7 @@ class ProfileController extends Controller
         
         $user = session('user')->role;
         $graph2 = [];
+        $namaukm = '';
         if ($user == 'adminkeuangan') 
         {
             $sql =  "SELECT users.nama, laporan.ukm_id, ukm.nama_ukm, COUNT(*) as graph_value
@@ -56,6 +57,7 @@ class ProfileController extends Controller
                     GROUP BY a.ukm_id,u.nama_ukm";
             $graph_title = "Grafik Keaktifan UKM dan HMJ";
             $graph_yaxis = "Rata-rata jumlah kehadiran";
+            $namaukm = DB::table('ukm')->join('users', 'ukm.pembina_id', '=', 'users.id')->where('ukm.pembina_id', $id)->first();
         }
         else if($user == "pelatih") 
         {
@@ -70,6 +72,7 @@ class ProfileController extends Controller
                     GROUP BY a.ukm_id,u.nama_ukm, day(a.created_at)";
             $graph_title = "Grafik Kehadiran Mahasiswa";
             $graph_yaxis = "Jumlah mahasiswa";
+            $namaukm = DB::table('ukm')->join('users', 'ukm.pelatih_id', '=', 'users.id')->where('ukm.pelatih_id', $id)->first();
         }
         else
         {
@@ -77,8 +80,12 @@ class ProfileController extends Controller
         }
         $graph = DB::select($sql);
         // dd($graph);
+<<<<<<< HEAD
 
         return view('dashboard', compact('profile', 'graph','graph_title', 'graph_yaxis'));
+=======
+        return view('dashboard', compact('profile', 'graph','graph_title', 'graph_yaxis', 'namaukm'));
+>>>>>>> tarisa3
     }
 
     public function grafik($id_ukm) 
@@ -122,7 +129,6 @@ class ProfileController extends Controller
         $request->validate([
             'niknpm'      => ['required'],
             'nohp'      => ['required', 'numeric'],
-            'email'          => ['required', 'email'],
             'alamat'          => ['required'],
             'user_id'      => ['required'],
         ]);
@@ -130,7 +136,6 @@ class ProfileController extends Controller
         $profile = new Profile;
         $profile->niknpm = $request->niknpm;
         $profile->nohp =$request->nohp;
-        $profile->email = $request->email;
         $profile->alamat = $request->alamat;
         $profile->user_id = $request->user_id;
 
@@ -185,7 +190,6 @@ class ProfileController extends Controller
         $profile = Profile::find($id);
         $profile->niknpm = $request->niknpm;
         $profile->nohp =$request->nohp;
-        $profile->email = $request->email;
         $profile->alamat = $request->alamat;
         $profile->user_id = $request->user_id;
 
@@ -197,6 +201,7 @@ class ProfileController extends Controller
         if ($request->password != null) {
             $user->password = Hash::make($request->password);
         }
+        $user->email = $request->email;
 
         Session::flash('edit',$user->save());
 

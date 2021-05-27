@@ -27,6 +27,7 @@
                                 <input type="password" class="form-control" id="password" name="password" placeholder="Password">
                             </div>
                             <button type="submit" class="btn btn-success btn-sm btn-block">LOGIN</button>
+                            <a href="/forgotpassword" class="mt-2 float-right">Lupa password</a>
                             <br>
                             @if(session('gagal_login') == TRUE)
                             <small style="color:red">username atau password salah!</small>

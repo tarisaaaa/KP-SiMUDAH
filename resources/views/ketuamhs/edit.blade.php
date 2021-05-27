@@ -19,7 +19,7 @@
                             @method('put')
                             @csrf
                             <div class="form-group mt-3">
-                                <label for="nama_mhs">Nama Ketua Mahasiswa</label>
+                                <label for="nama">Nama Ketua Mahasiswa</label>
                                 <input type="text" class="form-control @error('nama') is-invalid @enderror" name="nama" id="nama" value="{{ $ketuamhs->nama }}">
                                 <div class="text-danger">{{ $errors->first('nama')}}</div>
                             </div>
@@ -27,13 +27,21 @@
                             <div class="form-group mt-3">
                                 <label for="user_name">Username</label>
                                 <input type="text" class="form-control @error('user_name') is-invalid @enderror" name="user_name" id="user_name" value="{{ $ketuamhs->user_name }}">
-                                <div class="text-danger">{{ $errors->first('username')}}</div>
+                                <div class="text-danger">{{ $errors->first('user_name')}}</div>
                             </div>
+
                             <div class="form-group mt-3">
                                 <label for="password">Password</label>
                                 <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" id="password" value="">
                                 <div class="text-danger">{{ $errors->first('password') ? "" : "Kosongkan password jika tidak ingin diubah!" }}</div>
                             </div>
+
+                            <div class="form-group mt-3">
+                                <label for="email">Email</label>
+                                <input type="text" class="form-control @error('email') is-invalid @enderror" name="email" id="email" value="{{ $ketuamhs->email }}">
+                                <div class="text-danger">{{ $errors->first('email')}}</div>
+                            </div>
+
                             <button type="submit" class="btn btn-success btn-block border pt-2">Edit Data</button>
                             <a href="/ketuamhs" class="btn btn-outline-secondary btn-block">Batal</a>
                         </form>

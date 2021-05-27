@@ -15,18 +15,13 @@
                             Wakil Rektor III
                         @elseif (session('user')->role == 'pelatih')
                             Pelatih: 
-                            @foreach ($graph as $item)
-                                {{ $item->nama_ukm }}
-                            @endforeach 
+                            {{ $namaukm->nama_ukm }}
                         @elseif (session('user')->role == 'pembina')
                             Pembina: 
-                            @foreach ($graph as $item)
-                                {{ $item->nama_ukm }}
-                            @endforeach                                 
+                            {{ $namaukm->nama_ukm }}                              
                         @else
                             {{ session('user')->role }}     
                         @endif
-                       
                     </h6>
                     @if (!empty($profile->user_id))
                         <a href="{{ route('profile.edit',['profile' => $profile->id]) }}">Edit Profil</a>
@@ -41,16 +36,14 @@
                 </div>
 
                 <div class="col-lg-5 m-2">
-                    @if (!empty($profile->user_id))
                         <p><strong>Username :</strong> {{ session('user')->user_name }}</p>
+                        <p><strong>Email :</strong> {{ session('user')->email }}</p>
+                    @if (!empty($profile->user_id))
                         <p><strong>NIK/NPM :</strong> {{ $profile->niknpm }}</p>
-                        <p><strong>Email :</strong> {{ $profile->email }}</p>
                         <p><strong>Nomor HP :</strong> {{ $profile->nohp }}</p>
                         <p><strong>Alamat :</strong> {{ $profile->alamat }}</p>                  
                     @else
-                        <p><strong>Username :</strong> {{ session('user')->user_name }}</p>
                         <p><strong>NIK/NPM :</strong> -</p>
-                        <p><strong>Email :</strong> -</p>
                         <p><strong>Nomor HP :</strong> -</p>
                         <p><strong>Alamat :</strong> -</p>
                     @endif

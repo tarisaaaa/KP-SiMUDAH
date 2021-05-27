@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Session;
 class WkController extends Controller
 {
     public function index() {
-        $data['users']= DB::table('users')->select('id', 'user_name', 'nama')->where('role', '=', 'wk')->get();
+        $data['users']= DB::table('users')->where('role', '=', 'wk')->get();
         return view('wk.index',$data);
         
     }
@@ -25,16 +25,22 @@ class WkController extends Controller
     {
         $request->validate([
             'nama'      => ['required'],
-            'user_name'     => ['required'],
+            'user_name'     => ['required', 'unique:users,user_name'],
             'password'      => ['required'],
-            'role'          => ['required']
+            'email'         => ['required', 'email', 'unique:users,email'],
+        ],[
+            'required' => 'Field tidak boleh kosong!',
+            'user_name.unique' => 'Username sudah ada!',
+            'email.unique' => 'Email sudah ada!',
+            'email' => 'Format email tidak benar!'
         ]);
         
         $users = new Users;
         $users->nama = $request->nama;
         $users->user_name = $request->user_name;
-        $users->role =$request->role;
+        $users->role = 'wk';
         $users->password = Hash::make($request->password);
+        $users->email = $request->email;
 
         Session::flash('add',$users->save());
         return redirect('/wk')->with('status', 'Data User Berhasil Ditambahkan!');
@@ -43,7 +49,8 @@ class WkController extends Controller
     public function show($id)
     {
         $wk = Profile::where('user_id', $id)->first();
-        return view('wk.show', compact('wk'));
+        $user = Users::where('id', $id)->first();
+        return view('wk.show', compact('wk', 'user'));
     }
 
     public function edit($id)
@@ -58,14 +65,22 @@ class WkController extends Controller
     {
         $request->validate([
             'nama'      => ['required'],
-            'user_name'     => ['required'],
+            'user_name'     => ['required', 'unique:users,user_name,'.$id],
+            'email' => ['required', 'email', 'unique:users,email,'.$id]
+        ],[
+            'required' => 'Field tidak boleh kosong!',
+            'user_name.unique' => 'Username sudah ada!',
+            'email.unique' => 'Email sudah ada!',
+            'email' => 'Format email tidak benar!'
         ]);
+
         $user = Users::find($id);
         $user->nama = $request->nama;
         $user->user_name = $request->user_name;
         if ($request->password != null) {
             $user->password = Hash::make($request->password);
         }
+        $user->email = $request->email;
 
         Session::flash('edit',$user->save());
         return redirect()->route('wk.index')->with('status','Data User Berhasil Diubah');

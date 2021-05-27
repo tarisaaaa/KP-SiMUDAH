@@ -12,7 +12,7 @@ class IndexController extends Controller
     public function index()
     {
         $pengumuman = Pengumuman::latest()->paginate(2);
-        // dd($pengumuman);
+        
         return view('index', compact('pengumuman'));
     }
 
@@ -28,7 +28,7 @@ class IndexController extends Controller
         $getPelatih = DB::table('ukm')
                         ->join('pelatihview', 'ukm.pelatih_id', '=', 'pelatihview.id')
                         ->join('jadwal', 'ukm.id', '=', 'jadwal.ukm_id')
-                        ->select('pelatihview.nama')
+                        ->select('pelatihview.nama', 'ukm.pelatih_id')
                         ->get()->toArray();
         $getKetuamhs = DB::table('ukm')
                         ->join('ketuamhsview', 'ukm.ketuamhs_id', '=', 'ketuamhsview.id')
@@ -49,10 +49,15 @@ class IndexController extends Controller
             if (empty($getPelatih[$key])) {
                 $array['pelatih'] = "-";
             } else {
+                $array['pelatih_id'] = $getPelatih[$key]->pelatih_id;
                 $array['pelatih'] = $getPelatih[$key]->nama;
             }
             $array['ketuamhs'] = $getKetuamhs[$key]->nama;
-            $array['pembina'] = $getPembina[$key]->nama;
+            if (empty($getPembina[$key])) {
+                $array['pembina'] = "-";
+            } else {
+                $array['pembina'] = $getPembina[$key]->nama;
+            }
             $results[] = $array;
         }
             

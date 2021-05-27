@@ -31,7 +31,7 @@
                         <p class="card-text">{{ $pelatih->niknpm }}</p>
 
                         <p class="mb-0"><strong>Email</strong></p>
-                        <p class="card-text">{{ $pelatih->email }}</p>
+                        <p class="card-text">{{ $pelatih->users->email }}</p>
                     
                         <p class="mb-0"><strong>Nomor HP</strong></p>
                         <p class="card-text">{{ $pelatih->nohp }}</p>

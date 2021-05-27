@@ -18,7 +18,7 @@
         <h2 class=""><center>
             LAPORAN KEHADIRAN MAHASISWA
             <br>
-            UKM {{ $query2->nama_ukm }}
+            {{ $query2->nama_ukm }}
             <br>
             Bulan {{ $bulan }} Tahun {{ $tahun }}
         </center></h2>

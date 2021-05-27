@@ -67,9 +67,9 @@
             </div>
 
             <div class="col-lg-5 right">
+                <center><h1>PENGUMUMAN</h1></center>
                 
-                @if (!empty($pengumuman))
-                    <center><h1>PENGUMUMAN</h1></center>
+                @if (count($pengumuman) > 0)
                     
                     @foreach($pengumuman as $p)
                         <div class="card shadow m-4">
@@ -90,6 +90,10 @@
 
                     <div class="pagination justify-content-center">
                         {{ $pengumuman->render() }}
+                    </div>
+                @else
+                    <div class="card m-4 p-4">
+                        Belum ada pengumuman
                     </div>
                 @endif
                 

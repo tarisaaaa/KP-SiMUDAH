@@ -31,7 +31,7 @@
                         <p class="card-text">{{ $wk->niknpm }}</p>
 
                         <p class="mb-0"><strong>Email</strong></p>
-                        <p class="card-text">{{ $wk->email }}</p>
+                        <p class="card-text">{{ $user->email }}</p>
                     
                         <p class="mb-0"><strong>Nomor HP</strong></p>
                         <p class="card-text">{{ $wk->nohp }}</p>

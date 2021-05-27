@@ -30,12 +30,6 @@
                             </div>
 
                             <div class="form-group mt-3">
-                                <label for="email">Email</label>
-                                <input type="text" class="form-control @error('email') is-invalid @enderror" name="email" id="email" value="{{ old('email') }}">
-                                @error('email')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                            </div>
-
-                            <div class="form-group mt-3">
                                 <label for="nohp">Nomor HP</label>
                                 <input type="text" class="form-control @error('nohp') is-invalid @enderror" name="nohp" id="nohp" value="{{ old('nohp') }}">
                                 @error('nohp')<div class="invalid-feedback">{{ $message }}</div>@enderror

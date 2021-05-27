@@ -135,7 +135,7 @@
               <a href="/ukm" class="nav-link">
                 <i class="nav-icon fas fa-users"></i>
                 <p>
-                  UKM/HMJ
+                  UKM/HMJ - Anggota
                 </p>
               </a>
             </li>

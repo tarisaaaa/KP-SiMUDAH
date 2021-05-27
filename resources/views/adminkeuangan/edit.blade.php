@@ -27,13 +27,21 @@
                             <div class="form-group mt-3">
                                 <label for="user_name">Username</label>
                                 <input type="text" class="form-control @error('user_name') is-invalid @enderror" name="user_name" id="user_name" value="{{ $adminkeuangan->user_name }}">
-                                <div class="text-danger">{{ $errors->first('username')}}</div>
+                                <div class="text-danger">{{ $errors->first('user_name')}}</div>
                             </div>
+
                             <div class="form-group mt-3">
                                 <label for="password">Password</label>
                                 <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" id="password" value="">
                                 <div class="text-danger">{{ $errors->first('password') ? "" : "Kosongkan password jika tidak ingin diubah!" }}</div>
                             </div>
+
+                            <div class="form-group mt-3">
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" id="email" value="{{ $adminkeuangan->email }}">
+                                <div class="text-danger">{{ $errors->first('email')}}</div>
+                            </div>
+
                             <button type="submit" class="btn btn-success btn-block border pt-2">Edit Data</button>
                             <a href="/adminkeuangan" class="btn btn-outline-secondary btn-block">Batal</a>
                         </form>
