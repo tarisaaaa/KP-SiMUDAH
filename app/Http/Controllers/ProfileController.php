@@ -24,6 +24,7 @@ class ProfileController extends Controller
         
         $user = session('user')->role;
         $graph2 = [];
+        $namaukm = '';
         if ($user == 'adminkeuangan') 
         {
             $sql =  "SELECT users.nama, laporan.ukm_id, ukm.nama_ukm, COUNT(*) as graph_value

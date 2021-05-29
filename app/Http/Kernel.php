@@ -2,6 +2,16 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\AdminAplikasiandKetuaMahasiswaOnlyMiddleware;
+use App\Http\Middleware\AdminAplikasiOnlyMiddleware;
+use App\Http\Middleware\AdminaplKetuamhsPelatihOnlyMiddleware;
+use App\Http\Middleware\AdminKeuanganAndPembinaOnlyMiddleware;
+use App\Http\Middleware\AdminKeuanganOnlyMiddleware;
+use App\Http\Middleware\AdminOnlyMiddleware;
+use App\Http\Middleware\KetuaMahasiswaOnlyMiddleware;
+use App\Http\Middleware\PelatihOnlyMiddleware;
+use App\Http\Middleware\PembinaOnlyMiddleware;
+use App\Http\Middleware\WkOnlyMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -63,5 +73,14 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'adminaplikasi' => AdminAplikasiOnlyMiddleware::class,
+        'adminkeuangan' => AdminKeuanganOnlyMiddleware::class,
+        'ketuamahasiswa' => KetuaMahasiswaOnlyMiddleware::class,
+        'pelatih' => PelatihOnlyMiddleware::class,
+        'pembina' => PembinaOnlyMiddleware::class,
+        'wk' => WkOnlyMiddleware::class,
+        'adminaplikasiketuamahasiswa' => AdminAplikasiandKetuaMahasiswaOnlyMiddleware::class,
+        'adminaplikasiketuamahasiswapelatih' => AdminaplKetuamhsPelatihOnlyMiddleware::class,
+        'adminkeuanganandpembina' => AdminKeuanganAndPembinaOnlyMiddleware::class,
     ];
 }
