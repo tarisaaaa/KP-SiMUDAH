@@ -1,25 +1,24 @@
-@extends('layouts.main')
-
-@section('title', 'SiMUDAH | Lupa Password')
-
-@section('content')
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>SiMUDAH | Lupa Password</title>
+</head>
+<body>
+    
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Verify Your Email Address</div>
-                  <div class="card-body">
-                   @if (session('resent'))
-                        <div class="alert alert-success" role="alert">
-                           {{ __('A fresh verification link has been sent to your email address.') }}
-                       </div>
-                   @endif
-                   <a href="/{{$token}}/resetpassword">Click Here</a>.
-               </div>
-           </div>
-       </div>
-   </div>
+    <p>Verikasi email Anda</p>
+    @if (session('resent'))
+        <div class="alert alert-success" role="alert">
+            {{ __('A fresh verification link has been sent to your email address.') }}
+        </div>
+    @endif
+    <a href="{{config('app.url')}}/{{$token}}/resetpassword">Klik Di sini</a>.
+    
 </div>
 
-@endsection
+</body>
+</html>
+
