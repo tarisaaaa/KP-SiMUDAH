@@ -4,9 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Absensi;
 use App\AbsensiDetail;
+use App\Laporan;
 use App\Ukm;
+use App\Users;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 
 class AbsensiController extends Controller
@@ -30,10 +34,16 @@ class AbsensiController extends Controller
      */
     public function create($id)
     {
-        $ukm = DB::table('ukm')->where('id', $id)->select('id', 'nama_ukm')->first();
+        $pelatih_ids = Ukm::where('id', $id)->select('pelatih_id')->first();
+        $pelatih = DB::table('ukm')->join('pelatihview', 'ukm.pelatih_id', '=', 'pelatihview.id')->where('ukm.id', $id)->select('pelatihview.id','pelatihview.nama')->first();
+        $ukm = DB::table('ukm')->where('id', $id)->select('id', 'nama_ukm', 'pelatih_id')->first();   
+        $anggota = DB::table('anggota')->where('ukm_id', $id)->where('status', '=', 'Aktif')->select('id','nama_anggota')->get();
+        $jam = DB::table('jadwal')->where('ukm_id', $id)->first();
+        $jam_mulai = Carbon::createFromFormat('H:i:s', $jam->waktu_mulai)->format('H:i');
+        $jam_selesai = Carbon::createFromFormat('H:i:s', $jam->waktu_selesai)->format('H:i');
         
-        $anggota = DB::table('anggota')->where('ukm_id', $id)->where('status', '=', 'Aktif')->get();
-        return view('absensi.create', compact('ukm', 'anggota'))->with('no', 1);
+        // dd($pelatih_ids);
+        return view('absensi.create', compact('ukm', 'anggota', 'pelatih', 'jam_mulai', 'jam_selesai', 'pelatih_ids'))->with('no', 1);
     }
 
     /**
@@ -44,55 +54,30 @@ class AbsensiController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'keterangan'     => ['required'],
-            'foto'      => ['required'],
-            'user_id'          => ['required'],
-            'ukm_id'      => ['required'],
-
-            //absensi detail
-            'absensi_id' => ['required'],
-            'anggota_id' => ['required'],
-            'status_absen' => ['required'],
-            'keterangan_absen' => ['required']
-        ]);
-        
-        $absensi = new Absensi;
-        $absensi->keterangan = $request->keterangan;
-        $absensi->user_id = $request->user_id;
-        $absensi->ukm_id = $request->ukm_id;
-        $foto = $request->file('foto');
-        if(!empty($foto)){
-            $foto_name = date('Y-m-d')."_".$foto->getClientOriginalName();
-            $foto->move("assets/img/fotolatihan",$foto_name);
-            $absensi->foto = $foto_name;
-        }
-        
-        //Session::flash('add',$absensi->save());
-        $absensi->save();
-
-        $data = Absensi::find($absensi->id);
-        $anggota = DB::table('anggota')->where('ukm_id', $absensi->ukm_id)->where('status', '=', 'Aktif')->get();
-        //$absensi_detail = new AbsensiDetail;
-        $total = DB::table('anggota')->where('ukm_id', $absensi->ukm_id)->where('status', '=', 'Aktif')->count();
-        for ($i = 1; $i <= $total; $i++) {
-            $data->absensi_detail()->saveMany([
-                new AbsensiDetail(['anggota_id' => $anggota->id]),
-                new AbsensiDetail(['status_absen' => $request->status_absen[$i]]),
-                new AbsensiDetail(['keterangan' => $request->keterangan_absen[$i]]),
-            ]);
-        }
-        Session::flash('add',$data->save());
-
-        return redirect()->route('absensi.show', ['absensi'=>$request->ukm_id])->with('status', 'Absensi Berhasil Ditambahkan!');
-        
-        //return redirect()->route('absensi.detail', ['absensi'=>$absensi->id])->with('status', 'Absensi Berhasil Ditambahkan! Data absensi yang diinput tidak dapat diubah!')->with(compact('absensi'));
-
-         //return $this->detail(['absensi'=>$absensi->id])->with('status', 'Absensi Berhasil Ditambahkan! Data absensi yang diinput tidak dapat diubah!')->with(compact('absensi'));
+        //
     }
 
     public function inputabsensi(Request $request)
     {
+        if(!empty($request->kehadiran_pelatih)) {
+            if (count(explode(',', $request->pelatih_id)) > 1) {
+                $pelatih = json_decode($request->pelatih_id);
+                foreach($pelatih as $idpelatih) {
+                    $laporan = new Laporan;
+                    $laporan->ukm_id = $request->ukm_id;
+                    $laporan->pelatih_id = $idpelatih;
+                    $laporan->kehadiran = $request->kehadiran_pelatih[$idpelatih];
+                    $laporan->save();
+                }
+            } else {
+                $laporan = new Laporan;
+                $laporan->ukm_id = $request->ukm_id;
+                $laporan->pelatih_id = $request->pelatih_id;
+                $laporan->kehadiran = $request->kehadiran_pelatih;
+                $laporan->save();
+            }
+        }
+
         $absensi = new Absensi;
         $absensi->ukm_id = $request->ukm_id;
         $absensi->user_id = Session::get('user')->id;
@@ -102,6 +87,13 @@ class AbsensiController extends Controller
             $foto_name = date('Y-m-d')."_".$foto->getClientOriginalName();
             $foto->move("assets/img/fotolatihan",$foto_name);
             $absensi->foto = $foto_name;
+        }
+        if(!empty($request->kehadiran_pelatih)) {
+            if (count(explode(',', $request->pelatih_id)) > 1) {
+                $absensi->kehadiran_pelatih = implode(', ', (array) $request->get('kehadiran_pelatih'));
+            } else {
+                $absensi->kehadiran_pelatih = $request->kehadiran_pelatih;
+            }
         }
         $absensi->save();
 
@@ -113,16 +105,10 @@ class AbsensiController extends Controller
                 'keterangan' => $a->keterangan
             ]);
         }
+
         $response['success'] = true;
         return response()->json($response);
     }
-
-    // public function detail($id) 
-    // {
-    //     $absensi_detail = AbsensiDetail::findOrFail($id);
-    //     dd($absensi_detail);
-    //     return view('absensi.detail', compact('absensi_detail'));
-    // }
 
     /**
      * Display the specified resource.
@@ -134,8 +120,26 @@ class AbsensiController extends Controller
     {
         $ukm = Ukm::find($id);
         $absensi = Absensi::where(['ukm_id'=>$id])->get();
+        $sql = "SELECT absensi.id, absensi.created_at, COUNT(*) as jumlahs
+                FROM absensi
+                INNER JOIN absensi_detail ON absensi.id = absensi_detail.absensi_id
+                WHERE absensi_detail.status_absen = 'H' AND absensi.ukm_id = $id
+                GROUP BY absensi.id";
+        $jumlah = DB::select($sql);
+
+        $results = array();
+        foreach($absensi as $key=>$data){
+            $array=array();
+            $array['id'] = $data->id;
+            $array['keterangan'] = $data->keterangan;
+            $array['foto'] = $data->foto;
+            $array['created_at'] = $data->created_at;
+            $array['jumlah_hadir'] = $jumlah[$key]->jumlahs;
+            $results[] = $array;
+        }
         
-        return view('absensi.show', compact('absensi', 'ukm'));
+        // dd($results);
+        return view('absensi.show', compact('results', 'ukm'));
     }
 
     /**
@@ -204,3 +208,4 @@ class AbsensiController extends Controller
         return back()->with('status', 'Absensi Berhasil Dihapus!');
     }
 }
+ 

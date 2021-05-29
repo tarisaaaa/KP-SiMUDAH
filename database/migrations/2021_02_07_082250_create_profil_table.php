@@ -16,7 +16,6 @@ class CreateProfilTable extends Migration
         Schema::create('profil', function (Blueprint $table) {
             $table->id();
             $table->string('niknpm');
-            $table->string('email');
             $table->string('nohp');
             $table->string('alamat');
             $table->bigInteger('user_id', 0, 1);

@@ -1,10 +1,10 @@
 @extends('layouts.mainadv')
 
-@section('title', 'MDP UKM | Wakil Ketua 3')
+@section('title', 'MDP UKM | Wakil Rektor III')
 
 @section('content')
     <div class="container">
-        <h1 class="ml-3">Wakil Ketua 3</h1>
+        <h1 class="ml-3">Wakil Rektor 3</h1>
 
         @if (session('status'))
             <div class="alert alert-success">
@@ -15,7 +15,7 @@
         <div class="card shadow m-4">
             <div class="card-header py-3">
                 <a href="/wk/create" class="btn btn-outline-secondary btn-flat">
-                    <span class="text">Tambah WK</span>
+                    <span class="text">Tambah Wakil Rektor III</span>
                 </a>
             </div>
             <div class="card-body p-2 m-3">
@@ -25,6 +25,7 @@
                             <tr>
                                 <th>Nama</th>
                                 <th>User Name</th>
+                                <th>Email</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -33,6 +34,7 @@
                             <tr>
                                 <td>{{ $wk->nama }}</td>
                                 <td>{{ $wk->user_name }}</td>
+                                <td>{{ $wk->email }}</td>
                                 <td>
                                     <a href="/wk/{{ $wk->id}}" class="btn btn-warning btn-sm"><i class="fas fa-info"></i></a>
                                     <a href="{{ route('wk.edit',['wk'=>$wk->id]) }}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>

@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Session;
 class LoginController extends Controller
 {
     public function index() {
+        // dd(Hash::make('123'));
         return view('login');
     }
 
@@ -19,13 +20,20 @@ class LoginController extends Controller
 
         //dd(Hash::make('123'));
         $user = Login::where(["user_name"=>$user_name])->first();
-        if(Hash::check($password,$user->password)){
-            Session::put('user',$user);
-            return redirect('/dashboard');
-        }else{
+        if (!empty($user)){
+            if(Hash::check($password,$user->password)){
+                Session::put('user',$user);
+                return redirect('/dashboard');
+            }else{
+                Session::flash('gagal_login',TRUE);
+                return redirect('/login');
+            }
+        } else{
             Session::flash('gagal_login',TRUE);
             return redirect('/login');
         }
+        
+        
     }
 
     public function logout() {

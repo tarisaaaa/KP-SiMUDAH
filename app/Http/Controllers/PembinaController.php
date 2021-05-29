@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Session;
 class PembinaController extends Controller
 {
     public function index() {
-        $data['users']= DB::table('users')->select('id', 'user_name', 'nama')->where('role', '=', 'pembina')->get();
+        $data['users']= DB::table('users')->where('role', '=', 'pembina')->get();
         return view('pembina.index',$data);
         
     }
@@ -27,14 +27,20 @@ class PembinaController extends Controller
             'nama'      => ['required'],
             'user_name'     => ['required', 'unique:users,user_name'],
             'password'      => ['required'],
-            'role'          => ['required']
+            'email'         => ['required', 'email', 'unique:users,email'],
+        ],[
+            'required' => 'Field tidak boleh kosong!',
+            'user_name.unique' => 'Username sudah ada!',
+            'email.unique' => 'Email sudah ada!',
+            'email' => 'Format email tidak benar!'
         ]);
         
         $users = new Users;
         $users->nama = $request->nama;
         $users->user_name = $request->user_name;
-        $users->role =$request->role;
+        $users->role = 'pembina';
         $users->password = Hash::make($request->password);
+        $users->email = $request->email;
 
         Session::flash('add',$users->save());
         return redirect('/pembina')->with('status', 'Data User Berhasil Ditambahkan!');
@@ -58,12 +64,22 @@ class PembinaController extends Controller
     {
         $request->validate([
             'nama'      => ['required'],
-            'user_name'     => ['required'],
+            'user_name'     => ['required', 'unique:users,user_name,'.$id],
+            'email' => ['required', 'email', 'unique:users,email,'.$id]
+        ],[
+            'required' => 'Field tidak boleh kosong!',
+            'user_name.unique' => 'Username sudah ada!',
+            'email.unique' => 'Email sudah ada!',
+            'email' => 'Format email tidak benar!'
         ]);
+
         $user = Users::find($id);
         $user->nama = $request->nama;
         $user->user_name = $request->user_name;
-        $user->password = Hash::make($request->password);
+        if ($request->password != null) {
+            $user->password = Hash::make($request->password);
+        }
+        $user->email = $request->email;
 
         Session::flash('edit',$user->save());
         return redirect()->route('pembina.index')->with('status','Data User Berhasil Diubah');

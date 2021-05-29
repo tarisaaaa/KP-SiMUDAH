@@ -37,6 +37,11 @@ Route::get('/login', 'LoginController@index');
 Route::post("/login", 'LoginController@login');
 Route::get('/logout', 'LoginController@logout');
 
+Route::get('/forgotpassword', 'ForgotPasswordController@index');
+Route::post('/forgotpassword', 'ForgotPasswordController@sendEmail');
+Route::get('/{token}/resetpassword', 'ForgotPasswordController@getPassword')->name('forgotpasssword.resetpassword');
+Route::post('/resetpassword', 'ForgotPasswordController@updatePassword');
+
 Route::resource('ketuamhs', 'KetuamhsController');
 Route::resource('pelatih', 'PelatihController');
 Route::resource('adminkeuangan', 'AdminkeuanganController');
@@ -50,7 +55,13 @@ Route::resource('kegiatan', 'KegiatanController');
 Route::get('kegiatan/showperukm/{kegiatan}', 'KegiatanController@showperukm')->name('kegiatan.showperukm');
 Route::get('/kegiatan/createperukm/{kegiatan}', 'KegiatanController@createperukm');
 Route::resource('laporan', 'LaporanController');
+Route::get('/laporan/{tahun}/{bulan}', 'LaporanController@show');
+Route::get('/laporan-pdf/{tahun}/{bulan}','LaporanController@exportPDF');
+Route::resource('laporanmhs', 'LaporanMhsController');
+Route::get('/laporanmhs/{id_ukm}/{tahun}/{bulan}', 'LaporanMhsController@show');
+Route::get('/laporanmhs-pdf/{id_ukm}/{tahun}/{bulan}','LaporanMhsController@exportPDF');
 Route::resource('profile', 'ProfileController');
+Route::get('/grafik/{id_ukm}', 'ProfileController@grafik');
 Route::resource('pengumuman', 'PengumumanController');
 Route::get('pengumuman/showperukm/{pengumuman}', 'PengumumanController@showperukm');
 Route::get('/pengumuman/createperukm/{pengumuman}', 'PengumumanController@createperukm');

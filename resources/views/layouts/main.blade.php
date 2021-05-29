@@ -31,39 +31,11 @@
 </head>
 <body>
     <div id="app">
-        <!--CAROUSEL-->
-        <div id="demo" class="carousel slide" data-ride="carousel">
-            <!-- Indicators -->
-            <ul class="carousel-indicators">
-            <li data-target="#demo" data-slide-to="0" class="active"></li>
-            <li data-target="#demo" data-slide-to="1"></li>
-            <li data-target="#demo" data-slide-to="2"></li>
-            </ul>     
-            <!-- The slideshow -->
-            <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img src="{{ asset('assets/img/carousel1.jpg') }}" alt="Gambar - 1" class="img-fluid" width="100%">
-            </div>
-            <div class="carousel-item">
-                <img src="{{ asset('assets/img/carousel.jpg') }}" alt="Gambar - 2" class="img-fluid" width="100%">
-            </div>
-            <div class="carousel-item">
-                <img src="{{ asset('assets/img/carousel2.jpg') }}" alt="Gambar - 3" class="img-fluid" width="100%">
-            </div>
-            </div>   
-            <!-- Left and right controls -->
-            <a class="carousel-control-prev" href="#demo" data-slide="prev">
-            <span class="carousel-control-prev-icon"></span>
-            </a>
-            <a class="carousel-control-next" href="#demo" data-slide="next">
-            <span class="carousel-control-next-icon"></span>
-            </a>
-        </div>
 
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container-fluid">
                 <a class="navbar-brand text-white" href="{{ url('/') }}">
-                    <img src="{{ asset('assets/img/icon2white.png') }}" alt="SiMUDAH Logo">
+                    <img src="{{ asset('assets/img/icon2white.png') }}" alt="SiMUDAH Logo" width="90px">
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -87,6 +59,9 @@
                 </div>
             </div>
         </nav>
+        
+
+        
 
         <main class="py-4">
             @yield('content')

@@ -44,9 +44,27 @@
                             @foreach($ukm as $u)
                             <tr>
                                 <td>{{ $u->nama_ukm }}</td>
-                                <td>{{ $u->pembina->nama }}</td>
+                                @if (!empty($u->pembina->nama))
+                                    <td>{{ $u->pembina->nama }}</td>
+                                @else      
+                                    <td>-</td>                          
+                                @endif
                                 @if (!empty($u->pelatih->nama))
-                                    <td>{{ $u->pelatih->nama }}</td>
+                                
+                                    @if (count(explode(',', $u->pelatih_id)) > 1)
+                                    <td>
+                                        @php
+                                            $pelatih = App\Users::whereIn('id', explode(',', $u->pelatih_id))->get()
+                                        @endphp
+                                        @foreach ($pelatih as $item)
+                                            <li>{{ $item->nama}}</li>
+                                            <i class="ml-3">({{ $item->status_user }})</i>
+                                        @endforeach
+                                    </td>
+                                    @else
+                                        <td>{{ $u->pelatih->nama }} <i>({{ $u->pelatih->status_user }})</i></td>
+                                    @endif
+                                    
                                 @else      
                                     <td>-</td>                          
                                 @endif

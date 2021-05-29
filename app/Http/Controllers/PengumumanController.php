@@ -22,7 +22,13 @@ class PengumumanController extends Controller
             return view('pengumuman.index', compact('pengumuman'));
         } else {
             $id = session('user')->id;
-            $pengumuman = Ukm::where('pelatih_id', $id)->orWhere('ketuamhs_id', $id)->get();
+            
+            $p = Ukm::where('pelatih_id', '=', $id)->orWhere('ketuamhs_id', $id)->get();
+            if ($p->isEmpty()) {
+                $pengumuman = Ukm::where('pelatih_id', 'like', '%' .$id. '%')->orWhere('ketuamhs_id', $id)->get();
+            } else {
+                $pengumuman = $p;
+            }
             return view('pengumuman.menu', compact('pengumuman'));
         }
     }

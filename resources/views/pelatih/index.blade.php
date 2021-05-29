@@ -25,6 +25,7 @@
                             <tr>
                                 <th>Nama Pelatih</th>
                                 <th>User Name</th>
+                                <th>Email</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -33,6 +34,7 @@
                             <tr>
                                 <td>{{ $pelatih->nama }}</td>
                                 <td>{{ $pelatih->user_name }}</td>
+                                <td>{{ $pelatih->email }}</td>
                                 <td>
                                     <a href="/pelatih/{{ $pelatih->id}}" class="btn btn-warning btn-sm"><i class="fas fa-info"></i></a>
                                     <a href="{{ route('pelatih.edit',['pelatih'=>$pelatih->id]) }}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>
