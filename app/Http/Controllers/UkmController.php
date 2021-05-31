@@ -20,9 +20,6 @@ class UkmController extends Controller
         if (session('user')->role == 'adminaplikasi') 
         {
             $ukm = Ukm::all();
-            $pelatih = Ukm::where('id', 3)->select('pelatih_id')->get();
-            $pelatihh = explode(',', $pelatih);
-            // dd($pelatihh);
             return view('ukm.index', compact('ukm'));
         } 
         else if (session('user')->role == 'ketuamahasiswa') 
@@ -60,6 +57,8 @@ class UkmController extends Controller
             'nama_ukm'      => ['required'],
             'ketuamhs_id'      => ['required'],
             'status'          => ['required']
+        ], [
+            'required' => 'Field harus diisi!'
         ]);
         
         $ukm = new Ukm;
@@ -117,6 +116,8 @@ class UkmController extends Controller
             'nama_ukm' => 'required',
             'ketuamhs_id' => 'required',
             'status' => 'required'
+        ],[
+            'required' => 'Field harus diisi!'
         ]);
 
         Ukm::where('id', $ukm->id)

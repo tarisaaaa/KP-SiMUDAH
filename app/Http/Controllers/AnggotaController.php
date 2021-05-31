@@ -44,10 +44,17 @@ class AnggotaController extends Controller
         $request->validate([
             'nama_anggota'      => ['required'],
             'npm'     => ['required', 'numeric', 'digits:10'],
-            'nohp'      => ['required', 'regex:/^[0-9]+$/u' , 'min:11'],
+            'nohp'      => ['required',  'regex:/(0)[0-9]{10,13}/', 'numeric', 'digits_between:11,14'],
             'email'          => ['required', 'email'],
             'status'          => ['required'],
             'ukm_id'      => ['required'],
+        ],[
+            'required' => 'Field harus diisi!',
+            'email' => 'Field harus berupa email!',
+            'digits' => 'Field harus berjumlah 10 digit',
+            'regex' => 'gunakan format nomor diawali dengan 0!',
+            'digits_between' => ':attribute berjumlah 11-14 digit',
+            'numeric' => ':attribute harus berupa angka'
         ]);
         
         $anggota = new Anggota;
@@ -105,11 +112,18 @@ class AnggotaController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nama_anggota' => 'required',
-            'npm' => 'required',
-            'nohp' => 'required',
-            'email' => 'required',
-            'status' => 'required'
+            'nama_anggota' => ['required'],
+            'npm' => ['required', 'numeric', 'digits:10'],
+            'nohp' => ['required', 'regex:/(0)[0-9]{10,13}/', 'numeric', 'digits_between:11,14'],
+            'email' => ['required', 'email'],
+            'status' => ['required']
+        ],[
+            'required' => 'Field harus diisi!',
+            'email' => 'Field harus berupa email!',
+            'regex' => 'gunakan format nomor diawali dengan 0!',
+            'digits_between' => ':attribute berjumlah 11-14 digit',
+            'numeric' => ':attribute harus berupa angka',
+            'digits' => 'Field harus berjumlah 10 digit',
         ]);
 
         $anggota = Anggota::find($id);

@@ -15,6 +15,9 @@
         <div class="card shadow m-4">
             <div class="card-header py-3">
                 <a href="/kegiatan/create" class="btn btn-outline-secondary btn-flat">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-plus-square"></i>
+                    </span>
                     <span class="text">Tambah Kegiatan</span>
                 </a>
             </div>
@@ -36,7 +39,7 @@
                                 <td>{{ $kegiatan->ukm->nama_ukm }}</td>
                                 <td>{{ $kegiatan->nama_kegiatan }}</td>
                                 <td>{{ $kegiatan->tanggal }}</td>
-                                <td>{{ substr($kegiatan->keterangan,0,20) }} ...</td>
+                                <td>{!! substr($kegiatan->keterangan,0,20) !!} ...</td>
                                 <td>
                                     <a href="/kegiatan/{{ $kegiatan->id}}" class="btn btn-warning btn-sm"><i class="fas fa-info"></i></a>
                                     <a href="{{ route('kegiatan.edit',['kegiatan'=>$kegiatan->id]) }}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>

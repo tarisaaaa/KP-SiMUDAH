@@ -15,6 +15,9 @@
         <div class="card shadow m-4">
             <div class="card-header py-3">
                 <a href="/pengumuman/createperukm/{{$ukm->id}}" class="btn btn-outline-secondary btn-flat">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-plus-square"></i>
+                    </span>
                     <span class="text">Tambah Pengumuman</span>
                 </a>
             </div>
@@ -37,7 +40,7 @@
                             <tr>
                                 <td>{{ $pengumuman->ukm->nama_ukm }}</td>
                                 <td>{{ $pengumuman->judul }}</td>
-                                <td>{{ substr($pengumuman->isi,0,20) }} ...</td>
+                                <td>{!! substr($pengumuman->isi,0,20) !!} ...</td>
                                 <td>{{ $pengumuman->nama }}</td>
                                 <td>{{ $pengumuman->created_at }}</td>
                                 <td>

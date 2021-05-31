@@ -57,6 +57,8 @@ class KegiatanController extends Controller
             'nama_kegiatan'     => ['required'],
             'tanggal'      => ['required'],
             'keterangan'          => ['required']
+        ],[
+            'required' => 'field :attribute tidak boleh kosong!'
         ]);
         
         $kegiatan = new Kegiatan;
@@ -113,6 +115,8 @@ class KegiatanController extends Controller
             'nama_kegiatan' => 'required',
             'tanggal' => 'required',
             'keterangan' => 'required'
+        ],[
+            'required' => 'field :attribute tidak boleh kosong!'
         ]);
 
         Kegiatan::where('id', $kegiatan->id)

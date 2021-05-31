@@ -47,7 +47,6 @@
                                 <label for="judul">Judul</label>
                                 <input type="text" class="form-control @error('judul') is-invalid @enderror" name="judul" id="judul" value="{{ $pengumuman->judul }}">
                                 <div class="text-danger">{{ $errors->first('judul')}}</div>
-                                @error('judul')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
 
                             <div class="form-group mt-3">

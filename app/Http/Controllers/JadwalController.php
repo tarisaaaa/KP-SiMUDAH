@@ -46,6 +46,8 @@ class JadwalController extends Controller
             'waktu_selesai' => ['required'],
             'hari'          => ['required'],
             'tempat'        => ['required']
+        ], [
+            'required'      => 'Field harus diisi!',
         ]);
         
         $jadwal = new Jadwal;
@@ -100,8 +102,9 @@ class JadwalController extends Controller
             'waktu_selesai' => ['required'],
             'hari'          => ['required'],
             'tempat'        => ['required']
+        ], [
+            'required'      => 'Field harus diisi!',
         ]);
-
         
 
         Jadwal::where('id', $jadwal->id)

@@ -15,6 +15,9 @@
         <div class="card shadow m-4">
             <div class="card-header py-3">
                 <a href="/ketuamhs/create" class="btn btn-outline-secondary btn-flat">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-plus-square"></i>
+                    </span>
                     <span class="text">Tambah Ketua Mahasiswa</span>
                 </a>
             </div>
