@@ -125,9 +125,14 @@ class ProfileController extends Controller
     {
         $request->validate([
             'niknpm'      => ['required'],
-            'nohp'      => ['required', 'numeric'],
+            'nohp'      => ['required', 'regex:/(0)[0-9]{10,13}/', 'numeric', 'digits_between:11,14'],
             'alamat'          => ['required'],
             'user_id'      => ['required'],
+        ], [
+            'required' => ':attribute tidak boleh kosong!',
+            'regex' => 'gunakan format nomor diawali dengan 0!',
+            'digits_between' => ':attribute berjumlah 11-14 digit',
+            'numeric' => ':attribute harus berupa angka'
         ]);
         
         $profile = new Profile;
@@ -175,13 +180,19 @@ class ProfileController extends Controller
     {
         $request->validate([
             'niknpm'      => ['required'],
-            'nohp'      => ['required', 'numeric'],
+            'nohp'      => ['required', 'regex:/(0)[0-9]{10,13}/', 'numeric', 'digits_between:11,14'],
             'email'          => ['required', 'email'],
             'alamat'          => ['required'],
             'user_id'      => ['required'],
 
             'nama'      => ['required'],
             'user_name'     => ['required'],
+        ], [
+            'required' => ':attribute tidak boleh kosong!',
+            'email' => 'field harus berupa email!',
+            'regex' => 'gunakan format nomor diawali dengan 0!',
+            'digits_between' => ':attribute berjumlah 11-14 digit',
+            'numeric' => ':attribute harus berupa angka'
         ]);
         
         $profile = Profile::find($id);

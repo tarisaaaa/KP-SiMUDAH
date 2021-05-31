@@ -24,14 +24,11 @@ Route::get('/jadwal-ukm', 'IndexController@jadwal');
 //     return view('jadwal');
 // });
 
-Route::get('/user', function () {
-    return view('user');
-});
 
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
 // });
-Route::get('/dashboard', 'ProfileController@index');
+
 
 Route::get('/login', 'LoginController@index')->name('login');
 Route::post("/login", 'LoginController@login');
@@ -43,6 +40,8 @@ Route::get('/{token}/resetpassword', 'ForgotPasswordController@getPassword')->na
 Route::post('/resetpassword', 'ForgotPasswordController@updatePassword');
 
 Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', 'ProfileController@index');
+    
     Route::middleware(['adminaplikasi'])->group(function() {
         Route::resource('adminaplikasi', 'AdminaplikasiController');
         Route::resource('ketuamhs', 'KetuamhsController');
@@ -51,6 +50,9 @@ Route::middleware('auth')->group(function () {
         Route::resource('pembina', 'PembinaController');
         Route::resource('wk', 'WkController');
         Route::resource('jadwal', 'JadwalController');
+        Route::get('/user', function () {
+            return view('user');
+        });
         
     });
     // Route::resource('adminaplikasi', 'AdminaplikasiController')->middleware('adminaplikasi');

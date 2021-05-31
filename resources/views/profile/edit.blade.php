@@ -55,13 +55,13 @@
                         <div class="form-group mt-3">
                             <label for="nama">Nama</label>
                             <input type="text" class="form-control @error('nama') is-invalid @enderror" name="nama" id="nama" value="{{ $users->nama }}">
-                            <div class="text-danger">{{ $errors->first('nama')}}</div>
+                            @error('nama')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
 
                         <div class="form-group mt-3">
                             <label for="user_name">Username</label>
                             <input type="text" class="form-control @error('user_name') is-invalid @enderror" name="user_name" id="user_name" value="{{ $users->user_name }}">
-                            <div class="text-danger">{{ $errors->first('username')}}</div>
+                            @error('user_name')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
                         <div class="form-group mt-3">
                             <label for="password">Password</label>

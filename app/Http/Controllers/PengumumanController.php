@@ -121,6 +121,8 @@ class PengumumanController extends Controller
             'judul'     => ['required'],
             'isi'     => ['required'],
             'nama'     => ['required'],
+        ], [
+            'required' => ':attribute tidak boleh kosong!'
         ]);
         $pengumuman = Pengumuman::find($id);
         $pengumuman->ukm_id = $request->ukm_id;
