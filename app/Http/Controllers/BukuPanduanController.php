@@ -11,6 +11,10 @@ class BukuPanduanController extends Controller
     }
 
     public function adminaplikasi() {
-        return response()->download('buku_panduan/BukuPanduan.pdf');
+        return response()->download('buku_panduan/BukuPanduanAdminAplikasi.pdf');
+    }
+
+    public function pembina() {
+        return response()->download('buku_panduan/BukuPanduanPembina.pdf');
     }
 }

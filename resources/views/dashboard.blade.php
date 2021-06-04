@@ -114,6 +114,7 @@
             jml.push('{{ $g->graph_value }}');
         @endforeach
         jml = jml.map(Number);
+
         
         Highcharts.chart('grafik', {
             chart: {
@@ -143,6 +144,9 @@
                     dataLabels: {
                         enabled: true
                     }
+                },
+                series: {
+                    colorByPoint: true
                 }
             },
             credits: {

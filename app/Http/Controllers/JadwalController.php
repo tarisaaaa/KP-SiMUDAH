@@ -98,7 +98,7 @@ class JadwalController extends Controller
     public function update(Request $request, Jadwal $jadwal)
     {
         $request->validate([
-            'ukm_id'        => ['required', 'unique:jadwal,ukm_id'],
+            'ukm_id'        => ['required', 'unique:jadwal,ukm_id,'. $jadwal->id],
             'waktu_mulai'   => ['required'],
             'waktu_selesai' => ['required'],
             'hari'          => ['required'],
