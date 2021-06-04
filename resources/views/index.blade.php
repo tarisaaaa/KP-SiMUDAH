@@ -14,7 +14,7 @@
                 <div class="card">
 
                     <!--CAROUSEL-->
-                    <div id="demo" class="carousel slide" data-ride="carousel"">
+                    <div id="demo" class="carousel slide" data-ride="carousel">
                         <!-- Indicators -->
                         <ul class="carousel-indicators">
                             <li data-target="#demo" data-slide-to="0" class="active"></li>
@@ -43,26 +43,6 @@
                     </div>
 
                 </div>
-
-                {{-- <div class="row">
-                    <div class="col-lg-6 ml-3 mt-4 mr-5">
-                        <img src="{{ asset('assets/img/logomdp.png')}}" alt="logomdp" width="200px">
-                        <ul class="list-unstyled mt-3">
-                            <li>
-                                <i class="fas fa-map-pin pr-4"></i>Jl. Rajawali 14, 30113 Palembang - Sumatera Selatan
-                            </li>
-                            <li>
-                                <i class="fas fa-phone-alt pr-3 mt-3"></i>(0711) 376 400
-                            </li>
-                            <li>
-                                <i class="fas fa-globe-asia pr-3 mt-3"></i><a href="https://mdp.ac.id/" class="text-reset text-decoration-none">mdp.ac.id</a>
-                            </li>
-                            <li>
-                                <i class="fab fa-instagram-square pr-3 mt-3"></i><a href="http://instagram.com/mdp_campus/">@mdp_campus</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div> --}}
 
             </div>
 

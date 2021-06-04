@@ -30,7 +30,6 @@
                                 <th>Jumlah Kehadiran</th>
                                 <th>Keterangan</th>
                                 <th>Foto</th>
-                                <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -47,14 +46,6 @@
                                     @else
                                         -
                                     @endif
-                                </td>
-                                <td>
-                                    
-                                    <form action="/absensi/{{ $a["id"] }}" method="POST" class="d-inline">
-                                        @method('delete')
-                                        @csrf
-                                        <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i> Hapus</button>
-                                    </form>
                                 </td>
                             </tr>
                             @endforeach

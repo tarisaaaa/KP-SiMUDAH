@@ -75,6 +75,9 @@
                     dataLabels: {
                         enabled: true
                     }
+                },
+                series: {
+                    colorByPoint: true
                 }
             },
             credits: {

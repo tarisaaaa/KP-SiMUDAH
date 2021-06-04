@@ -150,8 +150,7 @@ class AbsensiController extends Controller
      */
     public function edit($id)
     {
-        $absensi = Absensi::findOrFail($id);
-        return view('absensi.edit', compact('absensi'));
+        // 
     }
 
     /**
@@ -163,33 +162,7 @@ class AbsensiController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'jml_kehadiran'      => ['required'],
-            'keterangan'     => ['required'],
-            'user_id'          => ['required'],
-            'ukm_id'      => ['required'],
-        ]);
-        
-        $foto = $request->file('foto');
-        if(!empty($foto)){
-            $request->validate([
-                'foto'      => ['required']
-            ]);
-        }
-
-        $absensi = Absensi::find($id);
-        $absensi->jml_kehadiran = $request->jml_kehadiran;
-        $absensi->keterangan = $request->keterangan;
-        $absensi->user_id = $request->user_id;
-        $absensi->ukm_id = $request->ukm_id;
-        if(!empty($foto)){
-            $foto_name = date('Y-m-d')."_".$foto->getClientOriginalName();
-            $foto->move("assets/img/fotolatihan",$foto_name);
-            $absensi->foto = $foto_name;
-        }
-
-        Session::flash('edit',$absensi->save());
-        return redirect()->route('absensi.show', ['absensi'=>$request->ukm_id])->with('status', 'Absensi Berhasil Ditambahkan!');
+        // 
     }
 
     /**
@@ -200,12 +173,7 @@ class AbsensiController extends Controller
      */
     public function destroy($id)
     {
-        // $absensi_detail = AbsensiDetail::findorFail($id);
-        // DB::table('absensi_detail')->where('id',$absensi_detail->id)->delete();
-
-        $absensi = Absensi::findorFail($id);
-        DB::table('absensi')->where('id',$absensi->id)->delete();
-        return back()->with('status', 'Absensi Berhasil Dihapus!');
+        // 
     }
 }
  

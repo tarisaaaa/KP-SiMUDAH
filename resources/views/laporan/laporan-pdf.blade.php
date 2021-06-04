@@ -50,7 +50,7 @@
                     @php
                         $persen = ($laporan->jumlah_absensi / $latihan) * 100
                     @endphp
-                    {{$persen}}%
+                    {{round($persen,2)}}%
                     </td>
                 </tr>
                 @endforeach

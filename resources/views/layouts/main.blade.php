@@ -29,6 +29,12 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
 </head>
+
+<style>
+    html, body {
+        height: 100%;
+    }
+</style>
 <body>
     <div id="app">
 
@@ -43,9 +49,15 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-                    <ul class="nav navbar-nav mr-auto">
+                    <ul class="nav navbar-nav">
                         <li class="nav-item">
                             <a class="nav-link" href="/jadwal-ukm">Jadwal</a>
+                        </li>
+                    </ul>
+
+                    <ul class="nav navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/bukupanduan">Buku Panduan</a>
                         </li>
                     </ul>
                     
