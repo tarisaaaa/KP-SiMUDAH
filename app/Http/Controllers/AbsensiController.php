@@ -173,12 +173,7 @@ class AbsensiController extends Controller
      */
     public function destroy($id)
     {
-        // $absensi_detail = AbsensiDetail::findorFail($id);
-        // DB::table('absensi_detail')->where('id',$absensi_detail->id)->delete();
-
-        $absensi = Absensi::findorFail($id);
-        DB::table('absensi')->where('id',$absensi->id)->delete();
-        return back()->with('status', 'Absensi Berhasil Dihapus!');
+        // 
     }
 }
  
