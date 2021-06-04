@@ -19,6 +19,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'IndexController@index');
 Route::get('/jadwal-ukm', 'IndexController@jadwal');
+// Route::resource('bukupanduan', 'BukuPanduanController');
+Route::get('/bukupanduan', 'BukuPanduanController@index');
+Route::get('/bukupanduan-adminaplikasi', 'BukuPanduanController@adminaplikasi');
+Route::get('/bukupanduan-adminkeuangan', 'BukuPanduanController@adminkeuangan');
+Route::get('/bukupanduan-ketuamahasiswa', 'BukuPanduanController@ketuamahasiswa');
+Route::get('/bukupanduan-pelatih', 'BukuPanduanController@pelatih');
+Route::get('/bukupanduan-pembina', 'BukuPanduanController@pembina');
+Route::get('/bukupanduan-wakilrektoriii', 'BukuPanduanController@wakilrektoriii');
 
 // Route::get('/jadwal-ukm', function () {
 //     return view('jadwal');
