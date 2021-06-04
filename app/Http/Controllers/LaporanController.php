@@ -29,8 +29,8 @@ class LaporanController extends Controller
                 FROM laporan
                 JOIN users ON users.id = laporan.pelatih_id
                 JOIN ukm ON ukm.id = laporan.ukm_id
-                WHERE YEAR(laporan.created_at) = 2021
-                AND MONTH(laporan.created_at) = 5
+                WHERE YEAR(laporan.created_at) = $tahun
+                AND MONTH(laporan.created_at) = $bulan
                 AND laporan.kehadiran = 'Hadir'
                 AND users.status_user = 'Aktif'
                 GROUP BY laporan.pelatih_id";
@@ -47,8 +47,8 @@ class LaporanController extends Controller
                 FROM laporan
                 JOIN users ON users.id = laporan.pelatih_id
                 JOIN ukm ON ukm.id = laporan.ukm_id
-                WHERE YEAR(laporan.created_at) = 2021
-                AND MONTH(laporan.created_at) = 5
+                WHERE YEAR(laporan.created_at) = $tahun
+                AND MONTH(laporan.created_at) = $bulan
                 AND laporan.kehadiran = 'Hadir'
                 AND users.status_user = 'Aktif'
                 GROUP BY laporan.pelatih_id";
