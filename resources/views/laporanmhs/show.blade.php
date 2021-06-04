@@ -34,7 +34,7 @@
                             @php
                                 $persen = ($laporan->jumlah_absensi / $query2->jumlah_latihan) * 100
                             @endphp
-                            {{$persen}}%
+                            {{round($persen, 2)}}%
                             </td>
                         </tr>
                         @endforeach
