@@ -33,7 +33,9 @@
                                 <th>NPM</th>
                                 <th>No HP</th>
                                 <th>Email</th>
-                                <th>Aksi</th>
+                                @if (session('user')->role == 'ketuamahasiswa')
+                                    <th>Aksi</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -47,13 +49,14 @@
                                 <td>
                                     @if (session('user')->role == 'ketuamahasiswa')
                                         <a href="{{ route('anggota.edit',['anggotum' => $a->id]) }}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>    
-                                    @endif
                                     
-                                    <form action="/anggota/{{ $a->id }}" method="POST" class="d-inline">
-                                        @method('delete')
-                                        @csrf
-                                        <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
-                                    </form>
+                                        <form action="/anggota/{{ $a->id }}" method="POST" class="d-inline">
+                                            @method('delete')
+                                            @csrf
+                                            <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
+                                        </form>
+
+                                    @endif
                                 </td>
                             </tr>
                             @endforeach
