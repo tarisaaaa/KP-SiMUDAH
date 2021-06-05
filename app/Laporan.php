@@ -9,7 +9,7 @@ class Laporan extends Model
     public $timestamps = false;
     protected $table = 'laporan';
     protected $primaryKey = 'id';
-    protected $fillable = ['ukm_id', 'pelatih_id', 'kehadiran', 'created_at'];
+    protected $fillable = ['absensi_id','ukm_id', 'pelatih_id', 'kehadiran'];
 
     public function ukm()
     {
@@ -19,5 +19,10 @@ class Laporan extends Model
     public function users()
     {
         return $this->belongsTo('App\Users', 'pelatih_id', 'id');
+    }
+
+    public function absensi()
+    {
+        return $this->belongsTo('App\Absensi', 'absensi_id', 'id');
     }
 }

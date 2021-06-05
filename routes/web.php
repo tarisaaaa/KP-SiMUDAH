@@ -109,3 +109,5 @@ Route::middleware('auth')->group(function () {
     Route::resource('profile', 'ProfileController');
     
 });
+
+Route::resource('daftarabsensipelatih', 'DaftarAbsensiPelatihController');

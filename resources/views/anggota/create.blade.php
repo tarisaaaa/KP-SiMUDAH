@@ -8,10 +8,10 @@
         <div class="card shadow m-4">
 
             @if (session('status'))
-            <div class="alert alert-success">
-                {{ session('status') }}
-            </div>
-        @endif
+                <div class="alert alert-success">
+                    {{ session('status') }}
+                </div>
+            @endif
 
             <div class="card-header py-3">
                 <h3 class="mt-2">Tambah Data Anggota</h3>

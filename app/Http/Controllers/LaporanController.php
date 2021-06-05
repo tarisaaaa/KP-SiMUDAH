@@ -16,8 +16,8 @@ class LaporanController extends Controller
     public function index() 
     {
         $data = DB::table('laporan')
-                    ->select([DB::raw('YEAR(created_at) as tahun, MONTH(created_at) as bulan')])
-                    // ->distinct()
+                    ->join('absensi', 'absensi.id', '=', 'laporan.absensi_id')
+                    ->select([DB::raw('YEAR(absensi.created_at) as tahun, MONTH(absensi.created_at) as bulan')])
                     ->groupBy(['bulan', 'tahun'])
                     ->paginate(10);
         return view('laporan.index', compact('data'));
@@ -29,8 +29,9 @@ class LaporanController extends Controller
                 FROM laporan
                 JOIN users ON users.id = laporan.pelatih_id
                 JOIN ukm ON ukm.id = laporan.ukm_id
-                WHERE YEAR(laporan.created_at) = $tahun
-                AND MONTH(laporan.created_at) = $bulan
+                JOIN absensi ON absensi.id = laporan.absensi_id
+                WHERE YEAR(absensi.created_at) = $tahun
+                AND MONTH(absensi.created_at) = $bulan
                 AND laporan.kehadiran = 'Hadir'
                 AND users.status_user = 'Aktif'
                 GROUP BY laporan.pelatih_id";
@@ -47,8 +48,9 @@ class LaporanController extends Controller
                 FROM laporan
                 JOIN users ON users.id = laporan.pelatih_id
                 JOIN ukm ON ukm.id = laporan.ukm_id
-                WHERE YEAR(laporan.created_at) = $tahun
-                AND MONTH(laporan.created_at) = $bulan
+                JOIN absensi ON absensi.id = laporan.absensi_id
+                WHERE YEAR(absensi.created_at) = $tahun
+                AND MONTH(absensi.created_at) = $bulan
                 AND laporan.kehadiran = 'Hadir'
                 AND users.status_user = 'Aktif'
                 GROUP BY laporan.pelatih_id";

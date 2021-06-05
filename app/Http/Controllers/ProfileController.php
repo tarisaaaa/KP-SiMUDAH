@@ -31,8 +31,9 @@ class ProfileController extends Controller
                     FROM laporan
                     JOIN users ON users.id = laporan.pelatih_id
                     JOIN ukm ON ukm.id = laporan.ukm_id
-                    WHERE YEAR(laporan.created_at) = YEAR(CURRENT_DATE()) 
-                    AND MONTH(laporan.created_at) = MONTH(CURRENT_DATE()) 
+                    JOIN absensi ON absensi.id = laporan.absensi_id
+                    WHERE YEAR(absensi.created_at) = YEAR(CURRENT_DATE()) 
+                    AND MONTH(absensi.created_at) = MONTH(CURRENT_DATE()) 
                     AND laporan.kehadiran = 'Hadir'
                     GROUP BY laporan.pelatih_id";
             $graph_title = "Grafik Kehadiran Pelatih Bulan Ini";

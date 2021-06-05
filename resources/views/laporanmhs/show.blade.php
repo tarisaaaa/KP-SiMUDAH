@@ -8,7 +8,7 @@
         <div class="card ml-5 mr-5">
             <div class="card-header">
                 <a href="/laporanmhs" class="btn btn-outline-dark btn-sm m-2 float-left">Kembali</a>
-                <a href="/laporanmhs-pdf/{{ $id_ukm }}/{{ $tahun }}/{{ $bulan }}" class="btn btn-info btn-sm m-2 float-right">Export PDF</a>
+                <a href="/laporanmhs-pdf/{{ $id_ukm }}/{{ $tahun }}/{{ $bulan }}" target="_blank" class="btn btn-info btn-sm m-2 float-right">Export PDF</a>
             </div>
             <div class="card-body ml-3 mr-3">
                 <h2><center>Laporan Kehadiran Mahasiswa</center></h2>
