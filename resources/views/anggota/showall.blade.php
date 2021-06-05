@@ -24,7 +24,9 @@
                                 <th>No HP</th>
                                 <th>Email</th>
                                 <th>Status</th>
-                                <th>Aksi</th>
+                                @if (session('user')->role == 'ketuamahasiswa')
+                                    <th>Aksi</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -36,15 +38,17 @@
                                 <td>{{ $a->nohp }}</td>
                                 <td>{{ $a->email }}</td>
                                 <td>{{ $a->status }}</td>
-                                <td>
-                                    <center>
-                                        <form action="/anggota/{{ $a->id }}" method="POST" class="d-inline">
-                                            @method('delete')
-                                            @csrf
-                                            <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
-                                        </form>
-                                    </center>
-                                </td>
+                                @if (session('user')->role == 'ketuamahasiswa')
+                                    <td>
+                                        <center>
+                                            <form action="/anggota/{{ $a->id }}" method="POST" class="d-inline">
+                                                @method('delete')
+                                                @csrf
+                                                <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
+                                            </form>
+                                        </center>
+                                    </td>
+                                @endif
                             </tr>
                             @endforeach
 
