@@ -19,7 +19,7 @@
 
             <div class="card-body">
                 
-                <table class="table border">
+                <table class="table border" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th>Pertemuan ke-</th>
@@ -43,7 +43,7 @@
             </div>
 
             <div class="card-footer">
-                <div class="float-right">Persentase kehadiran: {{ round($persentase,2) }}%</div>
+                <strong><div class="float-right">Persentase kehadiran: {{ round($persentase,2) }}%</div></strong>
             </div>
     
         </div>
