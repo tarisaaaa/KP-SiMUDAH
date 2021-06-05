@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jadwal;
 use App\Profile;
 use App\Ukm;
 use App\Users;
@@ -25,6 +26,7 @@ class ProfileController extends Controller
         $user = session('user')->role;
         $graph2 = [];
         $namaukm = '';
+        $jadwal = '';
         if ($user == 'adminkeuangan') 
         {
             $sql =  "SELECT users.nama, laporan.ukm_id, ukm.nama_ukm, COUNT(*) as graph_value
@@ -75,7 +77,13 @@ class ProfileController extends Controller
             $graph_title = "Grafik Kehadiran Mahasiswa";
             $graph_yaxis = "Jumlah mahasiswa";
             $namaukm = DB::table('ukm')->join('users', 'ukm.pelatih_id', '=', 'users.id')->where('ukm.pelatih_id', $id)->first();
-            
+            if (empty($namaukm)) {
+                $namaukm = DB::table('ukm')->join('users', 'ukm.pelatih_id', '=', 'users.id')->where('ukm.pelatih_id', 'like', '%'. $id .'%')->first();
+            }
+            $jadwal = DB::table('jadwal')->join('ukm', 'jadwal.ukm_id', '=', 'ukm.id')->where('ukm.pelatih_id', $id)->first();
+            if (empty($jadwal)) {
+                $jadwal = DB::table('jadwal')->join('ukm', 'jadwal.ukm_id', '=', 'ukm.id')->where('ukm.pelatih_id', 'like', '%'. $id .'%')->first();
+            }
         }
         else
         {
@@ -83,7 +91,7 @@ class ProfileController extends Controller
         }
         $graph = DB::select($sql);
         // dd($graph);
-        return view('dashboard', compact('profile', 'graph','graph_title', 'graph_yaxis', 'namaukm'));
+        return view('dashboard', compact('profile', 'graph','graph_title', 'graph_yaxis', 'namaukm', 'jadwal'));
     }
 
     public function grafik($id_ukm) 

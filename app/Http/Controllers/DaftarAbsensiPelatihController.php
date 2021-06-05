@@ -10,9 +10,9 @@ class DaftarAbsensiPelatihController extends Controller
 {
     public function index() {
         $id = session('user')->id;
-        $p = Ukm::where('pelatih_id', '=', $id)->orWhere('ketuamhs_id', $id)->get();
+        $p = Ukm::where('pelatih_id', '=', $id)->get();
         if ($p->isEmpty()) {
-            $listukm = Ukm::where('pelatih_id', 'like', '%' .$id. '%')->orWhere('ketuamhs_id', $id)->get();
+            $listukm = Ukm::where('pelatih_id', 'like', '%' .$id. '%')->get();
         } else {
             $listukm = $p;
         }
