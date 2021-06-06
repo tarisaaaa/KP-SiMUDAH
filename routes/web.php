@@ -98,7 +98,6 @@ Route::middleware('auth')->group(function () {
     
     Route::middleware(['adminkeuangan'])->group(function () {
         Route::resource('laporan', 'LaporanController');
-        Route::get('/laporan/{tahun}/{bulan}', 'LaporanController@show');
         Route::get('/laporan-pdf/{tahun}/{bulan}', 'LaporanController@exportPDF');
     });
     
