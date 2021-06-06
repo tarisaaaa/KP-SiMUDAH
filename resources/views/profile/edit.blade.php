@@ -15,7 +15,7 @@
                 <div class="col-lg-6">
                     <div class="container">
 
-                        <form method="post" action="{{ route('profile.update',['profile'=>$profile->id]) }}">
+                        <form method="post" action="{{ route('profile.update',['profile'=>$profile->user_id]) }}">
                             @method('put')
                             @csrf
                             <div class="form-group mt-3">

@@ -25,4 +25,9 @@ class Absensi extends Model
     {
         return $this->hasMany('App\AbsensiDetail', 'absensi_id', 'id');
     }
+
+    public function laporan()
+    {
+        return $this->hasMany('App\Laporan', 'absensi_id', 'id');
+    }
 }

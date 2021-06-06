@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jadwal;
 use App\Profile;
 use App\Ukm;
 use App\Users;
@@ -25,14 +26,16 @@ class ProfileController extends Controller
         $user = session('user')->role;
         $graph2 = [];
         $namaukm = '';
+        $jadwal = '';
         if ($user == 'adminkeuangan') 
         {
             $sql =  "SELECT users.nama, laporan.ukm_id, ukm.nama_ukm, COUNT(*) as graph_value
                     FROM laporan
                     JOIN users ON users.id = laporan.pelatih_id
                     JOIN ukm ON ukm.id = laporan.ukm_id
-                    WHERE YEAR(laporan.created_at) = YEAR(CURRENT_DATE()) 
-                    AND MONTH(laporan.created_at) = MONTH(CURRENT_DATE()) 
+                    JOIN absensi ON absensi.id = laporan.absensi_id
+                    WHERE YEAR(absensi.created_at) = YEAR(CURRENT_DATE()) 
+                    AND MONTH(absensi.created_at) = MONTH(CURRENT_DATE()) 
                     AND laporan.kehadiran = 'Hadir'
                     GROUP BY laporan.pelatih_id";
             $graph_title = "Grafik Kehadiran Pelatih Bulan Ini";
@@ -74,7 +77,13 @@ class ProfileController extends Controller
             $graph_title = "Grafik Kehadiran Mahasiswa";
             $graph_yaxis = "Jumlah mahasiswa";
             $namaukm = DB::table('ukm')->join('users', 'ukm.pelatih_id', '=', 'users.id')->where('ukm.pelatih_id', $id)->first();
-            
+            if (empty($namaukm)) {
+                $namaukm = DB::table('ukm')->join('users', 'ukm.pelatih_id', '=', 'users.id')->where('ukm.pelatih_id', 'like', '%'. $id .'%')->first();
+            }
+            $jadwal = DB::table('jadwal')->join('ukm', 'jadwal.ukm_id', '=', 'ukm.id')->where('ukm.pelatih_id', $id)->first();
+            if (empty($jadwal)) {
+                $jadwal = DB::table('jadwal')->join('ukm', 'jadwal.ukm_id', '=', 'ukm.id')->where('ukm.pelatih_id', 'like', '%'. $id .'%')->first();
+            }
         }
         else
         {
@@ -82,7 +91,7 @@ class ProfileController extends Controller
         }
         $graph = DB::select($sql);
         // dd($graph);
-        return view('dashboard', compact('profile', 'graph','graph_title', 'graph_yaxis', 'namaukm'));
+        return view('dashboard', compact('profile', 'graph','graph_title', 'graph_yaxis', 'namaukm', 'jadwal'));
     }
 
     public function grafik($id_ukm) 
@@ -164,8 +173,8 @@ class ProfileController extends Controller
      */
     public function edit($id)
     {
-        $profile = Profile::findOrFail($id);
-        $users = Users::findOrFail($profile->user_id);
+        $profile = Profile::where('user_id', $id)->first();
+        $users = Users::findOrFail($id);
         return view('profile.edit', compact('profile', 'users'));
     }
 
@@ -195,7 +204,7 @@ class ProfileController extends Controller
             'numeric' => ':attribute harus berupa angka'
         ]);
         
-        $profile = Profile::find($id);
+        $profile = Profile::where('user_id',$id)->first();
         $profile->niknpm = $request->niknpm;
         $profile->nohp =$request->nohp;
         $profile->alamat = $request->alamat;

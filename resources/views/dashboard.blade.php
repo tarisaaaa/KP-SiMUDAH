@@ -32,7 +32,8 @@
                         @endif
                     </h6>
                     @if (!empty($profile->user_id))
-                        <a href="{{ route('profile.edit',['profile' => $profile->id]) }}">Edit Profil</a>
+                        {{-- <a href="{{ route('profile.edit',['profile' => $profile->id]) }}">Edit Profil</a> --}}
+                        <a href="{{ route('profile.edit', session('user')->id) }}">Edit Profil</a>
                     @else
                         <a href="/profile/create">Edit Profil</a>
                         <br>
@@ -59,11 +60,32 @@
             </div>
         </div>
 
+        @if (session('user')->role == 'pelatih')
+            @if (!empty($jadwal->hari))
+                <div class="card ml-5 mr-5">
+                    <div class="row m-2">
+                        <div class="col-lg-6 m-2" style="text-align: right">
+                            <h5><strong>Jadwal</strong></h5>
+                            <h6>{{ $namaukm->nama_ukm }}</h6>
+                        </div>
+                        <div class="col-lg-5 m-3">
+                            <p>
+                                <b>Hari:</b> {{ $jadwal->hari }}
+                                <br>
+                                <b>Jam:</b> {{ date('H.i', strtotime($jadwal->waktu_mulai)) }} - {{ date('H.i', strtotime($jadwal->waktu_selesai)) }} WIB
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            @endif
+            
+        @endif
+
         @if (session('user')->role == 'wk' || session('user')->role == 'adminkeuangan' || session('user')->role == 'pembina' || session('user')->role == 'pelatih')
 
             <div>
 
-                <div class="card m-5">
+                <div class="card ml-5 mr-5">
                     @if (session('user')->role == 'wk')
                         <div class="row">
                             <div class="col-lg-4 m-4">

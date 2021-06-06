@@ -59,24 +59,24 @@ class AbsensiController extends Controller
 
     public function inputabsensi(Request $request)
     {
-        if(!empty($request->kehadiran_pelatih)) {
-            if (count(explode(',', $request->pelatih_id)) > 1) {
-                $pelatih = json_decode($request->pelatih_id);
-                foreach($pelatih as $idpelatih) {
-                    $laporan = new Laporan;
-                    $laporan->ukm_id = $request->ukm_id;
-                    $laporan->pelatih_id = $idpelatih;
-                    $laporan->kehadiran = $request->kehadiran_pelatih[$idpelatih];
-                    $laporan->save();
-                }
-            } else {
-                $laporan = new Laporan;
-                $laporan->ukm_id = $request->ukm_id;
-                $laporan->pelatih_id = $request->pelatih_id;
-                $laporan->kehadiran = $request->kehadiran_pelatih;
-                $laporan->save();
-            }
-        }
+        // if(!empty($request->kehadiran_pelatih)) {
+        //     if (count(explode(',', $request->pelatih_id)) > 1) {
+        //         $pelatih = json_decode($request->pelatih_id);
+        //         foreach($pelatih as $idpelatih) {
+        //             $laporan = new Laporan;
+        //             $laporan->ukm_id = $request->ukm_id;
+        //             $laporan->pelatih_id = $idpelatih;
+        //             $laporan->kehadiran = $request->kehadiran_pelatih[$idpelatih];
+        //             $laporan->save();
+        //         }
+        //     } else {
+        //         $laporan = new Laporan;
+        //         $laporan->ukm_id = $request->ukm_id;
+        //         $laporan->pelatih_id = $request->pelatih_id;
+        //         $laporan->kehadiran = $request->kehadiran_pelatih;
+        //         $laporan->save();
+        //     }
+        // }
 
         $absensi = new Absensi;
         $absensi->ukm_id = $request->ukm_id;
@@ -96,6 +96,25 @@ class AbsensiController extends Controller
             }
         }
         $absensi->save();
+
+        if(!empty($request->kehadiran_pelatih)) {
+            if (count(explode(',', $request->pelatih_id)) > 1) {
+                $pelatih = json_decode($request->pelatih_id);
+                foreach($pelatih as $idpelatih) {
+                    $absensi->laporan()->create([
+                        'ukm_id' => $request->ukm_id,
+                        'pelatih_id' => $idpelatih,
+                        'kehadiran' => $request->kehadiran_pelatih[$idpelatih]
+                    ]);
+                }
+            } else {
+                $absensi->laporan()->create([
+                    'ukm_id' => $request->ukm_id,
+                    'pelatih_id' => $request->pelatih_id,
+                    'kehadiran' => $request->kehadiran_pelatih
+                ]);
+            }
+        }
 
         $data_absensi = json_decode($request->absensi);
         foreach ($data_absensi as $a) {

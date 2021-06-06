@@ -129,6 +129,14 @@
                 </p>
               </a>
             </li>
+            <li class="nav-item">
+              <a href="/daftarabsensipelatih" class="nav-link">
+                <i class="nav-icon fas fa-clipboard-list"></i>
+                <p>
+                  Daftar Absensi
+                </p>
+              </a>
+            </li>
 
           @elseif(session('user')->role == "ketuamahasiswa")
             <li class="nav-item">

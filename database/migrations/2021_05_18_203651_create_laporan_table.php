@@ -15,10 +15,11 @@ class CreateLaporanTable extends Migration
     {
         Schema::create('laporan', function (Blueprint $table) {
             $table->id();
+            $table->string('absensi_id');
             $table->string('ukm_id');
             $table->string('pelatih_id');
             $table->string('kehadiran');
-            $table->timestamp('created_at')->useCurrent();
+            // $table->timestamp('created_at')->useCurrent();
         });
     }
 
