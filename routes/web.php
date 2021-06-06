@@ -48,7 +48,13 @@ Route::get('/{token}/resetpassword', 'ForgotPasswordController@getPassword')->na
 Route::post('/resetpassword', 'ForgotPasswordController@updatePassword');
 
 Route::middleware('auth')->group(function () {
+    Route::get('/profile/create', 'ProfileController@create')->name('profile.create');
     Route::get('/dashboard', 'ProfileController@index');
+    // Route::resource('profile', 'ProfileController');
+    Route::get('/profile', 'ProfileController@index')->name('profile.index');
+    Route::get('/profile/{profile}', 'ProfileController@show')->name('profile.show');
+    Route::post('/profile', 'ProfileController@store')->name('profile.store');
+    
     
     Route::middleware(['adminaplikasi'])->group(function() {
         Route::resource('adminaplikasi', 'AdminaplikasiController');
@@ -110,6 +116,11 @@ Route::middleware('auth')->group(function () {
         Route::resource('daftarabsensipelatih', 'DaftarAbsensiPelatihController');
     });
     
-    Route::resource('profile', 'ProfileController');
+    Route::middleware('userid')->group(function(){
+        Route::get('/profile/{profile}/edit', 'ProfileController@edit')->name('profile.edit');
+        Route::put('/profile/{profile}', 'ProfileController@update')->name('profile.update');
+    });
+    
+    
     
 });

@@ -32,7 +32,8 @@
                         @endif
                     </h6>
                     @if (!empty($profile->user_id))
-                        <a href="{{ route('profile.edit',['profile' => $profile->id]) }}">Edit Profil</a>
+                        {{-- <a href="{{ route('profile.edit',['profile' => $profile->id]) }}">Edit Profil</a> --}}
+                        <a href="{{ route('profile.edit', session('user')->id) }}">Edit Profil</a>
                     @else
                         <a href="/profile/create">Edit Profil</a>
                         <br>

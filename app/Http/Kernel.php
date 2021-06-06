@@ -11,6 +11,7 @@ use App\Http\Middleware\AdminOnlyMiddleware;
 use App\Http\Middleware\KetuaMahasiswaOnlyMiddleware;
 use App\Http\Middleware\PelatihOnlyMiddleware;
 use App\Http\Middleware\PembinaOnlyMiddleware;
+use App\Http\Middleware\UserOnlyMiddleware;
 use App\Http\Middleware\WkOnlyMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -82,5 +83,6 @@ class Kernel extends HttpKernel
         'adminaplikasiketuamahasiswa' => AdminAplikasiandKetuaMahasiswaOnlyMiddleware::class,
         'adminaplikasiketuamahasiswapelatih' => AdminaplKetuamhsPelatihOnlyMiddleware::class,
         'adminkeuanganandpembina' => AdminKeuanganAndPembinaOnlyMiddleware::class,
+        'userid' => UserOnlyMiddleware::class,
     ];
 }

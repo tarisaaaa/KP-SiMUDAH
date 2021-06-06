@@ -173,8 +173,8 @@ class ProfileController extends Controller
      */
     public function edit($id)
     {
-        $profile = Profile::findOrFail($id);
-        $users = Users::findOrFail($profile->user_id);
+        $profile = Profile::where('user_id', $id)->first();
+        $users = Users::findOrFail($id);
         return view('profile.edit', compact('profile', 'users'));
     }
 
@@ -204,7 +204,7 @@ class ProfileController extends Controller
             'numeric' => ':attribute harus berupa angka'
         ]);
         
-        $profile = Profile::find($id);
+        $profile = Profile::where('user_id',$id)->first();
         $profile->niknpm = $request->niknpm;
         $profile->nohp =$request->nohp;
         $profile->alamat = $request->alamat;
