@@ -105,9 +105,11 @@ Route::middleware('auth')->group(function () {
         Route::get('/laporanmhs/{id_ukm}/{tahun}/{bulan}', 'LaporanMhsController@show');
         Route::get('/laporanmhs-pdf/{id_ukm}/{tahun}/{bulan}', 'LaporanMhsController@exportPDF');
     });
+
+    Route::middleware('pelatih')->group(function(){
+        Route::resource('daftarabsensipelatih', 'DaftarAbsensiPelatihController');
+    });
     
     Route::resource('profile', 'ProfileController');
     
 });
-
-Route::resource('daftarabsensipelatih', 'DaftarAbsensiPelatihController');

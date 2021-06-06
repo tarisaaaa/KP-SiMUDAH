@@ -18,7 +18,7 @@
         <h2><center>
             LAPORAN KEHADIRAN PELATIH
             <br>
-            Bulan {{ $bulan }} Tahun {{ $tahun }}
+            {{ Carbon\Carbon::parse($date1)->isoFormat('Do MMMM Y') }} - {{ Carbon\Carbon::parse($date2)->isoFormat('Do MMMM Y') }}
         </center></h2>
         
         <br>
@@ -34,7 +34,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($query as $laporan)
+                @foreach ($records as $laporan)
                 <tr>
                     <td style="width: 30px; text-align: center">{{ $loop->iteration }}</td>
                     <td>{{ $laporan->nama_ukm }}</td>
@@ -42,7 +42,7 @@
                     <td>{{ $laporan->jumlah_absensi }}</td>
                     <td>
                         @php
-                            $latihan = App\Absensi::where('ukm_id', $laporan->ukm_id)->count();
+                            $latihan = App\Absensi::where('ukm_id', $laporan->ukm_id)->whereBetween('created_at', [$date1, $date2])->count();
                         @endphp
                         {{ $latihan }}
                     </td>

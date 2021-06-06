@@ -13,18 +13,30 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="list-group">
-                            <b>bulan/tahun</b>
-                            @if ($data->count())
-                                @foreach ($data as $date)
-                                    <a href="/laporan/{{ $date->tahun }}/{{ $date->bulan }}" class="list-group-item list-group-item-action">
-                                        {{ $date->bulan }}/{{ $date->tahun }}
-                                    </a>                            
-                                @endforeach
+                            <form action="{{ route('laporan.store') }}" method="post">
+                                @csrf
 
-                                <div class="mt-2">
-                                    {{ $data->render() }}
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group mt-3">
+                                            <label for="tanggalmulai">Tanggal Mulai</label>
+                                            <input type="date" class="form-control @error('tanggalmulai') is-invalid @enderror" name="tanggalmulai" id="tanggalmulai" value="{{ old('tanggalmulai') }}">
+                                            @error('tanggalmulai')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group mt-3">
+                                            <label for="tanggalselesai">Tanggal Selesai</label>
+                                            <input type="date" class="form-control @error('tanggalselesai') is-invalid @enderror" name="tanggalselesai" id="tanggalselesai" value="{{ old('tanggalselesai') }}">
+                                            @error('tanggalselesai')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                                        </div>
+                                    </div>
                                 </div>
-                            @endif
+
+                                <button type="submit" class="btn btn-dark border pt-2">Lihat</button>
+
+                            </form>
+
                         </div>
                     </div>
                     <div class="col-lg-6 my-auto">

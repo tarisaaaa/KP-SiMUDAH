@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 // use Barryvdh\DomPDF\PDF;
 use Barryvdh\DomPDF\Facade as PDF;
+use Carbon\Carbon;
 
 class LaporanController extends Controller
 {
@@ -25,39 +26,42 @@ class LaporanController extends Controller
 
     public function show($tahun, $bulan) 
     {
-        $sql = "SELECT users.nama, laporan.ukm_id, ukm.nama_ukm, COUNT(*) as jumlah_absensi
-                FROM laporan
-                JOIN users ON users.id = laporan.pelatih_id
-                JOIN ukm ON ukm.id = laporan.ukm_id
-                JOIN absensi ON absensi.id = laporan.absensi_id
-                WHERE YEAR(absensi.created_at) = $tahun
-                AND MONTH(absensi.created_at) = $bulan
-                AND laporan.kehadiran = 'Hadir'
-                AND users.status_user = 'Aktif'
-                GROUP BY laporan.pelatih_id";
-        $query = DB::select($sql);
-        
-        // $pdf = PDF::loadview('laporan.show',['data'=>$data])->setPaper('A4','potrait');
-	    // return $pdf->stream();
-        return view('laporan.show', compact('query', 'bulan', 'tahun'));
+        // 
     }
 
-    public function exportPDF($tahun, $bulan)
+    public function store(Request $request) {
+        $date1 = Carbon::parse($request->tanggalmulai)->format('Y-m-d');
+        $date2 = Carbon::parse($request->tanggalselesai)->format('Y-m-d');
+
+        $records = DB::table('laporan')
+                        ->join('absensi', 'absensi.id', '=', 'laporan.absensi_id')
+                        ->join('users', 'users.id', '=', 'laporan.pelatih_id')
+                        ->join('ukm', 'ukm.id', '=', 'laporan.ukm_id')
+                        ->whereBetween('absensi.created_at', [$date1, $date2])
+                        ->where('laporan.kehadiran', '=', 'Hadir')
+                        ->where('users.status_user', '=', 'Aktif')
+                        ->select('laporan.ukm_id', 'ukm.nama_ukm', 'users.nama', (DB::raw('count(*) as jumlah_absensi')))
+                        ->groupBy('laporan.pelatih_id')
+                        ->get();
+        // dd($records);
+        return view ('laporan.show', compact('records', 'date1', 'date2'));
+    }
+
+    public function exportPDF($date1, $date2)
     {
-        $sql = "SELECT users.nama, laporan.ukm_id, ukm.nama_ukm, COUNT(*) as jumlah_absensi
-                FROM laporan
-                JOIN users ON users.id = laporan.pelatih_id
-                JOIN ukm ON ukm.id = laporan.ukm_id
-                JOIN absensi ON absensi.id = laporan.absensi_id
-                WHERE YEAR(absensi.created_at) = $tahun
-                AND MONTH(absensi.created_at) = $bulan
-                AND laporan.kehadiran = 'Hadir'
-                AND users.status_user = 'Aktif'
-                GROUP BY laporan.pelatih_id";
-        $query = DB::select($sql);
+        $records = DB::table('laporan')
+                        ->join('absensi', 'absensi.id', '=', 'laporan.absensi_id')
+                        ->join('users', 'users.id', '=', 'laporan.pelatih_id')
+                        ->join('ukm', 'ukm.id', '=', 'laporan.ukm_id')
+                        ->whereBetween('absensi.created_at', [$date1, $date2])
+                        ->where('laporan.kehadiran', '=', 'Hadir')
+                        ->where('users.status_user', '=', 'Aktif')
+                        ->select('laporan.ukm_id', 'ukm.nama_ukm', 'users.nama', (DB::raw('count(*) as jumlah_absensi')))
+                        ->groupBy('laporan.pelatih_id')
+                        ->get();
 
         // $pdf = PDF::loadview('laporan.laporan-pdf', compact('results', 'bulan', 'tahun'))->setPaper('A4','potrait');
         // return $pdf->stream('laporanpelatih'. $bulan. $tahun. '.pdf');
-        return view('laporan.laporan-pdf', compact('query', 'bulan', 'tahun'));
+        return view('laporan.laporan-pdf', compact('records', 'date1', 'date2'));
     }
 }
