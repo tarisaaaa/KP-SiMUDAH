@@ -39,7 +39,7 @@ class ProfileController extends Controller
                     AND laporan.kehadiran = 'Hadir'
                     GROUP BY laporan.pelatih_id";
             $graph_title = "Grafik Kehadiran Pelatih Bulan Ini";
-            $graph_yaxis = "Rata-rata kehadiran mahasiswa";
+            $graph_yaxis = "Jumlah kehadiran";
         } 
         else if ($user == 'wk') 
         {
@@ -58,7 +58,7 @@ class ProfileController extends Controller
                     WHERE u.pembina_id = $pembina_id
                     GROUP BY a.ukm_id,u.nama_ukm";
             $graph_title = "Grafik Keaktifan UKM dan HMJ";
-            $graph_yaxis = "Jumlah Latihan";
+            $graph_yaxis = "Rata-rata kehadiran mahasiswa";
             $namaukm = DB::table('ukm')->join('users', 'ukm.pembina_id', '=', 'users.id')->where('ukm.pembina_id', $id)->first();
         }
         else if($user == "pelatih") 
