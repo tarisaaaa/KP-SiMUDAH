@@ -39,7 +39,7 @@ class ProfileController extends Controller
                     AND laporan.kehadiran = 'Hadir'
                     GROUP BY laporan.pelatih_id";
             $graph_title = "Grafik Kehadiran Pelatih Bulan Ini";
-            $graph_yaxis = "Jumlah kehadiran";
+            $graph_yaxis = "Rata-rata kehadiran mahasiswa";
         } 
         else if ($user == 'wk') 
         {
