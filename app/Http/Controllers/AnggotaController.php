@@ -44,7 +44,7 @@ class AnggotaController extends Controller
         $request->validate([
             'nama_anggota'      => ['required'],
             'npm'     => ['required', 'numeric', 'digits:10'],
-            'nohp'      => ['required',  'regex:/(0)[0-9]{10,13}/', 'numeric', 'digits_between:11,14'],
+            'nohp'      => ['required', 'digits_between:11,14',  'regex:/(0)[0-9]{10,13}/', 'numeric'],
             'email'          => ['required', 'email'],
             'status'          => ['required'],
             'ukm_id'      => ['required'],
