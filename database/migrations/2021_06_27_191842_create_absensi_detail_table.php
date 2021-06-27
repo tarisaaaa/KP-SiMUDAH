@@ -13,17 +13,17 @@ class CreateAbsensiDetailTable extends Migration
      */
     public function up()
     {
+        Schema::enableForeignKeyConstraints();
         Schema::create('absensi_detail', function (Blueprint $table) {
             $table->id();
-            // $table->string('absensi_id');
             $table->unsignedBigInteger('absensi_id');
             $table->foreign('absensi_id')
                 ->references('id')->on('absensi')
                 ->onDelete('cascade');
-            $table->string('anggota_id');
+            $table->bigInteger('anggota_id',0,1);
+            $table->foreign('anggota_id')->references('id')->on('anggota');
             $table->enum("status_absen", ['H', 'I', 'A']);
             $table->text('keterangan');
-            //$table->timestamps();
         });
     }
 

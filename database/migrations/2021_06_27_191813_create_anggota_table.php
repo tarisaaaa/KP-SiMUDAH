@@ -13,6 +13,7 @@ class CreateAnggotaTable extends Migration
      */
     public function up()
     {
+        Schema::enableForeignKeyConstraints();
         Schema::create('anggota', function (Blueprint $table) {
             $table->id();
             //$table->timestamps();
@@ -20,7 +21,8 @@ class CreateAnggotaTable extends Migration
             $table->string('npm');
             $table->string('nohp');
             $table->string('email');
-            $table->string('ukm_id');
+            $table->bigInteger('ukm_id',0,1);
+            $table->foreign('ukm_id')->references('id')->on('ukm');
             $table->string('status');
         });
     }

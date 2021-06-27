@@ -13,13 +13,14 @@ class CreateKegiatanTable extends Migration
      */
     public function up()
     {
+        Schema::enableForeignKeyConstraints();
         Schema::create('kegiatan', function (Blueprint $table) {
             $table->id();
             $table->string('nama_kegiatan');
             $table->date('tanggal');
             $table->text('keterangan');
-            $table->string('ukm_id');
-            //$table->timestamps();
+            $table->bigInteger('ukm_id',0,1);
+            $table->foreign('ukm_id')->references('id')->on('ukm');
         });
     }
 

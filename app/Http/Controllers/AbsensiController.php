@@ -23,7 +23,7 @@ class AbsensiController extends Controller
     public function index()
     {
         $id = session('user')->id;
-        $absensi = Ukm::where('pelatih_id', $id)->orWhere('ketuamhs_id', $id)->get();
+        $absensi = Ukm::where('status', 'Aktif')->where('ketuamhs_id', $id)->get();
         return view('absensi.index', compact('absensi'));
     }
 

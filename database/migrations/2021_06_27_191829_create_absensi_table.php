@@ -13,9 +13,11 @@ class CreateAbsensiTable extends Migration
      */
     public function up()
     {
+        Schema::enableForeignKeyConstraints();
         Schema::create('absensi', function (Blueprint $table) {
             $table->id();
-            $table->string('ukm_id');
+            $table->bigInteger('ukm_id',0,1);
+            $table->foreign('ukm_id')->references('id')->on('ukm');
             $table->string('user_id');
             $table->text('keterangan');
             $table->text('foto')->nullable();

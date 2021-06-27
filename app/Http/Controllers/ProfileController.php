@@ -52,15 +52,13 @@ class ProfileController extends Controller
         else if($user == "pembina") 
         {
             $pembina_id = Session::get('user')->id;
-            $sql = "SELECT a.ukm_id,u.nama_ukm,count(*) as graph_value 
-                    FROM absensi as a 
+            $sql = "SELECT a.ukm_id,u.nama_ukm, SUM(a.rata_rata)/COUNT(*) as graph_value 
+                    FROM v_absensi_harian as a
                     JOIN ukm as u ON a.ukm_id = u.id 
-                    WHERE MONTH(a.created_at) = MONTH(CURRENT_DATE()) 
-                    AND YEAR(a.created_at) = YEAR(CURRENT_DATE()) 
-                    AND u.pembina_id = '".$pembina_id."' 
+                    WHERE u.pembina_id = $pembina_id
                     GROUP BY a.ukm_id,u.nama_ukm";
             $graph_title = "Grafik Keaktifan UKM dan HMJ";
-            $graph_yaxis = "Rata-rata jumlah kehadiran";
+            $graph_yaxis = "Rata-rata kehadiran mahasiswa";
             $namaukm = DB::table('ukm')->join('users', 'ukm.pembina_id', '=', 'users.id')->where('ukm.pembina_id', $id)->first();
         }
         else if($user == "pelatih") 

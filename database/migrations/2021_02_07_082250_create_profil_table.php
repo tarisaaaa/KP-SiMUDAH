@@ -13,12 +13,14 @@ class CreateProfilTable extends Migration
      */
     public function up()
     {
+        Schema::enableForeignKeyConstraints();
         Schema::create('profil', function (Blueprint $table) {
             $table->id();
             $table->string('niknpm');
             $table->string('nohp');
             $table->string('alamat');
             $table->bigInteger('user_id', 0, 1);
+            $table->foreign('user_id')->references('id')->on('users');
             //$table->timestamps();
         });
     }
