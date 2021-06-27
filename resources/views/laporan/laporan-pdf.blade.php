@@ -57,8 +57,16 @@
             </tbody>
         </table>
 
-        <div style="text-align: right;">
+        <div style="text-align: left;" class="float-left">
+            <br>
+            <br> Admin Keuangan
+            <br><br><br><br>
+            <p>{{ session('user')->nama }}</p>
+        </div>
+
+        <div style="text-align: right;" class="float-right">
             Palembang, {{ date('d-m-Y') }}
+            <br>Mengetahui,
             <br> Wakil Rektor II
             <br><br><br><br>
             <p>Kathryn Sugara, S.E., M.Si, CFP®</p>
