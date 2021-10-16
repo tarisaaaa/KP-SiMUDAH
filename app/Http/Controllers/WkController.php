@@ -65,11 +65,10 @@ class WkController extends Controller
         $request->validate([
             'nama'      => ['required'],
             'user_name'     => ['required', 'unique:users,user_name,'.$id],
-            'email' => ['required', 'email', 'unique:users,email,'.$id]
+            'email' => ['required', 'email']
         ],[
             'required' => 'Field tidak boleh kosong!',
             'user_name.unique' => 'Username sudah ada!',
-            'email.unique' => 'Email sudah ada!',
             'email' => 'Format email tidak benar!'
         ]);
 

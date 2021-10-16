@@ -98,13 +98,10 @@ class ProfileController extends Controller
                 FROM absensi as a 
                 RIGHT JOIN absensi_detail as ad ON a.id=ad.absensi_id 
                 JOIN ukm as u ON a.ukm_id = u.id 
-                -- WHERE MONTH(a.created_at) = MONTH(CURRENT_DATE()) 
-                -- AND YEAR(a.created_at) = YEAR(CURRENT_DATE()) 
                 WHERE u.id = $id_ukm
                 GROUP BY a.ukm_id,u.nama_ukm, day(a.created_at)";
         $graph = DB::select($sql);
-        
-        
+
         $sql_ukm = "SELECT ukm_id, nama_ukm, SUM(rata_rata)/COUNT(*) as graph_value 
                     FROM v_absensi_harian 
                     GROUP BY ukm_id";
