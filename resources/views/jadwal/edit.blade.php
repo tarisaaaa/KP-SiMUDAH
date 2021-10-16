@@ -54,6 +54,10 @@
                                     <input type="checkbox" class="form-check-input" name="hari[]" value="Sabtu" id="sabtu">
                                     <label class="form-check-label" for="sabtu">Sabtu</label>
                                 </div>
+                                <div class="form-check ml-4">
+                                    <input type="checkbox" class="form-check-input" name="hari[]" value="Minggu" id="minggu">
+                                    <label class="form-check-label" for="minggu">Minggu</label>
+                                </div>
                                 @error('hari')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
 

@@ -46,18 +46,11 @@
                                 <td>{{ $a->npm }}</td>
                                 <td>{{ $a->nohp }}</td>
                                 <td>{{ $a->email }}</td>
-                                <td>
-                                    @if (session('user')->role == 'ketuamahasiswa')
-                                        <a href="{{ route('anggota.edit',['anggotum' => $a->id]) }}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>    
-                                    
-                                        <form action="/anggota/{{ $a->id }}" method="POST" class="d-inline">
-                                            @method('delete')
-                                            @csrf
-                                            <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
-                                        </form>
-
-                                    @endif
-                                </td>
+                                @if (session('user')->role == 'ketuamahasiswa')
+                                    <td>
+                                        <a href="{{ route('anggota.edit',['anggotum' => $a->id]) }}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i></a>  
+                                    </td>
+                                @endif
                             </tr>
                             @endforeach
 
